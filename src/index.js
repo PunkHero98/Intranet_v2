@@ -23,11 +23,11 @@ app.set('view engine', 'hbs');
 app.set('views' , path.join( __dirname , 'resources\\views'));
 
 app.get('/' , (req , res)=>{
-    res.render('home');
+    res.render('login');
 });
 
 app.get('/news' , (req , res )=>{
-    res.render('news');
+    res.render('login');
 })
 
 app.listen(port , ()=>{
