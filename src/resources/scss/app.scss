@@ -1,37 +1,37 @@
-@import 'variables';
- 
+@import "variables";
+
 // CSS LOGIN-PAGE-----------------------------------
 .login-intranet {
-    height: 100vh;
-    background-image: url(../imgs/bg-login.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-size: 0.9rem;
-  }
-  
-  .login-intranet img {
-    width: 15rem;
-  }
-  
-  .login-intranet .alert {
-    padding: 0;
-    margin: 0;
-    height: 20px;
-  }
-  
-  .login-intranet .sectionforalert {
-    margin: 0;
-    padding: 0.5rem 0;
-    height: 30px;
-  }
-  
-  .login-intranet .sectionforalert p {
-    text-align: center;
-    color: red;
-  }
-  
-  .login-intranet .forgot input {
-    padding: 0.5rem 2.5rem;
-  }
+  height: 100vh;
+  background-image: url(../imgs/bg-login.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 0.9rem;
+}
+
+.login-intranet img {
+  width: 15rem;
+}
+
+.login-intranet .alert {
+  padding: 0;
+  margin: 0;
+  height: 20px;
+}
+
+.login-intranet .sectionforalert {
+  margin: 0;
+  padding: 0.5rem 0;
+  height: 30px;
+}
+
+.login-intranet .sectionforalert p {
+  text-align: center;
+  color: $red-color;
+}
+
+.login-intranet .forgot input {
+  padding: 0.5rem 2.5rem;
+}
 
 //   -------------------------------------------
