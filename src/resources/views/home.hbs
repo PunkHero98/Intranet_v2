@@ -1,1 +1,68 @@
-<h1>Home Page</h1>
+
+<!-- homepage intranet -->
+<div class="homepage-intranet">
+  <div class="welcome-homepage container-fluid">
+    <div class="row">
+      <!-- welcome user -->
+      <div class="col-12">
+        <h2 class="text-light">Welcome, huylam !</h2>
+        <button class="btn m-2 text-light fw-bold" type="button">Teams</button>
+        <button
+          class="btn m-2 text-light fw-bold"
+          id="TicketSystem"
+          type="button"
+        >
+          Ticket System
+        </button>
+        <button class="btn m-2 text-light fw-bold" type="button">
+          Time Sheets
+        </button>
+        <button class="btn m-2 text-light fw-bold" type="button">
+          Time Sheets
+        </button>
+        <button class="btn m-2 text-light fw-bold" type="button">
+          Time Sheets
+        </button>
+        <button class="btn m-2 text-light fw-bold" type="button">
+          Time Sheets
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="whats-new-intranet container-fluid">
+    <div class="row d-flex">
+
+        {{#each contents}}
+
+            <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="row">
+                <div class="col-3">
+                  <a href="content/{{this.id_content}}">
+                    <img class="object-fit-cover" src="imgs/news/img-news1.jpg" />
+                  </a>
+                </div>
+                <!-- body -->
+                <div class="col-9">
+                    <!-- title -->
+                    <a href="content/{{this.id_content}}">
+                      <h5>
+                      {{this.title}}
+                      </h5>
+                    </a>
+                    <!-- content -->
+                    <p>
+                    {{this.content}}
+                    </p>
+                    <i class="text-light-emphasis"
+                    >Posted by:{{this.poster}} | Date and time: {{this.date_time}} | Site: {{this.poster_site}}</i
+                    >
+                </div>
+                </div>
+            </div>
+
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</div>

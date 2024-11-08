@@ -41,7 +41,7 @@ const createUser = async (
     .input("user_working_site", sql.NVarChar, site)
     .input("user_address", sql.NVarChar, address)
     .input("office_phone_number", sql.NVarChar, phonenumber)
-    .input("isActived", sql.bit, 0)
+    .input("isActived", sql.Bit, 0)
     .query(
       "INSERT INTO users (id_user, username, fullname ,email,user_password,user_role,department,position,user_working_site,user_address,office_phone_number,isActived) VALUES (@id_user, @username, @fullname ,@email,@user_password,@user_role,@department,@position,@user_working_site,@user_address,@office_phone_number,@isActived)"
     );

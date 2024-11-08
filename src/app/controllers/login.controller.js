@@ -5,11 +5,12 @@ export default new (class LoginController {
   login(req, res) {
     res.render("login");
   }
-
+  // [POST] /login/verify
   async verify(req, res) {
     try {
-      const user = await getUserByEmail(`${req.body.emailAddress}`);
-      if (user.user_password === req.body.password) {
+      const { emailAddress, password } = req.body;
+      const user = await getUserByEmail(`${emailAddress}`);
+      if (user.user_password === password) {
         return res.redirect("/homepage");
       }
       res.status(301).send("Fail to login");

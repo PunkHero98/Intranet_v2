@@ -1,0 +1,97 @@
+
+<!-- login intranet -->
+<div class="login-intranet container-fluid">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+    <!-- <div class="col-8"> -->
+      <!-- logo QSL -->
+      <img class="mb-4 container-fluid" src="imgs/qsl-logo.png" alt="logo-QSL"/>
+      <form id="loginForm" action="/register-tfa" method="post">
+        <div class="d-flex">
+          <div class="left col-6 container-fluid">
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" placeholder="Nguyen Van A" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" placeholder="name@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <input class="form-control" list="datalistOptions1" placeholder="Type to search..." required>
+              <datalist id="datalistOptions1">
+                <option value="Super Admin">
+                <option value="Admin">
+                <option value="Member">
+              </datalist>
+            </div>
+          </div>
+          <div class="right col-6 container-fluid">
+            <div class="mb-3">
+              <label class="form-label">Department</label>
+              <input class="form-control" list="datalistOptions2" placeholder="Type to search..." required>
+              <datalist id="datalistOptions2">
+                <option value="Corporate">
+                <option value="Operation">
+                <option value="Inventory">
+                <option value="Logistics">
+              </datalist>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Position</label>
+              <input class="form-control" list="datalistOptions3" placeholder="Type to search..." required>
+              <datalist id="datalistOptions3">
+                <option value="Junior Developer">
+                <option value="Technician">
+                <option value="HR Officer">
+              </datalist>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Site</label>
+              <input class="form-control" list="datalistOptions4" placeholder="Type to search..." required>
+              <datalist id="datalistOptions4">
+                <option value="Australia">
+                <option value="Thailand">
+                <option value="New Zealand">
+                <option value="Philippines">
+                <option value="Vietnam">
+              </datalist>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Office Address</label>
+              <input class="form-control" list="datalistOptions5" placeholder="Type to search..." required>
+              <datalist id="datalistOptions5">
+                <option value="Silverwater">
+                <option value="Auckland">
+                <option value="Bangkok">
+                <option value="HoChiMinh">
+                <option value="Manila">
+              </datalist>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Office Number</label>
+              <input type="text" class="form-control" placeholder="01425566" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- show alert -->
+        {{!-- <div class="sectionforalert">
+        </div> --}}
+        <div class="forgot text-center mt-2 pt-2">
+          <!-- login button -->
+          <input class="btn btn-primary btn-lg" id="submitbtn" type="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

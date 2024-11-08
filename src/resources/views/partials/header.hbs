@@ -1,1 +1,130 @@
-<h1>Header</h1>
+<!-- header intranet -->
+<div
+  class="header-intranet container-fluid fixed-top d-flex align-items-center"
+>
+  <!-- logo QSL -->
+  <a class="logo" onclick="window.location.href='/'">
+    <img src="imgs/qsl-logo.png" alt="logo-QSL" />
+  </a>
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-md ms-auto fw-bold">
+    <!-- toggler -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- navbar offcanvas -->
+    <div
+      class="offcanvas offcanvas-end"
+      id="offcanvasNavbar"
+      tabindex="-1"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <!-- close button -->
+      <div class="offcanvas-header">
+        <button
+          class="btn-close"
+          type="button"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav countries">
+          <!-- australia -->
+          <li class="nav-item mx-1">
+            <form action="activities" method="post">
+              <button name="site" value="Australia">Australia</button>
+            </form>
+          </li>
+          <!-- new zealand -->
+          <li class="nav-item mx-1">
+            <form action="activities" method="post">
+              <button name="site" value="New Zealand">New Zealand</button>
+            </form>
+          </li>
+          <!-- thailand -->
+          <li class="nav-item mx-1">
+            <form action="activities" method="post">
+              <button name="site" value="Thailand">Thailand</button>
+            </form>
+          </li>
+          <!-- vietnam -->
+          <li class="nav-item mx-1">
+            <form action="activities" method="post">
+              <button name="site" value="Vietnam">Vietnam</button>
+            </form>
+          </li>
+          <!-- philippines -->
+          <li class="nav-item mx-1">
+            <form action="activities" method="post">
+              <button name="site" value="Philippines">Philippines</button>
+            </form>
+          </li>
+        </ul>
+        <ul class="navbar-nav user">
+          <li class="nav-item dropdown d-flex mx-1">
+            <!-- user avatar -->
+            <img
+              class="rounded-circle object-fit-cover"
+              src="imgs/user/user.png"
+            />
+            <!-- user name -->
+            <a
+              class="nav-link nav-profile dropdown-toggle d-flex align-items-center text-reset p-0"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="ps-2">huylam</span>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+            >
+              <!-- full name and role -->
+              <li class="dropdown-header">
+                {{#if username}}
+                  <h6>{{username}}</h6>
+                  <span>{{user_role}}</span>
+                {{else}}
+                  <h6>huylam</h6>
+                  <span>HR</span>
+                {{/if}}
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <!-- my profile -->
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  onclick="window.location.href='/profile'"
+                >
+                  <i class="fa-regular fa-user"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <!-- sign out -->
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  onclick="window.location.href='/logout'"
+                >
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

@@ -25,14 +25,15 @@ CREATE TABLE roles (
 
 ---Table CONTENT-----
 CREATE TABLE contents (
-    id_content int primary key not null,
+    id_content int identity(1,1) primary key not null,
 	title nvarchar(100) not null,
 	content nvarchar(max) not null,
 	content_image nvarchar(max) not null,
 	poster nvarchar(40) not null,
 	date_time datetime2 not null,
 	last_updated datetime2 null,
-	deleted bit not null
+	deleted bit not null,
+	poster_site nvarchar(20) not null	
 ) 
 ---Table VERIFICATION-----
 CREATE TABLE vertification (

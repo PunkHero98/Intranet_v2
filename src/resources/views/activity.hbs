@@ -1,0 +1,148 @@
+<div class="activities-header">
+
+  <div class="header-img" style="--img: url({{url}})">
+    <div class="content">
+      <h2>{{site}}</h2>
+      <p>Location: {{city}}</p>
+    </div>
+  </div>
+
+</div>
+<div class="activities-body">
+  <div class="title">WHAT'S NEWS</div>
+  <div class="navbtn">
+    <div>
+      <!-- <span class="navbtn-left">QSL SITE</span>
+      <span class="navbtn-left">HOLIDAYS</span>
+      <span class="navbtn-left">EXPOLORE</span> -->
+    </div>
+    <div>
+      <span class="navbtn-right" id="create-content">CREATE CONTENT</span>
+    </div>
+  </div>
+  <div class="content-container">
+    <div class="create-content-box">
+      <form action="content/add" method="POST" enctype="multipart/form-data">
+        <div class="first-row">
+          <label for="title-input">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title-input"
+            placeholder="Enter your content title.."
+          />
+        </div>
+        <div class="third-row">
+          <label for="content-area">Content</label>
+          <textarea
+            name="text_content"
+            id="content-area"
+            placeholder="Write something.."
+          ></textarea>
+        </div>
+        <div class="fourth-row">
+          <label>Upload Pictures</label>
+          <!-- <button>Clear</button> -->
+          <label for="Upload">Choose</label>
+          <input
+            type="file"
+            accept="image/jpeg , image/png , image/jpg"
+            id="Upload"
+            name="Imgfiles"
+            hidden
+            multiple
+          />
+          <div class="img-container"></div>
+        </div>
+        <div class="last-row">
+          <button>Clear</button>
+          <input
+            data-bs-toggle="modal"
+            data-bs-target="#modal-news"
+            type="button"
+            value="Review"
+          />
+          <input type="submit" value="Submit" id="submit-btn" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="whats-new-intranet container-fluid">
+    <div class="row d-flex">
+
+      {{#each contents}}
+        <div class="col-xl-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-3">
+              <img class="object-fit-cover" src="imgs/news/img-news1.jpg" />
+            </div>
+            <!-- body -->
+            <div class="col-9">
+              <!-- title -->
+              <h5>
+                {{this.title}}
+              </h5>
+              <!-- content -->
+              <p>
+                {{this.content}}
+              </p>
+              <i class="text-light-emphasis">Posted by:
+                {{this.poster}}
+                | Date and time:
+                {{this.date_time}}</i>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+
+    </div>
+  </div>
+</div>
+<!-- Modal  -->
+<div
+  class="modal-news modal fade"
+  id="modal-news"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modal-timesheet-record-Label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <!--header modal-->
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <!--body modal-->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-4">
+
+          </div>
+          <div class="col-8">
+            <h5>
+            </h5>
+            <!-- content -->
+            <p></p>
+            <div class="news-info row px-2">
+
+              <i class="text-light-emphasis w-100">
+                Posted by: | Date: | Time:
+              </i>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="button-divp-modal">
+          <label for="submit-btn">SUBMIT</label>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+</div>
