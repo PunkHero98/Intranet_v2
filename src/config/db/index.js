@@ -1,7 +1,7 @@
 import sql from "mssql";
 
 const config = {
-  server: "localhost\\QSLVN-LT-DEV001\\SQLEXPRESS",
+  server: "localhost",
   database: "Intranet_v2",
   user: "huylam",
   password: "1234",
@@ -9,7 +9,7 @@ const config = {
     trustServerCertificate: true,
     trustedConnection: true,
   },
-  port: 1423,
+  port: 1433,
 };
 
 const connectToDB = async () => {

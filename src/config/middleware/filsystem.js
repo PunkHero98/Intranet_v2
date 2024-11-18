@@ -1,3 +1,4 @@
+import { dir } from "console";
 import fs from "fs";
 import path from "path";
 
@@ -7,8 +8,10 @@ const createDir = (name) => {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true }); // { recursive: true } để tạo nhiều thư mục con nếu cần
     console.log(`Thư mục ${dirPath} đã được tạo!`);
+    return dirPath;
   } else {
     console.log(`Thư mục ${dirPath} đã tồn tại.`);
+    return dirPath;
   }
 };
 

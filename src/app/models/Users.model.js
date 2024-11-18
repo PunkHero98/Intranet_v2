@@ -7,13 +7,16 @@ const getUsers = async () => {
   return result.recordset;
 };
 
-const getUserByEmail = async (email) => {
+const getUserByEmail = async (email, password) => {
   const pool = await connectToDB();
   const result = await pool
     .request()
     .input("email", sql.NVarChar, email)
-    .query("SELECT * from users where email = @email");
-  return result.recordset[0];
+    .input("password", sql.NVarChar, password)
+    .query(
+      "SELECT * from users where email = @email and user_password = @password"
+    );
+  return result.recordset.length > 0 ? result.recordset[0] : null;
 };
 
 const createUser = async (

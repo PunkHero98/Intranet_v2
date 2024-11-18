@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get("/teams", siteController.teams);
 router.post("/activities", siteController.activity);
-router.get("/", siteController.homepage);
+router.get("/homepage", siteController.homepage);
+router.get("/", siteController.redirecT);
 
 export default router;

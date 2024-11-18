@@ -245,60 +245,37 @@ function showSlides(n) {
 // ----------------------------------------------------
 
 // submit function
-// $(".activities-body .create-content-box  #uploadform").on(
-//   "submit",
-//   async function (event) {
-//     event.preventDefault();
-//     console.log("ádhihih");
-//     const title = $(".activities-body .first-row input").val();
-//     const textcontent = $(".activities-body .third-row input").val();
+$(".activities-body .create-content-box  #uploadform").on(
+  "submit",
+  async function (event) {
+    event.preventDefault();
+    const title = $(".activities-body .first-row input").val();
+    const textcontent = $(".activities-body .third-row textarea").val();
 
-//     // try {
-//     //   const request = new XMLHttpRequest();
-//     //   request.open("POST", "/add-news-activities");
-//     //   request.setRequestHeader("Content-Type", "multipart/form-data");
-//     //   const body = JSON.stringify({
-//     //     rTitle: title,
-//     //     rContent: textcontent,
-//     //     image1: Imgsarray[0],
-//     //     image2: Imgsarray[1],
-//     //     image3: Imgsarray[2],
-//     //     image4: Imgsarray[3],
-//     //     image5: Imgsarray[4],
-//     //     image6: Imgsarray[5],
-//     //   });
-//     //   request.onload = ()=>{
-//     //     if(request.readyState == 4 && request.status == 201){
-//     //       return console.log(JSON.parse(request.responseText));
-//     //     }
-//     //     console.log(`ERROR: ${request.status}`);
-//     //   }
-//     //   request.send("image")
-//     // } catch (err) {}
+    if (Imgsarray.length === 0) {
+      alert("Please Chose at least 1 picture");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("textcontent", textcontent);
+    for (let i = 0; i < Imgsarray.length; i++) {
+      formData.append("Imgfiles", Imgsarray[i]);
+    }
 
-//     if (Imgsarray.length === 0) {
-//       alert("Please Chose at least 1 picture");
-//       return;
-//     }
-//     const formData = new FormData();
-//     for (let i = 0; i < Imgsarray.length; i++) {
-//       formData.append("Imgfiles[]", Imgsarray[i]);
-//     }
+    try {
+      const response = await fetch("content/add", {
+        method: "POST",
+        body: formData,
+      });
 
-//     console.log(formData);
-//     try {
-//       const response = await fetch("/add-news-activities", {
-//         method: "POST",
-//         body: formData,
-//       });
-
-//       const result = await response.text();
-//       alert(result);
-//     } catch (error) {
-//       console.error("Lỗi:", error);
-//     }
-//   }
-// );
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.error("Lỗi:", error);
+    }
+  }
+);
 
 // ----------------------------------------------------
 

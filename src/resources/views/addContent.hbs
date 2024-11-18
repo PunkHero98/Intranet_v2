@@ -1,0 +1,53 @@
+<div class="create-content-intranet container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <form
+        action="add-news-activities"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="first-row">
+          <label for="title-input">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title-input"
+            placeholder="Enter your content title.."
+          />
+        </div>
+        <div class="third-row">
+          <label for="content-area">Content</label>
+          <textarea
+            name="text-content"
+            id="content-area"
+            placeholder="Write something.."
+          ></textarea>
+        </div>
+        <div class="fourth-row">
+          <label>Upload Pictures</label>
+          <!-- <button>Clear</button> -->
+          <label for="Upload">Choose</label>
+          <input
+            type="file"
+            accept="image/jpeg , image/png , image/jpg"
+            id="Upload"
+            name="Imgfiles"
+            hidden
+            multiple
+          />
+          <div class="img-container"></div>
+        </div>
+        <div class="last-row">
+          <button>Clear</button>
+          <input
+            data-bs-toggle="modal"
+            data-bs-target="#modal-news"
+            type="button"
+            value="Review"
+          />
+          <input type="submit" value="Submit" id="submit-btn" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

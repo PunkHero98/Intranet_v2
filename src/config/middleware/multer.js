@@ -1,9 +1,14 @@
 import multer from "multer";
 import path from "path";
+import { createDir } from "./filsystem.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "D:\\IMG_Storage\\");
+    const { title, textcontent } = req.body;
+    cb(
+      null,
+      createDir(req.session.site + "_" + req.session.username + "_" + title)
+    );
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));

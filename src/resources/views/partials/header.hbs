@@ -3,7 +3,7 @@
   class="header-intranet container-fluid fixed-top d-flex align-items-center"
 >
   <!-- logo QSL -->
-  <a class="logo" onclick="window.location.href='/'">
+  <a class="logo" onclick="window.location.href='/homepage'">
     <img src="imgs/qsl-logo.png" alt="logo-QSL" />
   </a>
   <!-- navbar -->
@@ -38,6 +38,11 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav countries">
+          <li class="nav-item mx-1">
+            <form action="content/" method="post">
+              <button name="site" value="Australia">Add News</button>
+            </form>
+          </li>
           <!-- australia -->
           <li class="nav-item mx-1">
             <form action="activities" method="post">
@@ -84,7 +89,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <span class="ps-2">huylam</span>
+              <span class="ps-2">{{username}}</span>
             </a>
             <ul
               class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
@@ -93,7 +98,7 @@
               <li class="dropdown-header">
                 {{#if username}}
                   <h6>{{username}}</h6>
-                  <span>{{user_role}}</span>
+                  <span>{{role}}</span>
                 {{else}}
                   <h6>huylam</h6>
                   <span>HR</span>

@@ -1,19 +1,26 @@
 import { getUserByEmail } from "../models/Users.model.js";
 
 export default new (class LoginController {
-  // [GET] /
+  // [GET] /login
   login(req, res) {
+    if (req.session.username) {
+      res.redirect("/homepage");
+      return;
+    }
     res.render("login");
   }
-  // [POST] /login/verify
+  // [POST] /login
   async verify(req, res) {
     try {
       const { emailAddress, password } = req.body;
-      const user = await getUserByEmail(`${emailAddress}`);
-      if (user.user_password === password) {
+      const user = await getUserByEmail(emailAddress, password);
+      if (user) {
+        req.session.username = user.username;
+        req.session.userrole = user.user_role;
+        req.session.site = user.user_working_site;
         return res.redirect("/homepage");
       }
-      res.status(301).send("Fail to login");
+      res.status(401).send("Fail to login");
     } catch (err) {
       res
         .status(500)

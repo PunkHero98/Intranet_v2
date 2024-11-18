@@ -2,11 +2,19 @@ import { getUsers } from "../models/Users.model.js";
 import { getContents, getContentsBySite } from "../models/Contents.model.js";
 
 export default new (class SiteController {
+  // [GET] /
+  redirecT(req, res) {
+    res.redirect("/login");
+  }
   // [GET] /homepage
   async homepage(req, res) {
     try {
       const contents = await getContents();
-      res.render("home", { contents });
+      res.render("home", {
+        contents,
+        role: req.session.userrole,
+        username: req.session.username,
+      });
     } catch (err) {
       res
         .status(500)
@@ -55,7 +63,14 @@ export default new (class SiteController {
           city = "Manila City";
           break;
       }
-      res.render("activity", { contents, url, city, site });
+      res.render("activity", {
+        contents,
+        url,
+        city,
+        site,
+        role: req.session.userrole,
+        username: req.session.username,
+      });
     } catch (err) {
       res
         .status(500)
