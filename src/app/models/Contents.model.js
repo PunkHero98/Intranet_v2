@@ -36,7 +36,8 @@ const getContentsBySite = async (site) => {
 const addContent = async (
   title,
   content,
-  image_link,
+  images_link,
+  content_images,
   user,
   date_created,
   site
@@ -46,14 +47,15 @@ const addContent = async (
     .request()
     .input("title", sql.NVarChar, title)
     .input("content", sql.NVarChar, content)
-    .input("content_image", sql.NVarChar, image_link)
+    .input("images_link", sql.NVarChar, images_link)
+    .input("content_images", sql.NVarChar, content_images)
     .input("poster", sql.NVarChar, user)
     .input("dateandtime", sql.DateTime2, date_created)
     .input("last_update", sql.DateTime2, null)
     .input("deleted", sql.Bit, 0)
     .input("poster_site", sql.NVarChar, site)
     .query(
-      "INSERT INTO contents (title , content, content_image , poster , date_time , last_updated , deleted , poster_site) VALUES (@title , @content , @content_image , @poster , @dateandtime , @last_update , @deleted ,@poster_site)"
+      "INSERT INTO contents (title , content, images_link , content_images , poster , date_time , last_updated , deleted , poster_site) VALUES (@title , @content ,@images_link, @content_images , @poster , @dateandtime , @last_update , @deleted ,@poster_site)"
     );
   return result.rowsAffected;
 };

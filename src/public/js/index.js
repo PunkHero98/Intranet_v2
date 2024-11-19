@@ -262,18 +262,19 @@ $(".activities-body .create-content-box  #uploadform").on(
     for (let i = 0; i < Imgsarray.length; i++) {
       formData.append("Imgfiles", Imgsarray[i]);
     }
-
-    try {
-      const response = await fetch("content/add", {
-        method: "POST",
-        body: formData,
+    fetch("content/add", {
+      method: "POST",
+      body: formData,
+    })
+      .then((respone) => {
+        if (!respone.ok) {
+          throw new Error("error");
+        }
+        return respone.text();
+      })
+      .then((text) => {
+        console.log(text);
       });
-
-      const result = await response.text();
-      console.log(result);
-    } catch (error) {
-      console.error("Lỗi:", error);
-    }
   }
 );
 

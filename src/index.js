@@ -33,6 +33,7 @@ app.use(
 
 // Setup static folder
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("D:\\IMG_Storage"));
 app.use(morgan("combined"));
 
 // middleware

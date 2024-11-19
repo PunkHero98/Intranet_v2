@@ -1,5 +1,6 @@
 import { getUsers } from "../models/Users.model.js";
 import { getContents, getContentsBySite } from "../models/Contents.model.js";
+import { getfileinDir } from "../../config/middleware/filsystem.js";
 
 export default new (class SiteController {
   // [GET] /
@@ -10,6 +11,11 @@ export default new (class SiteController {
   async homepage(req, res) {
     try {
       const contents = await getContents();
+      contents.map((file) => {
+        file.content_images = JSON.parse(file.content_images);
+        file.content_images = file.images_link + "\\" + file.content_images[0];
+      });
+      console.log(contents);
       res.render("home", {
         contents,
         role: req.session.userrole,
@@ -41,6 +47,10 @@ export default new (class SiteController {
       let url = "";
       let city = "";
       const contents = await getContentsBySite(site);
+      contents.map((file) => {
+        file.content_images = JSON.parse(file.content_images);
+        file.content_images = file.images_link + "\\" + file.content_images[0];
+      });
       switch (site) {
         case "Australia":
           url = "../imgs/activities/sydney-opera-house-354375.jpg";

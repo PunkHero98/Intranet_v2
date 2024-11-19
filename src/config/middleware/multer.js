@@ -1,13 +1,14 @@
 import multer from "multer";
 import path from "path";
 import { createDir } from "./filsystem.js";
-
+import { simPliFizeString } from "./assets.js";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const { title, textcontent } = req.body;
+    const newTitle = simPliFizeString(title, true);
     cb(
       null,
-      createDir(req.session.site + "_" + req.session.username + "_" + title)
+      createDir(req.session.site + "_" + req.session.username + "_" + newTitle)
     );
   },
   filename: (req, file, cb) => {
