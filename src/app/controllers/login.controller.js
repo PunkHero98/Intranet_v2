@@ -18,6 +18,8 @@ export default new (class LoginController {
         req.session.username = user.username;
         req.session.userrole = user.user_role;
         req.session.site = user.user_working_site;
+        req.session.fullname = user.fullname;
+        req.session.idUser = user.id_user;
         return res.redirect("/homepage");
       }
       res.status(401).send("Fail to login");

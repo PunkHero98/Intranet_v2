@@ -1,6 +1,9 @@
-import { getUsers } from "../models/Users.model.js";
+import {
+  getUserByEmail,
+  getUsers,
+  getUserById,
+} from "../models/Users.model.js";
 import { getContents, getContentsBySite } from "../models/Contents.model.js";
-import { getfileinDir } from "../../config/middleware/filsystem.js";
 
 export default new (class SiteController {
   // [GET] /
@@ -15,11 +18,11 @@ export default new (class SiteController {
         file.content_images = JSON.parse(file.content_images);
         file.content_images = file.images_link + "\\" + file.content_images[0];
       });
-      console.log(contents);
       res.render("home", {
         contents,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
       });
     } catch (err) {
       res
@@ -85,6 +88,23 @@ export default new (class SiteController {
       res
         .status(500)
         .json({ message: "error fetching activity", error: err.message });
+    }
+  }
+
+  async profile(req, res) {
+    try {
+      const idUser = req.session.idUser;
+      const result = await getUserById(idUser);
+      res.render("profile", {
+        result,
+        role: req.session.userrole,
+        username: req.session.username,
+      });
+      console.log(result);
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "error fetching profile", error: err.message });
     }
   }
 })();

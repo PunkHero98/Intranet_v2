@@ -57,7 +57,7 @@ const addContent = async (
     .query(
       "INSERT INTO contents (title , content, images_link , content_images , poster , date_time , last_updated , deleted , poster_site) VALUES (@title , @content ,@images_link, @content_images , @poster , @dateandtime , @last_update , @deleted ,@poster_site)"
     );
-  return result.rowsAffected;
+  return (await result).rowsAffected;
 };
 
 export {

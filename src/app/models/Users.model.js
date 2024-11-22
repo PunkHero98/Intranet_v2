@@ -19,6 +19,15 @@ const getUserByEmail = async (email, password) => {
   return result.recordset.length > 0 ? result.recordset[0] : null;
 };
 
+const getUserById = async (id) => {
+  const pool = await connectToDB();
+  const result = await pool
+    .request()
+    .input("id", sql.Int, id)
+    .query("SELECT * from users where id_user = @id");
+  return result.recordset.length > 0 ? result.recordset[0] : null;
+};
+
 const createUser = async (
   fullname,
   email,
@@ -60,4 +69,4 @@ const deleteUser = async (id) => {
   return result.rowsAffected;
 };
 
-export { getUsers, getUserByEmail, createUser, deleteUser };
+export { getUsers, getUserByEmail, createUser, deleteUser, getUserById };

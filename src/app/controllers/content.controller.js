@@ -1,6 +1,5 @@
 import { getContentByID, addContent } from "../models/Contents.model.js";
 import path from "path";
-
 import { simPliFizeString, getDate } from "../../config/middleware/assets.js";
 import { getfileinDir } from "../../config/middleware/filsystem.js";
 
@@ -8,10 +7,17 @@ export default new (class ContentController {
   // [GET] /content/:slug
   async show(req, res) {
     const result = await getContentByID(req.params.slug);
+    result.content_images = JSON.parse(result.content_images);
+    result.content_images = result.content_images.map((f) => {
+      return "\\" + result.images_link + "\\" + f;
+    });
 
+    console.log(result);
     res.render("contentViews", {
+      result,
       role: req.session.userrole,
       username: req.session.username,
+      total: result.content_images.length,
     });
   }
 
@@ -45,8 +51,12 @@ export default new (class ContentController {
     }
   }
 
-  // [GET] /content/
+  // [GET] /content/add-news
   getAddpage(req, res) {
-    res.render("addContent");
+    res.render("addContent", {
+      role: req.session.userrole,
+      username: req.session.username,
+      fullname: req.session.fullname,
+    });
   }
 })();

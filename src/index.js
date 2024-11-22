@@ -9,8 +9,8 @@ import createError from "http-errors";
 import session from "express-session";
 import sequelize from "./config/db/sequelize.js";
 import sessionStore from "./config/db/sessionstore.js";
-import { getUserByEmail } from "./app/models/Users.model.js";
-
+import { addindex, totalindex } from "./app/helpers/adIndex.js";
+import Handlebars from "handlebars";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -21,12 +21,12 @@ const port = 3000;
 
 app.use(
   session({
-    secret: "your-secret-key", // Khóa bí mật để mã hóa session
-    resave: false, // Không lưu lại session nếu không có thay đổi
-    saveUninitialized: false, // Không tạo session nếu không có dữ liệu
-    store: sessionStore, // Sử dụng SequelizeStore để lưu trữ session vào SQL Server
+    secret: "low-row-rate",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // Thời gian sống của cookie (7 ngày)
+      maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   })
 );
@@ -40,6 +40,8 @@ app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+Handlebars.registerHelper("totalindex", totalindex);
+Handlebars.registerHelper("addindex", addindex);
 // Template Engine
 app.engine(
   "hbs",
