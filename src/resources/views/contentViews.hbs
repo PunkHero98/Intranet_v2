@@ -6,7 +6,7 @@
                     {{#each result.content_images}}
                     <div class="mySlides ">
                         <div class="numbertext"> {{addindex @index}} / {{@root.total}}</div>
-                            <img src={{this}} >
+                            <img src={{this}} style="height: 500px; object-fit: cover;">
                         <div class="text">Caption Text</div>
                     </div>
                     {{/each}}

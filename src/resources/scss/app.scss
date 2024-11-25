@@ -49,6 +49,10 @@ body {
   margin: 0.5rem 0;
 }
 
+.header-intranet .user li i {
+  width: 1.1rem;
+}
+
 .header-intranet .nav-item form {
   height: 100%;
   display: flex;
@@ -1737,4 +1741,34 @@ body {
 .create-content-intranet .last-row input[type="submit"] {
   background-color: blue;
   color: white;
+}
+
+
+
+
+
+.manage-posts {
+  margin-top: 5rem;
+}
+
+.manage-posts .title {
+  width: 20%;
+  text-align: justify;
+}
+
+.manage-posts .content {
+  width: 50%;
+  text-align: justify;
+}
+
+.manage-posts .date-time {
+  width: 15%;
+}
+
+.manage-posts .select {
+  width: 5%;
+}
+
+.manage-posts button {
+  margin: 0.1rem 0;
 }
