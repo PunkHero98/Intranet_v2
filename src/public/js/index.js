@@ -1,57 +1,58 @@
 // ------------Block of function for Login Page---------------------
-var i = true;
-$("#inputEmail").on("blur", function () {
-  if ($(this).val() == "") {
-    $(".login-intranet .emailalert").text("Cannot leave this field blank!");
-  } else if (!isValidEmail($(this).val())) {
-    $(".login-intranet .emailalert ").text("Provide a valid email address");
-  }
-});
-
-$("#inputPassword").on("blur", function () {
-  if ($(this).val() == "") {
-    $(".login-intranet .passwordalert").text("Cannot leave this field blank!");
-  }
-  if ($("#inputPassword").val() != "" && $("#inputEmail").val() != "") {
-    $("#submitbtn").removeAttr("disabled");
-  } else {
-    $("#submitbtn").prop("disabled", true);
-  }
-});
-
-$("#inputPassword").on("keypress", function (e) {
-  if (e.key === "Enter") {
-    if ($("#inputPassword").val() != "" && $("#inputEmail").val() != "") {
-      $("#submitbtn").removeAttr("disabled");
-      $(".login-intranet form").submit();
-    }
-  }
-});
-$("#inputEmail").on("focus", function () {
-  $(".login-intranet .emailalert ").text("");
-});
-
-$("#inputPassword").on("focus", function () {
-  $(".login-intranet .passwordalert ").text("");
-});
-
-$("#inputShowPassword").on("click", function () {
-  passwordCheckBox();
-});
-function passwordCheckBox() {
-  if (i) {
-    $("#inputPassword").attr("type", "text");
-    i = false;
-  } else {
-    $("#inputPassword").attr("type", "password");
-    i = true;
-  }
-}
 const isValidEmail = (email) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };
+
+let passwordVisible = false;
+
+function togglePasswordVisibility() {
+  $("#inputPassword").attr("type", passwordVisible ? "password" : "text");
+  passwordVisible = !passwordVisible;
+}
+
+function handleInputBlur(input, alertSelector, validationFunc = null) {
+  const value = input.val();
+  const alertMessage =
+    value === ""
+      ? "Cannot leave this field blank!"
+      : validationFunc && !validationFunc(value)
+      ? "Provide a valid email address"
+      : "";
+  $(alertSelector).text(alertMessage);
+}
+
+function toggleSubmitButton() {
+  const isEmailValid =
+    $("#inputEmail").val() !== "" && isValidEmail($("#inputEmail").val());
+  const isPasswordValid = $("#inputPassword").val() !== "";
+  $("#submitbtn").prop("disabled", !(isEmailValid && isPasswordValid));
+}
+
+$("#inputEmail").on("blur", function () {
+  handleInputBlur($(this), ".login-intranet .emailalert", isValidEmail);
+});
+
+$("#inputPassword").on("blur", function () {
+  handleInputBlur($(this), ".login-intranet .passwordalert");
+  toggleSubmitButton();
+});
+
+$("#inputPassword").on("keypress", function (e) {
+  if (e.key === "Enter") {
+    toggleSubmitButton();
+    if (!$("#submitbtn").prop("disabled")) {
+      $(".login-intranet form").submit();
+    }
+  }
+});
+$("#inputEmail, #inputPassword").on("focus", function () {
+  $(this).siblings(".emailalert, .passwordalert").text("");
+});
+$("#inputShowPassword").on("click", togglePasswordVisibility);
+$("#inputEmail").on("blur", () => toggleSubmitButton());
+$("#inputPassword").on("blur", () => toggleSubmitButton());
 
 // ------------End Block function for Login Page---------------------
 
@@ -135,10 +136,6 @@ function handleChoosePicture(event) {
     if (!f.type.match("image.*")) {
       return alert("image only");
     }
-    // $($(".activities-body .fourth-row  input").next()).css(
-    //   "display",
-    //   "block"
-    // );
     Imgsarray.push(f);
   });
 }
@@ -198,7 +195,6 @@ $('.activities-body .last-row input[type="button"]').on("click", function (e) {
 function bindingContentandTitle() {
   const title = $("#title-input").val();
   const content = $(".activities-body .third-row textarea").val();
-  let first;
   if (!Imgsarray.length == 0) {
     $(".modal-news .modal-body .col-4").html(
       '<div class="button row"><span onclick="plusSlides(-1)" class="prev"></span><span onclick="plusSlides(1)" class="next"></span></div>'
@@ -288,6 +284,211 @@ $(".activities-body .create-content-box  #uploadform").on(
 // });
 // ----------------------------------------------------
 
+// manage posts
+var deletePicArray = [];
+var editContentJson = [];
+
+function getRowElements(obj) {
+  const row = $(obj).closest("tr");
+  return {
+    id: row.find("td.newId"),
+    content: row.find("td.content"),
+    title: row.find("td.title"),
+    imageContainer: row.find("td.image_container"),
+    dateTime: row.find("td.date_time"),
+  };
+}
+
+$(".manage-posts .table-group-divider .editBtn").on("click", function () {
+  const button = $(this);
+  const isEditing = button.html() === "Edit";
+  const isSaving = button.html() === "Save";
+  if (isEditing) {
+    changeEditBtn(button, "btn-primary", "btn-success", "Save", 1);
+    editContentTitle(button);
+  } else if (isSaving) {
+    changeEditBtn(button, "btn-success", "btn-primary", "Edit", 0);
+    saveContentTitle(button);
+    pushOrUpdate(editContentJson, generateJsonForEdit(button));
+    console.log(editContentJson);
+  }
+});
+
+$(".manage-posts .table-group-divider .image_container .closeBtn").on(
+  "click",
+  function () {
+    const closeBtn = $(this);
+    const input = closeBtn.siblings("input");
+    const isChecked = input.prop("checked");
+
+    if (isChecked) {
+      input.prop("checked", false);
+      deletePicArray = deletePicArray.filter(
+        (f) => f.get(0) !== closeBtn.parent().get(0)
+      );
+      resetCloseBtnStyles(closeBtn);
+      enableModal(closeBtn);
+    } else {
+      input.prop("checked", true);
+      deletePicArray.push(closeBtn.parent());
+      highlightCloseBtn(closeBtn);
+      enableModal(closeBtn);
+      deletePicWithModal();
+    }
+  }
+);
+
+$(".manage-posts .modal_formanagePost .cancelBtn_for_managePost").on(
+  "click",
+  function () {
+    deletePicArray.forEach((f) =>
+      resetCloseBtnStyles($(f).children(".closeBtn"))
+    );
+    deletePicArray = [];
+    $(this).parents(".modal_formanagePost").fadeOut();
+  }
+);
+
+$(".manage-posts > div > div > .update_manage").on("click", function () {
+  const isContainEditData = editContentJson.length;
+
+  if (!isContainEditData) {
+    return;
+  }
+  const dataJson = JSON.stringify(editContentJson);
+  console.log(dataJson);
+  fetch("manage/update", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Đảm bảo gửi dữ liệu dạng JSON
+    },
+    body: dataJson,
+  })
+    .then((response) => response.text()) // Xử lý phản hồi (nếu có)
+    .then((data) => console.log(data)) // In kết quả trả về từ server
+    .catch((error) => console.error("Error:", error)); // Xử lý lỗi
+});
+function pushOrUpdate(array, newObj) {
+  const index = array.findIndex((item) => item.id === newObj.id);
+  if (index !== -1) {
+    array[index] = newObj;
+  } else {
+    array.push(newObj);
+  }
+}
+
+function deletePicWithModal() {
+  $(".manage-posts .modal_formanagePost .yesBtn_for_managePost").on(
+    "click",
+    function () {
+      deletePicArray.forEach((f) => $(f).remove());
+      deletePicArray = [];
+      $(".manage-posts .modal_formanagePost").fadeOut();
+    }
+  );
+}
+
+function enableModal(obj) {
+  const modal = $(".manage-posts .modal_formanagePost");
+  const { top, left } = $(obj).offset();
+  const numberOfPictures = deletePicArray.length;
+  const windowWidth = $(window).width();
+
+  modal.css({
+    left: windowWidth / 3,
+    top: top - 90,
+  });
+
+  modal
+    .find(".btn_container .textss")
+    .text(
+      `Choose ${numberOfPictures} picture${numberOfPictures > 1 ? "s" : ""}`
+    );
+  modal.fadeIn();
+}
+
+function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
+  const { imageContainer, id } = getRowElements(button);
+  id.css({
+    "background-color": opacity ? "#60a5fa" : "",
+    color: opacity ? "white" : "",
+  });
+  imageContainer.find(".closeBtn").css("opacity", opacity);
+  imageContainer.find(".addPic").css("opacity", opacity);
+
+  button.removeClass(prevClass).addClass(newClass).html(innerText);
+}
+
+function editContentTitle(button) {
+  const { content, title } = getRowElements(button);
+  content.html(
+    `<textarea style="width:100% ; height:${content.height()}px">${content.text()}</textarea>`
+  );
+  title.html(
+    `<textarea style="width:100% ; height:${title.height()}px">${title.text()}</textarea>`
+  );
+}
+
+function saveContentTitle(button) {
+  const { content, title } = getRowElements(button);
+  const innerContent = content.children().val();
+  const innerTitle = title.children().val();
+
+  content.text(innerContent);
+  title.text(innerTitle);
+}
+
+function generateJsonForEdit(button) {
+  const { title, content, dateTime, imageContainer } = getRowElements(button);
+  const contentId = dateTime.find("div").text().trim();
+  const userName = $(
+    ".header-ỉntranet nav.navbar div.offcanvas ul.navbar-nav a.nav-link > span.ps-2"
+  ).text();
+  console.log(userName);
+  const images = imageContainer
+    .find("img")
+    .map((i, img) => $(img).attr("src"))
+    .get();
+
+  return {
+    id_content: contentId,
+    title: title.text(),
+    content: content.html(),
+    image: images,
+    poster: userName,
+  };
+}
+
+function resetCloseBtnStyles(btn) {
+  btn.removeAttr("style").attr("opacity", 1);
+}
+
+function highlightCloseBtn(btn) {
+  btn.css({ "background-color": "#007bff", padding: "10px" });
+}
+
+function extracDate(value) {
+  // Chuỗi ngày giờ
+  const dateStr = value.trim();
+
+  // Chuyển chuỗi thành đối tượng Date
+  const dateObj = new Date(dateStr);
+
+  // Lấy các phần của ngày giờ
+  const day = dateObj.getDate(); // Ngày
+  const month = dateObj.getMonth() + 1; // Tháng (bắt đầu từ 0, nên cộng thêm 1)
+  const year = dateObj.getFullYear(); // Năm
+  const hours = dateObj.getHours(); // Giờ
+  const minutes = dateObj.getMinutes(); // Phút
+  const seconds = dateObj.getSeconds(); // Giây
+
+  // Định dạng lại thành chuỗi ngày, tháng, năm, giờ, phút, giây
+  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  console.log(formattedDate); // Ví dụ: "19/11/2024 16:19:16"
+}
+// ------------------------------------------------------
+
 // ---------------------------------------------------
 // viewspage picture
 let slideIndex1 = 1;
@@ -307,8 +508,6 @@ function showSlides1(n) {
   let i;
   let slides = document.getElementsByClassName("mySlides");
   let dots = document.getElementsByClassName("dot");
-  console.log(slides);
-  console.log(dots);
   if (n > slides.length) {
     slideIndex1 = 1;
   }

@@ -3,7 +3,7 @@ import morgan from "morgan";
 import { dirname } from "path";
 import path from "path";
 import { fileURLToPath } from "url";
-import handlebars, { create } from "express-handlebars";
+import handlebars from "express-handlebars";
 import route from "./routes/index.js";
 import createError from "http-errors";
 import session from "express-session";

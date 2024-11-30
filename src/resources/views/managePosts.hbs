@@ -1,29 +1,80 @@
 <div class="manage-posts container-fluid">
+  <div style="display: flex; justify-content:space-between" class="mb-2">
     <h5>Manage Posts</h5>
-    <table class="table datatable">
+    <div>
+      <button class="refesh_manage btn btn-warning">Refresh</button>
+      <button class="update_manage btn btn-success mx-3">Update</button>
+    </div>
+  </div>
+
+  <table class="table datatable" style="border: 1px solid black; width: 100%;">
         <thead>
             <tr>
                 <th class="id">ID <i class="fa-solid fa-sort"></i></th>
                 <th class="title">Title</th>
                 <th class="content">Content</th>
+        <th class="image_container" style="overflow-y: hidden;">Image</th>
                 <th class="date-time">Date/Time <i class="fa-solid fa-sort"></i></th>
                 <th class="status">Status</th>
                 <th class="select">Select</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
+
+      {{#each result}}
             <tr>
-                <td>1</td>
-                <td class="title">STANDARD FACTORY B - ANNUAL ORGANIZATION FOR FIREFIGHTING & EVACUATION DRILL</td>
-                <td class="content">At 15:00 on this Friday, 15th Nov 2024, TTC will be coordinated with Fire Department of Tan Thuan Export Processing Zone (EPZ) TTC will be coordinated with Fire Department of Tan Thuan Export Processing Zone (EPZ) TTC will be coordinated with Fire Department of Tan Thuan Export Processing Zone (EPZ) ted with Fire Department of Tan Thuan Export Processing Zone (EPZ) TTC will be coordinated with Fire Department of Tan Thuan Export Processing Zone (EPZ) ted with Fire Department of Tan Thuan Export Processing Zone (EPZ) TTC will be coordinated with Fire Department of Tan Thuan Export Processing Zone (EPZ) </td>
-                <td>2005/02/11 13:59:20</td>
+          <td class="newId">{{addindex @index}}</td>
+          <td class="title">{{this.title}}</td>
+          <td class="content">{{this.content}}</td>
+          <td class="image_container">
+            {{#each this.content_images}}
+              <div class="container-{{addindex @this.index}}">
+                <i class="fa-solid fa-x closeBtn" style="opacity: 0"></i>
+                <input
+                  id="stateCheck-{{addindex @this.index}}"
+                  type="checkbox"
+                  style="display: none"
+                />
+                <img src={{this}} alt="" />
+              </div>
+            {{/each}}
+            <i
+              class="addPic fa-solid fa-plus border border-2 fs-5 border-primary"
+              style="opacity: 0;"
+            ></i>
+          </td>
+          <td class="date_time">{{this.date_time}}
+            <div style="display:none">
+              {{this.id_content}}
+            </div>
+          </td>
                 <td>Active</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm">Edit</button>
+          <td class="btn_container_table">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm editBtn"
+            >Edit</button>
                     <button type="button" class="btn btn-secondary btn-sm">Hide</button>
                     <button type="button" class="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
+      {{/each}}
         </tbody>
     </table>
+
+  <div class="modal_formanagePost" style="display: none;">
+    <h2 class="title_for_managePost">Do you want to proceed to delete this
+      picture ?</h2>
+    <div class="btn_container">
+      <div class="textss">
+        <p></p>
+      </div>
+      <div>
+        <button class="yesBtn_for_managePost btn btn-primary">Proceed</button>
+        <button
+          class="cancelBtn_for_managePost btn btn-danger ms-2"
+        >Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>

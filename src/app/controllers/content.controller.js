@@ -1,5 +1,4 @@
 import { getContentByID, addContent } from "../models/Contents.model.js";
-import path from "path";
 import { simPliFizeString, getDate } from "../../config/middleware/assets.js";
 import { getfileinDir } from "../../config/middleware/filsystem.js";
 
