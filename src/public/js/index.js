@@ -144,7 +144,6 @@ $(".activities-body .navbtn-right").on("click", function () {
 //   });
 // }
 
-
 $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
   console.log(e);
@@ -163,7 +162,10 @@ $(".create-content-intranet .fourth-row input").on("change", function (e) {
 
 var Imgsarray = [];
 function handleChoosePicture(event) {
-  $($(".create-content-intranet .fourth-row input").next()).css("display", "flex");
+  $($(".create-content-intranet .fourth-row input").next()).css(
+    "display",
+    "flex"
+  );
   Imgsarray = [];
   const files = event.target.files;
   console.log(files);
@@ -200,8 +202,9 @@ $('.activities-body .last-row input[type="button"]').on("click", function (e) {
       );
       $(".modal-news .modal-body .col-4 .button.row").after(`
         <div class="row-thumbnail">
-        <div class="column-${index}"><img src="" onclick="currentSlide(${index + 1
-        })" id="thumbnail-pictured-${index}"/></div>
+        <div class="column-${index}"><img src="" onclick="currentSlide(${
+        index + 1
+      })" id="thumbnail-pictured-${index}"/></div>
         </div>`);
     } else if (index >= 1 && index <= 5) {
       $(
@@ -210,7 +213,8 @@ $('.activities-body .last-row input[type="button"]').on("click", function (e) {
         `<img src="" class="first-imgs" id="modal-added-picture-${index}" />`
       );
       $(`.modal-news .modal-body .col-4 .column-${index - 1}`).after(
-        `<div class="column-${index}"><img src="" onclick="currentSlide(${index + 1
+        `<div class="column-${index}"><img src="" onclick="currentSlide(${
+          index + 1
         })" id="thumbnail-pictured-${index}"/></div>`
       );
     }
@@ -426,13 +430,13 @@ $(".manage-posts > div > div > .update_manage").on("click", function () {
   fetch("manage/update", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json", // Đảm bảo gửi dữ liệu dạng JSON
+      "Content-Type": "application/json",
     },
     body: dataJson,
   })
-    .then((response) => response.text()) // Xử lý phản hồi (nếu có)
-    .then((data) => console.log(data)) // In kết quả trả về từ server
-    .catch((error) => console.error("Error:", error)); // Xử lý lỗi
+    .then((response) => response.text())
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
 });
 function pushOrUpdate(array, newObj) {
   const index = array.findIndex((item) => item.id === newObj.id);
@@ -534,24 +538,17 @@ function highlightCloseBtn(btn) {
 }
 
 function extracDate(value) {
-  // Chuỗi ngày giờ
   const dateStr = value.trim();
-
-  // Chuyển chuỗi thành đối tượng Date
   const dateObj = new Date(dateStr);
-
-  // Lấy các phần của ngày giờ
-  const day = dateObj.getDate(); // Ngày
-  const month = dateObj.getMonth() + 1; // Tháng (bắt đầu từ 0, nên cộng thêm 1)
-  const year = dateObj.getFullYear(); // Năm
-  const hours = dateObj.getHours(); // Giờ
-  const minutes = dateObj.getMinutes(); // Phút
-  const seconds = dateObj.getSeconds(); // Giây
-
-  // Định dạng lại thành chuỗi ngày, tháng, năm, giờ, phút, giây
+  const day = dateObj.getDate();
+  const month = dateObj.getMonth() + 1;
+  const year = dateObj.getFullYear();
+  const hours = dateObj.getHours();
+  const minutes = dateObj.getMinutes();
+  const seconds = dateObj.getSeconds();
   const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-  console.log(formattedDate); // Ví dụ: "19/11/2024 16:19:16"
+  console.log(formattedDate);
 }
 // ------------------------------------------------------
 
