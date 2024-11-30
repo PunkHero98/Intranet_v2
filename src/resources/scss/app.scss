@@ -1,11 +1,6 @@
-/*root*/
-:root {
-  --intranet-color-main: #050c9c;
-  --intranet-color-sub1: #3572ef;
-  --intranet-color-sub2: #3abef9;
-  --intranet-color-sub3: #a7e6ff;
-}
+@import "variables";
 
+<<<<<<< HEAD
 /* Laptop L - 1440px ----------------------------------------------------------------------------------------------------- */
 body {
   font-family: Roboto, "Segoe UI", sans-serif;
@@ -1827,3 +1822,9 @@ body {
   display: flex;
   justify-content: space-between;
 }
+=======
+@import "mobileM";
+@import "mobileL";
+@import "tablet";
+@import "desktop";
+>>>>>>> 2c1e0a602d000ca9f97e46a3627f38a60410560c

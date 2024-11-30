@@ -1,42 +1,28 @@
-<div class="create-content-intranet container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <form
-        action="add-news-activities"
-        method="post"
-        enctype="multipart/form-data"
-      >
+<!-- create-content-intranet -->
+<div class="create-content-intranet">
+  <div class="content-container m-0 p-0">
+    <div class="create-content-box">
+      <form action="content/add" method="POST" enctype="multipart/form-data" id="uploadform">
         <div class="first-row">
-          <label for="title-input">Title</label>
-          <input
-            type="text"
-            name="title"
-            id="title-input"
-            placeholder="Enter your content title.."
-          />
+          <label class="fw-bold" for="title-input">Title</label>
+          <input class="input-box border-0" type="text" name="title" id="title-input"
+            placeholder="Enter your content title.." />
         </div>
+
         <div class="third-row">
-          <label for="content-area">Content</label>
-          <textarea
-            name="text-content"
-            id="content-area"
-            placeholder="Write something.."
-          ></textarea>
+          <label class="fw-bold" for="content-area">Content</label>
+          <textarea class="input-box border-0" name="text_content" id="content-area"
+            placeholder="Write something.."></textarea>
         </div>
+
         <div class="fourth-row">
-          <label>Upload Pictures</label>
-          <!-- <button>Clear</button> -->
-          <label for="Upload">Choose</label>
-          <input
-            type="file"
-            accept="image/jpeg , image/png , image/jpg"
-            id="Upload"
-            name="Imgfiles"
-            hidden
-            multiple
-          />
+          <label class="fw-bold">Upload Pictures</label>
+          <label class="fw-bold bg-dark-subtle" for="Upload"><i class="fa-regular fa-folder-open"></i> Choose</label>
+          <label class="fw-bold bg-dark-subtle"><i class="fa-solid fa-delete-left"></i> Clear</label>
+          <input type="file" accept="image/jpeg , image/png , image/jpg" id="Upload" name="Imgfiles" hidden multiple />
           <div class="img-container"></div>
         </div>
+<<<<<<< HEAD
         <div class="last-row">
           <button>Clear</button>
           <input
@@ -46,6 +32,12 @@
             value="Review"
           />
           <input type="submit" value="Submit" id="submit-btn" />
+=======
+
+        <div class="last-row text-center">
+          <input class="fw-bold" data-bs-toggle="modal" data-bs-target="#modal-news" type="button" value="Review" />
+          <input class="fw-bold text-white" type="submit" value="Submit" id="submit-btn" />
+>>>>>>> 2c1e0a602d000ca9f97e46a3627f38a60410560c
         </div>
       </form>
     </div>

@@ -1,68 +1,49 @@
-
 <!-- homepage intranet -->
 <div class="homepage-intranet">
-  <div class="welcome-homepage container-fluid">
+  <div class="welcome-homepage container-fluid text-center">
     <div class="row">
-      <!-- welcome user -->
       <div class="col-12">
-        <h2 class="text-light">Welcome,{{fullname}}!</h2>
-        <button class="btn m-2 text-light fw-bold" type="button">Teams</button>
-        <button
-          class="btn m-2 text-light fw-bold"
-          id="TicketSystem"
-          type="button"
-        >
-          Ticket System
-        </button>
-        <button class="btn m-2 text-light fw-bold" type="button">
-          Time Sheets
-        </button>
-        <button class="btn m-2 text-light fw-bold" type="button">
-          Time Sheets
-        </button>
-        <button class="btn m-2 text-light fw-bold" type="button">
-          Time Sheets
-        </button>
-        <button class="btn m-2 text-light fw-bold" type="button">
-          Time Sheets
-        </button>
+        <!-- welcome user -->
+        <h2 class="text-black m-0">Welcome, {{fullname}}!</h2>
+
+        <!-- buttons link -->
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Teams</button>
+        <button id="TicketSystem" class="btn m-2 text-light fw-bold border-0" type="button">Ticket System</button>
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Time Sheets</button>
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Time Sheets</button>
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Time Sheets</button>
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Time Sheets</button>
       </div>
     </div>
   </div>
+
   <div class="whats-new-intranet container-fluid">
     <div class="row d-flex">
 
-        {{#each contents}}
+      {{#each contents}}
 
-            <div class="col-xl-6 col-md-6 col-sm-12">
-                <div class="row">
-                <div class="col-3">
-                  <a href="content/{{this.id_content}}" >
-                    <img class="object-fit-cover" src={{this.content_images}} />
-                  </a>
-                </div>
-                <!-- body -->
-                <div class="col-9">
-                    <!-- title -->
-                    <a href="content/{{this.id_content}}" style="text-decoration:none; color:black">
-                      <h5>
-                      {{this.title}}
-                      </h5>
-                    </a>
-                    <!-- content -->
-                    <p>
-                    {{this.content}}
-                    </p>
-                    <i class="text-light-emphasis"
-                    >Posted by:{{this.poster}} | Date and time: {{this.date_time}} | Site: {{this.poster_site}}</i
-                    >
-                </div>
-                </div>
-            </div>
-
-        {{/each}}
-
+      <div class="col-xl-6 col-md-6 col-sm-12">
+        <div class="row content-news">
+          <!-- image content -->
+          <div class="col-3 news-img p-0">
+            <a href="content/{{this.id_content}}">
+              <img class="object-fit-cover" src={{this.content_images}}>
+            </a>
+          </div>
+          <!-- body content -->
+          <div class="col-9 news-content position-relative text-justify">
+            <a href="content/{{this.id_content}}" class="text-black text-decoration-none">
+              <h5 class="m-0">{{this.title}}</h5>
+            </a>
+            <p class="m-0">{{this.content}}</p>
+            <i class="text-light-emphasis position-absolute">Posted: {{this.poster}} | {{this.date_time}} |
+              {{this.poster_site}}</i>
+          </div>
+        </div>
       </div>
+
+      {{/each}}
+
     </div>
   </div>
 </div>

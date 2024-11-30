@@ -1,177 +1,122 @@
+<!-- profile intranet -->
 <div class="container-fluid">
   <section class="section profile">
     <div class="row">
       <div class="col-xl-4 col-md-4 col-sm-12">
-        <div class="card">
-          <div
-            class="card-body profile-card pt-4 d-flex flex-column align-items-center w-100"
-          >
-            <img
-              src="imgs/user/HUỲNH THỊ MỘNG THƯỜNG.png"
-              alt="Profile"
-              class="rounded-circle"
-            />
+        <div class="card border-0">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center w-100">
+            <img src="imgs/user/HUỲNH THỊ MỘNG THƯỜNG.png" alt="Profile" class="rounded-circle" />
             <div class="pt-2">
-              <a
-                href="#"
-                class="btn btn-primary btn-sm"
-                title="Upload new profile image"
-              >View</a>
-              <a
-                href="#"
-                class="btn btn-danger btn-sm"
-                title="Remove my profile image"
-              >Change</a>
+              <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image">View</a>
+              <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image">Change</a>
             </div>
-            <h2>{{result.fullname}}</h2>
+            <h2 class="text-center">{{result.fullname}}</h2>
             <h3>{{result.position}}</h3>
           </div>
         </div>
       </div>
+
       <div class="col-xl-8 col-md-8 col-sm-12">
-        <div class="card">
-          <div class="card-body pt-2">
-            <!-- Bordered Tabs -->
+        <div class="card border-0">
+          <div class="card-body pt-2 info-card">
             <ul class="nav nav-tabs nav-tabs-bordered">
               <li class="nav-item">
-                <button
-                  class="nav-link active"
-                  data-bs-toggle="tab"
-                  data-bs-target="#profile-overview"
-                >
+                <button class="nav-link active text-black fw-bold" data-bs-toggle="tab"
+                  data-bs-target="#profile-overview">
                   Overview
                 </button>
               </li>
               <li class="nav-item">
-                <button
-                  class="nav-link"
-                  data-bs-toggle="tab"
-                  data-bs-target="#profile-edit"
-                >
+                <button class="nav-link text-black fw-bold" data-bs-toggle="tab" data-bs-target="#profile-edit">
                   Edit About
                 </button>
-              </li>
-              <li class="update-status">
-                <!-- <em>Last update: 10-8-2024 | 11:34:20 </em> -->
               </li>
             </ul>
 
             <div class="tab-content pt-2">
-              <div
-                class="tab-pane fade show active profile-overview"
-                id="profile-overview"
-              >
-                <h5 class="card-title">About</h5>
-                <p class="fst-italic">
-                  Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
-                </p>
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <h5>About</h5>
+                <p class="fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus.
+                  Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet
+                  perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
 
-                <h5 class="card-title">Profile Details</h5>
+                <h5>Profile Details</h5>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Full Name</div>
-                  <div class="col-lg-9 col-md-8">{{result.fullname}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Full Name</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.fullname}}</div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Department</div>
-                  <div class="col-lg-9 col-md-8">{{result.department}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Department</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.department}}</div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Position</div>
-                  <div class="col-lg-9 col-md-8">{{result.position}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Position</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.position}}</div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Bussiness Address</div>
-                  <div class="col-lg-9 col-md-8">{{result.user_address}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Bussiness Address</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.user_address}}</div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Address</div>
-                  <div
-                    class="col-lg-9 col-md-8"
-                  >{{result.user_working_site}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Address</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.user_working_site}}</div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Office Contact</div>
-                  <div
-                    class="col-lg-9 col-md-8"
-                  >{{result.office_phone_number}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Office Contact</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.office_phone_number}}</div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8">{{result.email}}</div>
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Email</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">{{result.email}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black">Last Updated</div>
+                  <div class="col-lg-9 col-md-8 col-sm-8 col-6">2024-11-26 12:09:55</div>
                 </div>
               </div>
+
               <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                 <form>
                   <div class="row mb-3">
-                    <label for="first-Q" class="mb-3">Some interesting facts
+                    <label for="first-Q" class="mb-3 fw-bold text-black">Some interesting facts
                       about you?</label>
                     <div class="">
-                      <textarea
-                        name="first-Q"
-                        class="form-control"
-                        id="first-Q"
-                      >Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniamest qui dolor. Ut sunt iure rerum quae quisquam autemeveniet perspiciatis odit. Fuga sequi sed ea saepe atunde.</textarea>
+                      <textarea name="first-Q" class="form-control" id="first-Q"></textarea>
                     </div>
                   </div>
+
                   <div class="row mb-3">
-                    <label for="second-Q" class="mb-3">What motivates you to
+                    <label for="second-Q" class="mb-3 fw-bold text-black">What motivates you to
                       come to work every morning or What is the most interesting
                       thing/highlight so far in your role?</label>
                     <div class="">
-                      <textarea
-                        name="second-Q"
-                        class="form-control"
-                        id="second-Q"
-                      >
-                        Sunt est soluta temporibus accusantium neque nam maiores
-                        cumque temporibus. Tempora libero non est unde veniam
-                        est qui dolor. Ut sunt iure rerum quae quisquam autem
-                        eveniet perspiciatis odit. Fuga sequi sed ea saepe at
-                        unde.</textarea>
+                      <textarea name="second-Q" class="form-control" id="second-Q"></textarea>
                     </div>
                   </div>
+
                   <div class="row mb-3">
-                    <label for="third-Q" class="mb-3">What are you hoping to
+                    <label for="third-Q" class="mb-3 fw-bold text-black">What are you hoping to
                       achieve in your regional role in QSL?</label>
                     <div class="">
-                      <textarea
-                        name="third-Q"
-                        class="form-control"
-                        id="third-Q"
-                      >
-                        Sunt est soluta temporibus accusantium neque nam maiores
-                        cumque temporibus. Tempora libero non est unde veniam
-                        est qui dolor. Ut sunt iure rerum quae quisquam autem
-                        eveniet perspiciatis odit. Fuga sequi sed ea saepe at
-                        unde.</textarea>
+                      <textarea name="third-Q" class="form-control" id="third-Q"></textarea>
                     </div>
                   </div>
+
                   <div class="row mb-3">
-                    <label for="fourth-Q" class="mb-3">What are your
+                    <label for="fourth-Q" class="mb-3 fw-bold text-black">What are your
                       outside-of-QSL recent professional/personal achievements?</label>
                     <div class="">
-                      <textarea
-                        name="fourth-Q"
-                        class="form-control"
-                        id="fourth-Q"
-                      >
-                        Sunt est soluta temporibus accusantium neque nam maiores
-                        cumque temporibus. Tempora libero non est unde veniam
-                        est qui dolor. Ut sunt iure rerum quae quisquam autem
-                        eveniet perspiciatis odit. Fuga sequi sed ea saepe at
-                        unde.</textarea>
+                      <textarea name="fourth-Q" class="form-control" id="fourth-Q"></textarea>
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary text-white">
                       Save Changes
                     </button>
                   </div>
                 </form>
-                <!-- End Profile Edit Form -->
               </div>
             </div>
-            <!-- End Bordered Tabs -->
           </div>
         </div>
       </div>
