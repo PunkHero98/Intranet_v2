@@ -1,0 +1,302 @@
+/* Tablet 768px - 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    body {
+        /* Text */
+        font-size: 0.85rem;
+    }
+
+    /* header ---------------------------------------------------------------------------------- */
+    .header-intranet {
+        /* Display & Box Model */
+        height: 3rem;
+    }
+
+    .header-intranet .logo img {
+        /* Display & Box Model */
+        height: 2.3rem;
+    }
+
+    .header-intranet ul.user li.nav-item img {
+        /* Display & Box Model */
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+
+    .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6 {
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+    .header-intranet ul.user ul.dropdown-menu li.dropdown-header span {
+      /* Text */
+      font-size: 0.85rem;
+    }
+
+    .header-intranet ul.user ul.dropdown-menu li a.dropdown-item {
+        /* Text */
+        font-size: 0.85rem;
+    }
+
+    .header-intranet ul.user ul.dropdown-menu li a.dropdown-item i {
+      /* Display & Box Model */
+      margin-right: 0.6rem;
+    }
+
+    /* footer ---------------------------------------------------------------------------------- */
+    .footer-intranet {
+        /* Display & Box Model */
+        height: 1.5rem;
+    }
+
+    /* login ----------------------------------------------------------------------------------- */
+    .login-intranet img {
+        /* Display & Box Model */
+        width: 13rem;
+    }
+
+    .login-intranet .login input {
+      /* Text */
+      font-size: 0.9rem;
+    }
+
+    /* home ------------------------------------------------------------------------------------ */
+    .homepage-intranet {
+        /* Display & Box Model */
+        margin-top: 3rem;
+    }
+
+    .welcome-homepage h2 {
+        /* Text */
+        font-size: 1.5rem;
+    }
+
+    .welcome-homepage button {
+        /* Display & Box Model */
+        width: 7rem;
+        height: 4rem;
+        margin: 0.2rem !important;
+
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+    .whats-new-intranet {
+        /* Display & Box Model */
+        margin-top: 2.5rem;
+    }
+
+    .whats-new-intranet .content-news {
+        /* Display & Box Model */
+        height: 7.5rem;
+        margin: 0.3rem 0;
+    }
+
+    .whats-new-intranet .news-img img {
+        /* Display & Box Model */
+        height: 7.5rem;
+    }
+
+    .whats-new-intranet .news-content h5 {
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+    .whats-new-intranet .news-content p {
+        /* Display & Box Model */
+        -webkit-line-clamp: 3;
+    }
+
+    .whats-new-intranet .news-content i {
+        /* Text */
+        font-size: 0.7rem;
+    }
+
+    /* activities ------------------------------------------------------------------------------ */
+    .activities-header {
+        /* Display & Box Model */
+        margin-top: 3rem;
+    }
+
+    .activities-header .header-img {
+        /* Display & Box Model */
+        height: calc(100vh - 3rem);
+    }
+
+    .activities-header .content {
+        /* Display & Box Model */
+        padding: 2rem 0 0 2rem;
+    }
+
+    .activities-header .content h2 {
+        /* Text */
+        font-size: 4rem;
+    }
+
+    .activities-header .content p {
+        /* Text */
+        font-size: 2rem;
+    }
+
+    .activities-body .title {
+        /* Display & Box Model */
+        padding: 1.5rem 0;
+
+        /* Text */
+        font-size: 3.5rem;
+    }
+
+    /* profile --------------------------------------------------------------------------------- */
+    .profile {
+        /* Display & Box Model */
+        margin: 5rem 0 3rem 0;
+    }
+
+    .profile .profile-card a {
+        /* Text */
+        font-size: 0.7rem;
+    }
+
+    .profile .profile-card h2 {
+        /* Display & Box Model */
+        margin: 1rem 0;
+
+        /* Text */
+        font-size: 1.1rem;
+    }
+
+    .profile .profile-card h3 {
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+    .profile .profile-overview .row {
+        /* Display & Box Model */
+        margin-bottom: 1rem;
+    }
+
+    .profile .profile-overview h5 {
+        /* Display & Box Model */
+        padding: 1rem 0;
+
+        /* Text */
+        font-size: 1.1rem;
+    }
+
+    .profile .profile-edit button {
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+    /* view content ---------------------------------------------------------------------------- */
+    .view-content-intranet {
+        /* Display & Box Model */
+        padding-top: 3rem;
+    }
+
+    .view-content-intranet .col-12 h5 {
+      /* Text */
+      font-size: 1.1rem;
+    }
+    
+
+    .view-content-intranet .mySlides div:last-child {
+        /* Display & Box Model */
+        height: 20rem;
+    }
+
+    .view-content-intranet .content-view .mySlides img {
+        /* Display & Box Model */
+        // max-height: 20rem;
+        height: 20rem;
+    }
+
+    .view-content-intranet .prev,
+    .view-content-intranet .next {
+        /* Positioning */
+        top: 43%;
+
+        /* Display & Box Model */
+        padding: 0.7rem;
+
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+    .view-content-intranet .numbertext {
+        /* Display & Box Model */
+        padding: 0.5rem;
+
+        /* Text */
+        font-size: 0.7rem;
+    }
+
+    .view-content-intranet .dot {
+        /* Display & Box Model */
+        width: 0.4rem;
+        height: 0.4rem;
+    }
+
+    .view-content-intranet .comments-view .col-11 h6 {
+      /* Text */
+      font-size: 1rem;
+    }
+
+    .view-content-intranet .comments-view .col-11 input {
+        /* Text */
+        font-size: 0.9rem;
+    }
+
+      /* create content -------------------------------------------------------------------------- */
+    .create-content-intranet {
+        /* Display & Box Model */
+        padding-top: 4rem;
+    }
+
+    .create-content-intranet .create-content-box form {
+    /* Display & Box Model */
+    padding: 1.5rem;
+    }
+
+    .create-content-intranet .create-content-box .fourth-row label:nth-child(n+2) {
+        /* Display & Box Model */
+        padding: 0.2rem 0.5rem;
+    }
+
+    .create-content-intranet .create-content-box .fourth-row .img-container {
+        /* Display & Box Model */
+        padding: 1rem 0;
+    }
+
+    .create-content-intranet .create-content-box .fourth-row .img-container img {
+        /* Display & Box Model */
+        height: 6rem;
+    }
+
+    .create-content-intranet .create-content-box .last-row input {
+        /* Display & Box Model */
+        width: 6rem;
+        margin: 0.5rem;
+        padding: 0.3rem;
+    }
+    
+    /* manage posts ---------------------------------------------------------------------------- */
+    .manage-posts {
+      /* Display & Box Model */
+      margin-top: 4rem;
+    }
+
+    .manage-posts button {
+      /* Text */
+      font-size: 0.7rem;
+    }
+
+    /* add news button ------------------------------------------------------------------------- */
+    .colorful-border-button {
+      /* Positioning */
+      bottom: 0.6rem;
+      right: -1.5rem;
+      
+      /* Text */
+      font-size: 0.85rem;
+    }    
+}

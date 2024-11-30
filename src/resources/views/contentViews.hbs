@@ -1,110 +1,96 @@
-<div class="view-content-intranet container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <div class="col-12">
-                <div class="slideshow-container">
-                    {{#each result.content_images}}
-                    <div class="mySlides ">
-                        <div class="numbertext"> {{addindex @index}} / {{@root.total}}</div>
-                            <img src={{this}} style="height: 500px; object-fit: cover;">
-                        <div class="text">Caption Text</div>
-                    </div>
-                    {{/each}}
-                    <a class="prev" onclick="plusSlides1(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides1(1)">&#10095;</a>
-
+<!-- view-content-intranet -->
+<div class="view-content-intranet">
+    <div class="row justify-content-center m-0">
+        <div class="col-12 bg-white content-view">
+            <div class="slideshow-container position-relative">
+                {{#each result.content_images}}
+                <div class="mySlides">
+                    <div class="numbertext text-white"> {{addindex @index}} / {{@root.total}}</div>
+                    <div><img src={{this}}></div>
                 </div>
-                <div style="text-align:center; margin-bottom: 2rem;">
-                    {{#each result.content_images}}
-                    <span class="dot" onclick="currentSlide({{addindex @index}})"></span>
-                    {{/each}}
-                </div>
-                
-                <h3>{{result.title}}</h3>
-                <p>
-                    {{result.content}}
-                </p>
-                
-                <ul class="p-0">
-                    <li><a href="#"><i class="fa fa-user"></i>Mong Thuong</a></li>
-                    <li><a href="#"><i class="fa-solid fa-clock"></i>2024-11-09</a></li>
-                    <li><a href="#"><i class="fa-solid fa-eye"></i>100 Views</a></li>
-                    <li><a href="#"><i class="fa-solid fa-heart"></i></i>Lily and 50 others</a></li>
-                    <li><a href="#"><i class="fa-solid fa-comment"></i>03 Comments</a></li>
-                    <li><a href="#"><i class="fa-solid fa-share"></i>02 Shares</a></li>
-                </ul>
+                {{/each}}
+                <a class="prev text-decoration-none text-white fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
+                <a class="next text-decoration-none text-white fw-bold" onclick="plusSlides1(1)">&#10095;</a>
             </div>
-            <div class="col-12 comments-view">
-                <!-- <h5>05 Comments</h5>
-                <hr> -->
-                <div class="row mb-2">
-                    <div class="col-1">
-                        <img src="/imgs/user/user.png" alt=""/>
-                    </div>
-                    <div class="col-11">
-                        <h6>Huy Pham</h6>
-                        <p class="m-0">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                        </p>
-                        <ul class="comments">
-                            <li><a href="#"><i class="fa-solid fa-heart"></i></i>01</a></li>
-                            <li><a href="#"><i class="fa-solid fa-reply"></i>Reply</a></li>
-                            <li><a href="#"><i class="fa-solid fa-clock"></i>2024-11-09 03:09PM</a></li>
-                        </ul>
-                    </div>
+
+            <div class="text-center">
+                {{#each result.content_images}}
+                <span class="dot" onclick="currentSlide({{addindex @index}})"></span>
+                {{/each}}
+            </div>
+
+            <h5>{{result.title}}</h5>
+            <p>
+                {{result.content}}
+            </p>
+
+            <ul class="p-0 list-unstyled m-0">
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa fa-user"></i>Mong
+                        Thuong</a></li>
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa-solid fa-clock"></i>2024-11-09</a></li>
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-eye"></i>100
+                        Views</a></li>
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa-solid fa-heart"></i></i>Lily and 50 others</a></li>
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa-solid fa-comment"></i>03 Comments</a></li>
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-share"></i>02
+                        Shares</a></li>
+            </ul>
+        </div>
+        <hr>
+        <div class="col-12 bg-white comments-view">
+            <h5>05 Comments</h5>
+            <hr>
+            <div class="row mb-3 m-0">
+                <div class="col-1 p-0">
+                    <img src="/imgs/user/user.png" alt="" />
                 </div>
-                <div class="row mb-2 ms-3">
-                    <div class="col-1">
-                        <img src="/imgs/user/HUỲNH THỊ MỘNG THƯỜNG.png" alt=""/>
-                    </div>
-                    <div class="col-11">
-                        <h6>Mong Thuong</h6>
-                        <p class="m-0">
-                            Haha
-                        </p>
-                        <ul class="comments">
-                            <li><a href="#"><i class="fa-solid fa-heart"></i></i>01</a></li>
-                            <li><a href="#"><i class="fa-solid fa-reply"></i>Reply</a></li>
-                            <li><a href="#"><i class="fa-solid fa-clock"></i>2024-11-09 03:19PM</a></li>
-                        </ul>
-                    </div>
+                <div class="col-11">
+                    <h6>Huy Pham</h6>
+                    <p class="m-0">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+                        beatae vitae dicta sunt explicabo.
+                    </p>
+                    <ul class="comments p-0 m-0">
+                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                                    class="fa-solid fa-heart"></i></i>01</a></li>
+                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                                    class="fa-solid fa-reply"></i>Reply</a></li>
+                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                                    class="fa-solid fa-clock"></i>2024-11-09 03:09 PM</a></li>
+                    </ul>
                 </div>
-                <div class="row mb-2">
-                    <div class="col-1">
-                        <img src="/imgs/user/LÂM QUANG HUY.jpg" alt=""/>
-                    </div>
-                    <div class="col-11">
-                        <h6>Huy Lam</h6>
-                        <p class="m-0">
-                            OMG
-                        </p>
-                        <ul class="comments">
-                            <li><a href="#"><i class="fa-solid fa-heart"></i></i>01</a></li>
-                            <li><a href="#"><i class="fa-solid fa-reply"></i>Reply</a></li>
-                            <li><a href="#"><i class="fa-solid fa-clock"></i>2024-11-09 04:09PM</a></li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="row mb-3 ms-3 m-0">
+                <div class="col-1 p-0">
+                    <img src="/imgs/user/HUỲNH THỊ MỘNG THƯỜNG.png" alt="" />
                 </div>
-                <div class="row mb-2">
-                    <div class="col-1">
-                        <img src="/imgs/user/user.png" alt=""/>
-                    </div>
-                    <div class="col-11">
-                        <h6>Kim Hao</h6>
-                        <p class="m-0">
-                            Multiply sea night grass fourth day sea lesser rule open subdue female fill which them Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                        </p>
-                        <ul class="comments">
-                            <li><a href="#"><i class="fa-solid fa-heart"></i></i>01</a></li>
-                            <li><a href="#"><i class="fa-solid fa-reply"></i>Reply</a></li>
-                            <li><a href="#"><i class="fa-solid fa-clock"></i>2024-11-09 04:19PM</a></li>
-                        </ul>
-                    </div>
+                <div class="col-11">
+                    <h6>Mong Thuong</h6>
+                    <p class="m-0">
+                        Haha
+                    </p>
+                    <ul class="comments p-0 m-0">
+                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                                    class="fa-solid fa-heart"></i></i>01</a></li>
+                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                                    class="fa-solid fa-reply"></i>Reply</a></li>
+                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                                    class="fa-solid fa-clock"></i>2024-11-09 03:19 PM</a></li>
+                    </ul>
                 </div>
-                <div class="row mb-2">
-                    <h6>Your Comment</h6>
+            </div>
+            <div class="row mb-3 m-0">
+                <div class="col-1 p-0">
+                    <img src="/imgs/user/user.png" alt="" />
+                </div>
+                <div class="col-11">
+                    <h6>Huy Pham</h6>
                     <textarea name="" id=""></textarea>
-                    <input class="btn btn-primary btn-sm" id="submitbtn" type="submit" value="Submit" />
+                    <input class="btn btn-primary btn-sm" id="submitbtn" type="submit" value="Send" />
                 </div>
             </div>
         </div>

@@ -108,7 +108,43 @@ $(".activities-body .navbtn-right").on("click", function () {
 // -----------------------------------------------------
 
 // ---------------Choose Picture function---------------
-$(".activities-body .fourth-row input").on("change", function (e) {
+// $(".activities-body .fourth-row input").on("change", function (e) {
+//   handleChoosePicture(e);
+//   console.log(e);
+//   Imgsarray.forEach((f, index) => {
+//     console.log(f);
+//     if (index === 0) {
+//       $($(this).next()).html(`<img src="" id="added-picture-${index}" />`);
+//     } else if (index >= 1 && index <= 5) {
+//       $($($(this).next()).children(`#added-picture-${index - 1}`)).after(
+//         `<img src="" id="added-picture-${index}" />`
+//       );
+//     }
+//     $($($(this).next()).children()[index]).attr("src", URL.createObjectURL(f));
+//   });
+// });
+
+// var Imgsarray = [];
+// function handleChoosePicture(event) {
+//   $($(".activities-body .fourth-row input").next()).css("display", "flex");
+//   Imgsarray = [];
+//   const files = event.target.files;
+//   console.log(files);
+//   const filesArray = Array.prototype.slice.call(files);
+//   filesArray.forEach((f, index) => {
+//     if (!f.type.match("image.*")) {
+//       return alert("image only");
+//     }
+//     // $($(".activities-body .fourth-row  input").next()).css(
+//     //   "display",
+//     //   "block"
+//     // );
+//     Imgsarray.push(f);
+//   });
+// }
+
+
+$(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
   console.log(e);
   Imgsarray.forEach((f, index) => {
@@ -126,7 +162,7 @@ $(".activities-body .fourth-row input").on("change", function (e) {
 
 var Imgsarray = [];
 function handleChoosePicture(event) {
-  $($(".activities-body .fourth-row input").next()).css("display", "flex");
+  $($(".create-content-intranet .fourth-row input").next()).css("display", "flex");
   Imgsarray = [];
   const files = event.target.files;
   console.log(files);
@@ -167,9 +203,8 @@ $('.activities-body .last-row input[type="button"]').on("click", function (e) {
       );
       $(".modal-news .modal-body .col-4 .button.row").after(`
         <div class="row-thumbnail">
-        <div class="column-${index}"><img src="" onclick="currentSlide(${
-        index + 1
-      })" id="thumbnail-pictured-${index}"/></div>
+        <div class="column-${index}"><img src="" onclick="currentSlide(${index + 1
+        })" id="thumbnail-pictured-${index}"/></div>
         </div>`);
     } else if (index >= 1 && index <= 5) {
       $(
@@ -178,8 +213,7 @@ $('.activities-body .last-row input[type="button"]').on("click", function (e) {
         `<img src="" class="first-imgs" id="modal-added-picture-${index}" />`
       );
       $(`.modal-news .modal-body .col-4 .column-${index - 1}`).after(
-        `<div class="column-${index}"><img src="" onclick="currentSlide(${
-          index + 1
+        `<div class="column-${index}"><img src="" onclick="currentSlide(${index + 1
         })" id="thumbnail-pictured-${index}"/></div>`
       );
     }
@@ -245,12 +279,43 @@ function showSlides(n) {
 // ----------------------------------------------------
 
 // submit function
-$(".activities-body .create-content-box  #uploadform").on(
+// $(".activities-body .create-content-box  #uploadform").on(
+//   "submit",
+//   async function (event) {
+//     event.preventDefault();
+//     const title = $(".activities-body .first-row input").val();
+//     const textcontent = $(".activities-body .third-row textarea").val();
+
+//     if (Imgsarray.length === 0) {
+//       alert("Please Chose at least 1 picture");
+//       return;
+//     }
+//     const formData = new FormData();
+//     formData.append("title", title);
+//     formData.append("textcontent", textcontent);
+//     for (let i = 0; i < Imgsarray.length; i++) {
+//       formData.append("Imgfiles", Imgsarray[i]);
+//     }
+//     fetch("content/add", {
+//       method: "POST",
+//       body: formData,
+//     }).then((respone) => {
+//       if (!respone.ok) {
+//         throw new Error("error");
+//       } else {
+//         console.log(respone.text());
+//         window.location.href = "/homepage";
+//       }
+//     });
+//   }
+// );
+
+$(".create-content-intranet .create-content-box #uploadform").on(
   "submit",
   async function (event) {
     event.preventDefault();
-    const title = $(".activities-body .first-row input").val();
-    const textcontent = $(".activities-body .third-row textarea").val();
+    const title = $(".create-content-intranet .first-row input").val();
+    const textcontent = $(".create-content-intranet .third-row textarea").val();
 
     if (Imgsarray.length === 0) {
       alert("Please Chose at least 1 picture");
@@ -262,7 +327,8 @@ $(".activities-body .create-content-box  #uploadform").on(
     for (let i = 0; i < Imgsarray.length; i++) {
       formData.append("Imgfiles", Imgsarray[i]);
     }
-    fetch("content/add", {
+    console.log(formData);
+    fetch("http://localhost:3000/content/add", {
       method: "POST",
       body: formData,
     }).then((respone) => {
