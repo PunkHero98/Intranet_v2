@@ -107,6 +107,9 @@
     }
 
     .whats-new-intranet .news-content i {
+        /* Display & Box Model */
+        -webkit-line-clamp: 1;
+
         /* Text */
         font-size: 0.7rem;
     }
