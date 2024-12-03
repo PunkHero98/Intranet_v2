@@ -32,24 +32,35 @@
           <td class="content">{{this.content}}</td>
           <td class="image_container">
 
-            {{#each this.content_images}}
-              <div class="img-box container-{{addindex @this.index}}">
-                <img src={{this}} alt="" />
-                <button
-                  type="button"
-                  class="btn btn-outline-danger closeBtn rounded-0 m-0"
-                  style="opacity: 0"
-                >
-                  <i class="fa-solid fa-x text-white"></i>
-                </button>
+            {{#if this.content_images}}
+              {{#each this.content_images}}
+                <div class="img-box container-{{addindex @this.index}}">
+                  <img src={{this}} alt="" />
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                    style="opacity: 0"
+                  >
+                    <i class="fa-solid fa-x text-white"></i>
+                  </button>
 
+                  <input
+                    id="stateCheck-0"
+                    type="checkbox"
+                    style="display: none"
+                  />
+                </div>
+              {{/each}}
+            {{else}}
+              <div class="container-0">
                 <input
                   id="stateCheck-0"
                   type="checkbox"
                   style="display: none"
                 />
+                <img src='alt=""' />
               </div>
-            {{/each}}
+            {{/if}}
 
             <button type="button" class="btn btn-outline-success addPic"><i
                 class="fa-solid fa-plus"
