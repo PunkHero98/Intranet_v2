@@ -1185,7 +1185,8 @@ img:last-child {
 .manage-posts .image_container .addPic {
   padding: 0.5rem;
   width: 100%;
-  margin-top: 1rem; }
+  margin-top: 1rem;
+  display: none; }
 
 .manage-posts .date-time {
   /* Display & Box Model */

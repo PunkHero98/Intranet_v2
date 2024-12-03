@@ -45,7 +45,7 @@
                   </button>
 
                   <input
-                    id="stateCheck-0"
+                    id="stateCheck-{{addindex @this.index}}"
                     type="checkbox"
                     style="display: none"
                   />
@@ -66,6 +66,13 @@
                 class="fa-solid fa-plus"
               ></i>
               Add more pictures</button>
+            <input
+              accept="image/jpeg , image/png , image/jpg"
+              style="display: none;"
+              type="file"
+              class="fileListForManage input-{{addindex @index}}"
+              multiple
+            />
           </td>
           <td class="date_time">{{this.date_time}}
             <div style="display:none">
