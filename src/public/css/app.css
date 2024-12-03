@@ -1075,7 +1075,10 @@ body {
   border-radius: 5px;
   padding: 0.5rem; }
 
-.create-content-intranet .create-content-box .fourth-row label:nth-child(n+2) {
+.create-content-intranet
+.create-content-box
+.fourth-row
+label:nth-child(n + 2) {
   /* Display & Box Model */
   margin-left: 0.5rem;
   padding: 0.2rem 0.5rem;
@@ -1095,7 +1098,11 @@ body {
   /* Other */
   object-fit: cover; }
 
-.create-content-intranet .create-content-box .fourth-row .img-container img:last-child {
+.create-content-intranet
+.create-content-box
+.fourth-row
+.img-container
+img:last-child {
   /* Display & Box Model */
   margin-right: 0; }
 
@@ -1192,3 +1199,93 @@ body {
     background-color: violet; }
   100% {
     background-color: red; } }
+
+.manage-posts {
+  margin-top: 5rem;
+  position: relative; }
+
+.manage-posts .title {
+  width: 20%;
+  text-align: justify; }
+
+.manage-posts .content {
+  width: 35%;
+  text-align: justify; }
+
+.manage-posts .image_container {
+  width: 15%;
+  position: relative; }
+
+.manage-posts .image_container img {
+  width: 100%; }
+
+.manage-posts .date-time {
+  width: 15%; }
+
+.manage-posts .select {
+  width: 5%; }
+
+.manage-posts button {
+  margin: 0.1rem 0; }
+
+.manage-posts .container {
+  margin: 0.5rem 0; }
+
+.manage-posts .image_container .closeBtn {
+  position: absolute;
+  color: white;
+  right: 30px;
+  margin-top: 5px;
+  cursor: pointer; }
+
+.manage-posts .image_container .closeBtn:hover {
+  background-color: gray;
+  padding: 10px;
+  transition: 0.2s ease-in; }
+
+.manage-posts .table-group-divider .addPic {
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 100%;
+  background-color: white;
+  color: #007bff; }
+
+.manage-posts .table-group-divider .addPic:hover {
+  color: white;
+  background-color: #007bff; }
+
+.manage-posts .modal_formanagePost {
+  position: absolute;
+  z-index: 10;
+  width: 500px;
+  background-color: white;
+  color: black;
+  font-size: 2rem;
+  padding: 20px;
+  border: 2px solid blue;
+  border-radius: 20px; }
+
+.manage-posts .modal_formanagePost > div {
+  font-size: 0.8rem; }
+
+.manage-posts .modal_formanagePost .btn_container {
+  display: flex;
+  justify-content: space-between; }
+
+.loader {
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  left: 50%; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }

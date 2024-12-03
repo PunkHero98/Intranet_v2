@@ -28,17 +28,28 @@
           <td class="title">{{this.title}}</td>
           <td class="content">{{this.content}}</td>
           <td class="image_container">
-            {{#each this.content_images}}
-              <div class="container-{{addindex @this.index}}">
-                <i class="fa-solid fa-x closeBtn" style="opacity: 0"></i>
+            {{#if this.content_images}}
+              {{#each this.content_images}}
+                <div class="container-{{addindex @this.index}}">
+                  <i class="fa-solid fa-x closeBtn" style="opacity: 0"></i>
+                  <input
+                    id="stateCheck-{{addindex @this.index}}"
+                    type="checkbox"
+                    style="display: none"
+                  />
+                  <img src={{this}} alt="" />
+                </div>
+              {{/each}}
+            {{else}}
+              <div class="container-0">
                 <input
-                  id="stateCheck-{{addindex @this.index}}"
+                  id="stateCheck-0"
                   type="checkbox"
                   style="display: none"
                 />
-                <img src={{this}} alt="" />
+                <img src='alt=""' />
               </div>
-            {{/each}}
+            {{/if}}
             <i
               class="addPic fa-solid fa-plus border border-2 fs-5 border-primary"
               style="opacity: 0;"

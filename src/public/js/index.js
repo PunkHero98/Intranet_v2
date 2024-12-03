@@ -66,129 +66,50 @@ $(".welcome-homepage .col-12 #team").on("click", function () {
 
 // -----------------------------------------------------
 
-// ------------Block function for Activities Page---------------------
-
-$(".activities-body .navbtn .navbtn-left").on("click", function () {
-  const checkDeg = window.getComputedStyle(this, "::before").transform;
-  if (
-    checkDeg == "matrix(-0.707107, 0.707107, -0.707107, -0.707107, -2.82843, 0)"
-  ) {
-    $(this).css("--arrowAnimation", "rotate(224deg) translate(2px , 2px)");
-  } else {
-    $(this).css("--arrowAnimation", "rotate(135deg) translate(2px , 2px)");
-  }
-});
-
-$(".activities-body .navbtn-right").on("click", function () {
-  const checkDeg = window.getComputedStyle(this, "::before").transform;
-  const checkDeg1 = window.getComputedStyle(this, "::after").transform;
-  if (checkDeg == "matrix(1, 0, 0, 1, 2, 2)") {
-    $(this).css("--beforeanimation", "rotate(180deg) translate(-8px , -8px)");
-    $(this).css("--afteranimation", "rotate(180deg) translate(4px , 4px)");
-    setTimeout(() => {
-      $(this).css("--minus", "none");
-    }, 100);
-  }
-  if (
-    checkDeg == "matrix(-1, 0, 0, -1, 8, 8)" &&
-    checkDeg1 == "matrix(-1, 0, 0, -1, -4, -4)"
-  ) {
-    $(this).css("--beforeanimation", "rotate(360deg) translate(2px , 2px)");
-    $(this).css("--afteranimation", "rotate(360deg) translate(2px , 2px)");
-
-    $(this).css("--minus", "2px solid #fff");
-  }
-  const xx = $(".create-content-box");
-  if (xx.css("display") === "none") {
-    xx.css("display", "block");
-  } else {
-    xx.css("display", "none");
-  }
-  // matrix(1, 0, 0, 1, 2, 2)
-});
-// -----------------------------------------------------
-
 // ---------------Choose Picture function---------------
-// $(".activities-body .fourth-row input").on("change", function (e) {
-//   handleChoosePicture(e);
-//   console.log(e);
-//   Imgsarray.forEach((f, index) => {
-//     console.log(f);
-//     if (index === 0) {
-//       $($(this).next()).html(`<img src="" id="added-picture-${index}" />`);
-//     } else if (index >= 1 && index <= 5) {
-//       $($($(this).next()).children(`#added-picture-${index - 1}`)).after(
-//         `<img src="" id="added-picture-${index}" />`
-//       );
-//     }
-//     $($($(this).next()).children()[index]).attr("src", URL.createObjectURL(f));
-//   });
-// });
 
-// var Imgsarray = [];
-// function handleChoosePicture(event) {
-//   $($(".activities-body .fourth-row input").next()).css("display", "flex");
-//   Imgsarray = [];
-//   const files = event.target.files;
-//   console.log(files);
-//   const filesArray = Array.prototype.slice.call(files);
-//   filesArray.forEach((f, index) => {
-//     if (!f.type.match("image.*")) {
-//       return alert("image only");
-//     }
-//     // $($(".activities-body .fourth-row  input").next()).css(
-//     //   "display",
-//     //   "block"
-//     // );
-//     Imgsarray.push(f);
-//   });
-// }
+var Imgsarray = [];
 
 $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
-  console.log(e);
-  Imgsarray.forEach((f, index) => {
-    console.log(f);
-    if (index === 0) {
-      $($(this).next()).html(`<img src="" id="added-picture-${index}" />`);
-    } else if (index >= 1 && index <= 5) {
-      $($($(this).next()).children(`#added-picture-${index - 1}`)).after(
-        `<img src="" id="added-picture-${index}" />`
-      );
-    }
-    $($($(this).next()).children()[index]).attr("src", URL.createObjectURL(f));
+  const imgElements = Imgsarray.map((f, index) => {
+    const imgElement = `<img src="${URL.createObjectURL(
+      f
+    )}" id="added-picture-${index}" />`;
+    return imgElement;
   });
+  const imgContainer = $($(this).next());
+  imgContainer.empty();
+  imgContainer.append(imgElements.join(""));
 });
 
-var Imgsarray = [];
 function handleChoosePicture(event) {
   $($(".create-content-intranet .fourth-row input").next()).css(
     "display",
     "flex"
   );
   Imgsarray = [];
+
   const files = event.target.files;
   console.log(files);
   const filesArray = Array.prototype.slice.call(files);
-  filesArray.forEach((f, index) => {
+  filesArray.forEach((f) => {
     if (!f.type.match("image.*")) {
-      return alert("image only");
+      alert("Image only");
+      return;
     }
     Imgsarray.push(f);
   });
 }
-// ----------------------------------------------------
-
-// clear picture function
-$(".activities-body .last-row  button").on("click", function (e) {
+$(".create-content-intranet .fourth-row label").on("click", function () {
   Imgsarray = [];
-  $(".activities-body .fourth-row  .img-container").html("");
-  $(".modal-news .modal-body .col-4").html("");
-  $(".activities-body .fourth-row  .img-container").css("display", "none");
+  $(".create-content-intranet .fourth-row .img-container")
+    .empty()
+    .css("display", "none");
   const fileInput = document.getElementById("Upload");
   fileInput.value = "";
-  e.preventDefault();
 });
+
 // ----------------------------------------------------
 
 // review function
@@ -279,79 +200,44 @@ function showSlides(n) {
 // ----------------------------------------------------
 
 // submit function
-// $(".activities-body .create-content-box  #uploadform").on(
-//   "submit",
-//   async function (event) {
-//     event.preventDefault();
-//     const title = $(".activities-body .first-row input").val();
-//     const textcontent = $(".activities-body .third-row textarea").val();
-
-//     if (Imgsarray.length === 0) {
-//       alert("Please Chose at least 1 picture");
-//       return;
-//     }
-//     const formData = new FormData();
-//     formData.append("title", title);
-//     formData.append("textcontent", textcontent);
-//     for (let i = 0; i < Imgsarray.length; i++) {
-//       formData.append("Imgfiles", Imgsarray[i]);
-//     }
-//     fetch("content/add", {
-//       method: "POST",
-//       body: formData,
-//     }).then((respone) => {
-//       if (!respone.ok) {
-//         throw new Error("error");
-//       } else {
-//         console.log(respone.text());
-//         window.location.href = "/homepage";
-//       }
-//     });
-//   }
-// );
 
 $(".create-content-intranet .create-content-box #uploadform").on(
   "submit",
   async function (event) {
     event.preventDefault();
+
     const title = $(".create-content-intranet .first-row input").val();
     const textcontent = $(".create-content-intranet .third-row textarea").val();
-
     if (Imgsarray.length === 0) {
-      alert("Please Chose at least 1 picture");
+      alert("Please choose at least 1 picture");
       return;
     }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("textcontent", textcontent);
-    for (let i = 0; i < Imgsarray.length; i++) {
-      formData.append("Imgfiles", Imgsarray[i]);
-    }
-    console.log(formData);
-    fetch("http://localhost:3000/content/add", {
-      method: "POST",
-      body: formData,
-    }).then((respone) => {
-      if (!respone.ok) {
-        throw new Error("error");
-      } else {
-        console.log(respone.text());
-        window.location.href = "/homepage";
-      }
+    Imgsarray.forEach((image, index) => {
+      formData.append("Imgfiles", image);
     });
+
+    try {
+      const response = await fetch("http://localhost:3000/content/add", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Error submitting form");
+      }
+      const responseText = await response.text();
+      console.log(responseText);
+      window.location.href = "/homepage";
+    } catch (error) {
+      console.error("Error:", error);
+      alert("There was an error submitting the form. Please try again.");
+    }
   }
 );
 
-// ----------------------------------------------------
-
-// Profile page
-
-// $(".profile .card").on("click", function () {
-//   $(".profile .card .card-body .rounded-circle").attr(
-//     "src",
-//     URL.createObjectURL("/C:/img/1725579110148.jpg")
-//   );
-// });
 // ----------------------------------------------------
 
 // manage posts
@@ -368,11 +254,11 @@ function getRowElements(obj) {
     dateTime: row.find("td.date_time"),
   };
 }
-
-$(".manage-posts .table-group-divider .editBtn").on("click", function () {
+$(".manage-posts").on("click", ".table-group-divider .editBtn", function () {
   const button = $(this);
   const isEditing = button.html() === "Edit";
   const isSaving = button.html() === "Save";
+
   if (isEditing) {
     changeEditBtn(button, "btn-primary", "btn-success", "Save", 1);
     editContentTitle(button);
@@ -384,32 +270,30 @@ $(".manage-posts .table-group-divider .editBtn").on("click", function () {
   }
 });
 
-$(".manage-posts .table-group-divider .image_container .closeBtn").on(
-  "click",
-  function () {
-    const closeBtn = $(this);
-    const input = closeBtn.siblings("input");
-    const isChecked = input.prop("checked");
+$(".manage-posts").on("click", ".image_container .closeBtn", function () {
+  const closeBtn = $(this);
+  const input = closeBtn.siblings("input");
+  const isChecked = input.prop("checked");
 
-    if (isChecked) {
-      input.prop("checked", false);
-      deletePicArray = deletePicArray.filter(
-        (f) => f.get(0) !== closeBtn.parent().get(0)
-      );
-      resetCloseBtnStyles(closeBtn);
-      enableModal(closeBtn);
-    } else {
-      input.prop("checked", true);
-      deletePicArray.push(closeBtn.parent());
-      highlightCloseBtn(closeBtn);
-      enableModal(closeBtn);
-      deletePicWithModal();
-    }
+  if (isChecked) {
+    input.prop("checked", false);
+    deletePicArray = deletePicArray.filter(
+      (f) => f.get(0) !== closeBtn.parent().get(0)
+    );
+    resetCloseBtnStyles(closeBtn);
+    enableModal(closeBtn);
+  } else {
+    input.prop("checked", true);
+    deletePicArray.push(closeBtn.parent());
+    highlightCloseBtn(closeBtn);
+    enableModal(closeBtn);
+    deletePicWithModal();
   }
-);
+});
 
-$(".manage-posts .modal_formanagePost .cancelBtn_for_managePost").on(
+$(".manage-posts").on(
   "click",
+  ".modal_formanagePost .cancelBtn_for_managePost",
   function () {
     deletePicArray.forEach((f) =>
       resetCloseBtnStyles($(f).children(".closeBtn"))
@@ -419,37 +303,55 @@ $(".manage-posts .modal_formanagePost .cancelBtn_for_managePost").on(
   }
 );
 
-$(".manage-posts > div > div > .update_manage").on("click", function () {
-  const isContainEditData = editContentJson.length;
+$(".manage-posts").on("click", ".update_manage", async function () {
+  try {
+    if (!editContentJson.length) return;
 
-  if (!isContainEditData) {
-    return;
+    const dataJson = JSON.stringify(editContentJson);
+    console.log(dataJson);
+    const windowHeight = $(window).height();
+
+    $(".loader").css({
+      display: "block",
+      top: windowHeight / 3,
+    });
+    $(".manage-posts").css({
+      filter: "blur(5px)",
+      "background-color": "grey",
+    });
+    const result = await fetch("manage/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: dataJson,
+    });
+    const data = await result.text();
+    setInterval(() => {
+      window.location.href = "/manage";
+    }, 3000);
+  } catch (err) {
+    $(".loader").css({
+      display: "none",
+    });
+    $(".manage-posts").css({
+      filter: "",
+      "background-color": "",
+    });
+    console.log("error fetching data: ", err);
   }
-  const dataJson = JSON.stringify(editContentJson);
-  console.log(dataJson);
-  fetch("manage/update", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: dataJson,
-  })
-    .then((response) => response.text())
-    .then((data) => console.log(data))
-    .catch((error) => console.error("Error:", error));
 });
+
 function pushOrUpdate(array, newObj) {
-  const index = array.findIndex((item) => item.id === newObj.id);
-  if (index !== -1) {
-    array[index] = newObj;
-  } else {
-    array.push(newObj);
-  }
+  const index = array.findIndex(
+    (item) => item.id_content === newObj.id_content
+  );
+  if (index !== -1) array[index] = newObj;
+  else array.push(newObj);
 }
 
 function deletePicWithModal() {
-  $(".manage-posts .modal_formanagePost .yesBtn_for_managePost").on(
+  $(".manage-posts").on(
     "click",
+    ".modal_formanagePost .yesBtn_for_managePost",
     function () {
       deletePicArray.forEach((f) => $(f).remove());
       deletePicArray = [];
@@ -464,16 +366,13 @@ function enableModal(obj) {
   const numberOfPictures = deletePicArray.length;
   const windowWidth = $(window).width();
 
-  modal.css({
-    left: windowWidth / 3,
-    top: top - 90,
-  });
-
+  modal.css({ left: windowWidth / 3, top: top - 90 });
   modal
     .find(".btn_container .textss")
     .text(
       `Choose ${numberOfPictures} picture${numberOfPictures > 1 ? "s" : ""}`
     );
+
   modal.fadeIn();
 }
 
@@ -485,17 +384,19 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
   });
   imageContainer.find(".closeBtn").css("opacity", opacity);
   imageContainer.find(".addPic").css("opacity", opacity);
-
   button.removeClass(prevClass).addClass(newClass).html(innerText);
 }
 
 function editContentTitle(button) {
   const { content, title } = getRowElements(button);
+  const contentHeight = content.height();
+  const titleHeight = title.height();
+  const maxHeight = Math.max(contentHeight, titleHeight);
   content.html(
-    `<textarea style="width:100% ; height:${content.height()}px">${content.text()}</textarea>`
+    `<textarea style="width:100% ; height:${maxHeight}px">${content.text()}</textarea>`
   );
   title.html(
-    `<textarea style="width:100% ; height:${title.height()}px">${title.text()}</textarea>`
+    `<textarea style="width:100% ; height:${maxHeight}px">${title.text()}</textarea>`
   );
 }
 
@@ -511,21 +412,36 @@ function saveContentTitle(button) {
 function generateJsonForEdit(button) {
   const { title, content, dateTime, imageContainer } = getRowElements(button);
   const contentId = dateTime.find("div").text().trim();
-  const userName = $(
-    ".header-ỉntranet nav.navbar div.offcanvas ul.navbar-nav a.nav-link > span.ps-2"
-  ).text();
-  console.log(userName);
+
+  const newdatetime = dateTime
+    .contents()
+    .filter(function () {
+      return this.nodeType === 3;
+    })
+    .text();
+  const anotherdatetime = extracDate(newdatetime);
+
   const images = imageContainer
     .find("img")
     .map((i, img) => $(img).attr("src"))
     .get();
-
+  const timenow = getDate();
+  const images_link = images[0].split("\\")[1];
+  const content_images = images.map((item) => {
+    const parts = item.split("\\");
+    return parts[parts.length - 1];
+  });
   return {
     id_content: contentId,
     title: title.text(),
     content: content.html(),
-    image: images,
-    poster: userName,
+    images_link: images_link,
+    content_images: content_images,
+    poster: "",
+    date_time: anotherdatetime,
+    last_updated: timenow,
+    deleted: 0,
+    poster_site: "string",
   };
 }
 
@@ -538,17 +454,20 @@ function highlightCloseBtn(btn) {
 }
 
 function extracDate(value) {
-  const dateStr = value.trim();
-  const dateObj = new Date(dateStr);
+  const dateObj = new Date(value.trim());
   const day = dateObj.getDate();
   const month = dateObj.getMonth() + 1;
   const year = dateObj.getFullYear();
   const hours = dateObj.getHours();
   const minutes = dateObj.getMinutes();
   const seconds = dateObj.getSeconds();
-  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-  console.log(formattedDate);
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+function getDate() {
+  const now = new Date();
+  return `${now.getFullYear()}-${
+    now.getMonth() + 1
+  }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 }
 // ------------------------------------------------------
 

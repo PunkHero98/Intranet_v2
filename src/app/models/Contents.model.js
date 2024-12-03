@@ -21,7 +21,7 @@ const getContentsByUser = async (user) => {
     .request()
     .input("user", sql.NVarChar, user)
     .query("SELECT * FROM contents WHERE poster = @user");
-  return result.recordset;
+  return (await result).recordset;
 };
 
 const getContentsBySite = async (site) => {
@@ -43,15 +43,15 @@ const addContent = async (
   site
 ) => {
   const pool = await connectToDB();
-  const result = (await pool)
+  const result = await pool
     .request()
     .input("title", sql.NVarChar, title)
     .input("content", sql.NVarChar, content)
     .input("images_link", sql.NVarChar, images_link)
     .input("content_images", sql.NVarChar, content_images)
     .input("poster", sql.NVarChar, user)
-    .input("dateandtime", sql.DateTime2, date_created)
-    .input("last_update", sql.DateTime2, null)
+    .input("dateandtime", sql.DateTime, date_created)
+    .input("last_update", sql.DateTime, null)
     .input("deleted", sql.Bit, 0)
     .input("poster_site", sql.NVarChar, site)
     .query(
@@ -60,10 +60,45 @@ const addContent = async (
   return (await result).rowsAffected;
 };
 
+const updateContents = async (records) => {
+  // Tạo kết nối chung, tránh tạo kết nối cho mỗi record
+  const pool = await connectToDB();
+
+  // Duyệt qua từng record và thực hiện truy vấn UPDATE
+  const queryPromises = records.map((record) => {
+    return pool
+      .request()
+      .input("id_content", sql.Int, record.id_content)
+      .input("title", sql.NVarChar, record.title)
+      .input("content", sql.NVarChar, record.content)
+      .input("images_link", sql.NVarChar, record.images_link)
+      .input("content_images", sql.NVarChar, record.content_images)
+      .input("poster", sql.NVarChar, record.poster)
+      .input("date_time", sql.DateTime, record.date_time)
+      .input("last_update", sql.DateTime, record.last_updated || null) // Nếu không có giá trị thì truyền null
+      .input(
+        "deleted",
+        sql.Bit,
+        record.deleted != undefined ? record.deleted : 0
+      ) // Nếu không có giá trị, gán mặc định 0
+      .input("poster_site", sql.NVarChar, record.poster_site)
+      .query(
+        "UPDATE contents SET title = @title, content = @content, images_link = @images_link, content_images = @content_images, poster = @poster, date_time = @date_time, last_updated = @last_update, deleted = @deleted, poster_site = @poster_site WHERE id_content = @id_content"
+      );
+  });
+
+  // Chạy tất cả các truy vấn song song và đợi kết quả
+  const results = await Promise.all(queryPromises);
+
+  // Trả về kết quả rowsAffected cho từng record
+  return results.map((result) => result.rowsAffected);
+};
+
 export {
   getContents,
   getContentByID,
   getContentsBySite,
   getContentsByUser,
   addContent,
+  updateContents,
 };

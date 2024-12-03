@@ -1,12 +1,13 @@
+import { rejects } from "assert";
 import { dir } from "console";
 import fs from "fs";
-import path from "path";
+import path, { resolve } from "path";
 
 const createDir = (name) => {
   const dirPath = path.join("D:\\IMG_Storage", `${name}`);
 
   if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true }); // { recursive: true } để tạo nhiều thư mục con nếu cần
+    fs.mkdirSync(dirPath, { recursive: true });
     console.log(`Thư mục ${dirPath} đã được tạo!`);
     return dirPath;
   } else {
@@ -18,32 +19,52 @@ const createDir = (name) => {
 const getfileinDir = (name) => {
   return new Promise((resolve, reject) => {
     const dirPath = path.join("D:\\IMG_Storage", `${name}`);
-
-    // Lọc các tệp hình ảnh có trong thư mục
     fs.readdir(dirPath, (err, files) => {
       if (err) {
         reject("Lỗi khi đọc thư mục: " + err);
         return;
       }
-
-      // Danh sách các định dạng hình ảnh hợp lệ
       const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
-
-      // Duyệt qua tất cả các tệp trong thư mục
       const imageFiles = files.filter((file) => {
-        const extname = path.extname(file).toLowerCase(); // Lấy phần mở rộng của tệp
-        return imageExtensions.includes(extname); // Kiểm tra xem phần mở rộng có phải là hình ảnh không
+        const extname = path.extname(file).toLowerCase();
+        return imageExtensions.includes(extname);
       });
-
-      // In danh sách các tệp hình ảnh
       if (imageFiles.length > 0) {
         console.log("Các hình ảnh trong thư mục:", imageFiles);
-        resolve(imageFiles); // Trả về danh sách các hình ảnh
+        resolve(imageFiles);
       } else {
         console.log("Không tìm thấy hình ảnh nào trong thư mục.");
-        resolve([]); // Nếu không có hình ảnh, trả về mảng rỗng
+        resolve([]);
       }
     });
   });
 };
-export { createDir, getfileinDir };
+
+const updateImageinFolder = async (array) => {
+  try {
+    for (const item of array) {
+      const dirPath = path.join("D:\\IMG_Storage", item.images_link);
+      const files = await fs.promises.readdir(dirPath);
+
+      const newImageContent = JSON.parse(item.content_images);
+      const filesToDelete = files.filter(
+        (file) => !newImageContent.includes(file)
+      );
+
+      for (const file of filesToDelete) {
+        const filePath = path.join(dirPath, file);
+
+        try {
+          await fs.promises.unlink(filePath);
+          console.log(`Đã xóa file ${file}`);
+        } catch (err) {
+          console.error(`Không thể xóa file ${file}: ${err}`);
+        }
+      }
+    }
+    console.log("Xử lý hoàn tất!");
+  } catch (error) {
+    console.error("Lỗi khi xử lý:", error);
+  }
+};
+export { createDir, getfileinDir, updateImageinFolder };

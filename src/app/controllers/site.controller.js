@@ -1,6 +1,6 @@
 import { getUsers, getUserById } from "../models/Users.model.js";
 import { getContents, getContentsBySite } from "../models/Contents.model.js";
-
+import path from "path";
 export default new (class SiteController {
   // [GET] /
   redirecT(req, res) {
@@ -10,9 +10,24 @@ export default new (class SiteController {
   async homepage(req, res) {
     try {
       const contents = await getContents();
-      contents.map((file) => {
-        file.content_images = JSON.parse(file.content_images);
-        file.content_images = file.images_link + "\\" + file.content_images[0];
+      if (!contents || contents.length === 0) {
+        return res.status(404).json({ message: "No contents found" });
+      }
+      contents.forEach((file) => {
+        if (file.content_images) {
+          try {
+            file.content_images = JSON.parse(file.content_images);
+            if (file.content_images.length > 0) {
+              file.content_images = path.join(
+                file.images_link,
+                file.content_images[0]
+              );
+            }
+          } catch (parseError) {
+            console.error("Error parsing content_images:", parseError);
+            file.content_images = [];
+          }
+        }
       });
       res.render("home", {
         contents,
@@ -23,7 +38,7 @@ export default new (class SiteController {
     } catch (err) {
       res
         .status(500)
-        .json({ message: "error fetching contents", error: err.message });
+        .json({ message: "Error fetching contents", error: err.message });
     }
   }
 
@@ -43,35 +58,44 @@ export default new (class SiteController {
   async activity(req, res) {
     try {
       const { site } = req.body;
-      let url = "";
-      let city = "";
-      const contents = await getContentsBySite(site);
-      contents.map((file) => {
-        file.content_images = JSON.parse(file.content_images);
-        file.content_images = file.images_link + "\\" + file.content_images[0];
-      });
-      switch (site) {
-        case "Australia":
-          url = "../imgs/activities/sydney-opera-house-354375.jpg";
-          city = "Sysney City";
-          break;
-        case "New Zealand":
-          url = "../imgs/activities/NZ.jpg";
-          city = "Auckland City";
-          break;
-        case "Thailand":
-          url = "../imgs/activities/bangkok.jpg";
-          city = "Bangkok City";
-          break;
-        case "Vietnam":
-          url = "../imgs/activities/VN.jpg";
-          city = "Ho Chi Minh City";
-          break;
-        case "Philippines":
-          url = "../imgs/activities/PH.jpg";
-          city = "Manila City";
-          break;
+      const siteDetails = {
+        Australia: {
+          url: "../imgs/activities/sydney-opera-house-354375.jpg",
+          city: "Sydney City",
+        },
+        "New Zealand": {
+          url: "../imgs/activities/NZ.jpg",
+          city: "Auckland City",
+        },
+        Thailand: {
+          url: "../imgs/activities/bangkok.jpg",
+          city: "Bangkok City",
+        },
+        Vietnam: { url: "../imgs/activities/VN.jpg", city: "Ho Chi Minh City" },
+        Philippines: { url: "../imgs/activities/PH.jpg", city: "Manila City" },
+      };
+
+      const { url, city } = siteDetails[site] || {};
+
+      if (!url || !city) {
+        return res.status(400).json({ message: "Invalid site" });
       }
+      const contents = await getContentsBySite(site);
+      contents.forEach((file) => {
+        try {
+          file.content_images = JSON.parse(file.content_images);
+          file.content_images = path.join(
+            file.images_link,
+            file.content_images[0]
+          );
+        } catch (err) {
+          console.error(
+            `Error parsing content_images for file: ${file.id}`,
+            err
+          );
+          file.content_images = [];
+        }
+      });
       res.render("activity", {
         contents,
         url,
@@ -83,9 +107,10 @@ export default new (class SiteController {
     } catch (err) {
       res
         .status(500)
-        .json({ message: "error fetching activity", error: err.message });
+        .json({ message: "Error fetching activity", error: err.message });
     }
   }
+
   // [GET] /profile
   async profile(req, res) {
     try {

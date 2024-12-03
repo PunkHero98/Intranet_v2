@@ -13,6 +13,11 @@ export default new (class LoginController {
   async verify(req, res) {
     try {
       const { emailAddress, password } = req.body;
+      if (!emailAddress || !password) {
+        return res.render("login", {
+          status: "Email and password are required",
+        });
+      }
       const user = await getUserByEmail(emailAddress, password);
       if (user) {
         req.session.username = user.username;
@@ -22,11 +27,16 @@ export default new (class LoginController {
         req.session.idUser = user.id_user;
         return res.redirect("/homepage");
       }
-      res.status(401).send("Fail to login");
+      return res.render("login", {
+        email: emailAddress,
+        status: "Invalid Email or Password",
+      });
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "error fetching users", error: err.message });
+      console.error("Error during user authentication:", err);
+      return res.status(500).json({
+        message: "Error fetching users",
+        error: err.message,
+      });
     }
   }
 })();
