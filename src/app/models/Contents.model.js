@@ -21,7 +21,7 @@ const getContentsByUser = async (user) => {
     .request()
     .input("user", sql.NVarChar, user)
     .query("SELECT * FROM contents WHERE poster = @user");
-  return result.recordset;
+    return (await result).recordset;
 };
 
 const getContentsBySite = async (site) => {
