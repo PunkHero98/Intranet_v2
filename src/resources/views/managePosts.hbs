@@ -4,7 +4,10 @@
     <h5>Manage Posts</h5>
     <div>
       <button class="refesh_manage btn btn-warning">Refresh</button>
-      <button class="update_manage btn btn-success mx-3">Update</button>
+      <button
+        class="update_manage btn btn-success mx-3"
+        disabled
+      >Update</button>
     </div>
   </div>
 
@@ -28,32 +31,30 @@
           <td class="title">{{this.title}}</td>
           <td class="content">{{this.content}}</td>
           <td class="image_container">
-            {{#if this.content_images}}
-              {{#each this.content_images}}
-                <div class="container-{{addindex @this.index}}">
-                  <i class="fa-solid fa-x closeBtn" style="opacity: 0"></i>
-                  <input
-                    id="stateCheck-{{addindex @this.index}}"
-                    type="checkbox"
-                    style="display: none"
-                  />
-                  <img src={{this}} alt="" />
-                </div>
-              {{/each}}
-            {{else}}
-              <div class="container-0">
+
+            {{#each this.content_images}}
+              <div class="img-box container-{{addindex @this.index}}">
+                <img src={{this}} alt="" />
+                <button
+                  type="button"
+                  class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                  style="opacity: 0"
+                >
+                  <i class="fa-solid fa-x text-white"></i>
+                </button>
+
                 <input
                   id="stateCheck-0"
                   type="checkbox"
                   style="display: none"
                 />
-                <img src='alt=""' />
               </div>
-            {{/if}}
-            <i
-              class="addPic fa-solid fa-plus border border-2 fs-5 border-primary"
-              style="opacity: 0;"
-            ></i>
+            {{/each}}
+
+            <button type="button" class="btn btn-outline-success addPic"><i
+                class="fa-solid fa-plus"
+              ></i>
+              Add more pictures</button>
           </td>
           <td class="date_time">{{this.date_time}}
             <div style="display:none">
@@ -74,19 +75,15 @@
     </tbody>
   </table>
 
-  <div class="modal_formanagePost" style="display: none;">
-    <h2 class="title_for_managePost">Do you want to proceed to delete this
-      picture ?</h2>
+  <div class="modal_formanagePost text-center bg-white">
+    <i class="fa-solid fa-circle-exclamation text-danger"></i>
+    <h3 class="title_for_managePost">Confirm</h3>
+    <p class="title_for_managePost">Are you sure want to delete this Picture?</p>
     <div class="btn_container">
-      <div class="textss">
-        <p></p>
-      </div>
-      <div>
-        <button class="yesBtn_for_managePost btn btn-primary">Proceed</button>
-        <button
-          class="cancelBtn_for_managePost btn btn-danger ms-2"
-        >Cancel</button>
-      </div>
+      <button class="yesBtn_for_managePost btn btn-primary">Yes, Delete!</button>
+      <button
+        class="cancelBtn_for_managePost btn btn-danger ms-2"
+      >Cancel</button>
     </div>
   </div>
 </div>

@@ -271,6 +271,8 @@
     /* Display & Box Model */
     -webkit-line-clamp: 2; }
   .whats-new-intranet .news-content i {
+    /* Display & Box Model */
+    -webkit-line-clamp: 1;
     /* Text */
     font-size: 0.7rem; }
   /* activities ------------------------------------------------------------------------------ */
@@ -462,6 +464,8 @@
     /* Display & Box Model */
     -webkit-line-clamp: 3; }
   .whats-new-intranet .news-content i {
+    /* Display & Box Model */
+    -webkit-line-clamp: 1;
     /* Text */
     font-size: 0.7rem; }
   /* activities ------------------------------------------------------------------------------ */
@@ -596,7 +600,7 @@ body {
   z-index: 999;
   /* Display & Box Model */
   height: 3.5rem;
-  box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 5px 20px 5px #00000033; }
 
 .header-intranet .logo img {
   /* Display & Box Model */
@@ -649,7 +653,7 @@ body {
 
 .header-intranet ul.user ul.dropdown-menu {
   /* Display & Box Model */
-  box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px 5px #00000033;
   padding: 1rem 0 0 0; }
 
 .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6 {
@@ -735,7 +739,7 @@ body {
   width: 6rem;
   height: 5rem;
   padding: 0.5rem;
-  box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 20px 5px #00000033;
   margin: 0.3rem !important;
   /* Color */
   background: linear-gradient(0deg, #050c9c 0%, #3681f1 100%, #3abef9 100%);
@@ -757,13 +761,13 @@ body {
   height: 8rem;
   margin: 0.2rem 0;
   /* Color */
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.03);
   /* Other */
   cursor: pointer; }
 
 .whats-new-intranet .content-news:hover {
   /* Display & Box Model */
-  box-shadow: 0px 5px 20px 5px rgba(0, 68, 255, 0.5); }
+  box-shadow: 0px 1px 5px 1px rgba(0, 68, 255, 0.3); }
 
 .whats-new-intranet .news-img img {
   /* Display & Box Model */
@@ -857,7 +861,7 @@ body {
 .profile .card {
   /* Display & Box Model */
   border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0 30px #00000033;
   margin-bottom: 2rem; }
 
 .profile .profile-card img {
@@ -1031,7 +1035,7 @@ body {
 
 .view-content-intranet .comments-view .col-1 img {
   /* Display & Box Model */
-  width: 100%;
+  width: 50%;
   border-radius: 50%; }
 
 .view-content-intranet .comments-view .col-11 h6 {
@@ -1116,7 +1120,7 @@ img:last-child {
 
 .create-content-intranet .create-content-box .last-row input:hover {
   /* Display & Box Model */
-  box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0px 5px 20px 5px #00000033; }
 
 .create-content-intranet .create-content-box .last-row input:first-child {
   /* Color */
@@ -1128,6 +1132,8 @@ img:last-child {
 
 /* manage posts ---------------------------------------------------------------------------- */
 .manage-posts {
+  /* Positioning */
+  position: relative;
   /* Display & Box Model */
   margin-top: 5rem;
   margin-bottom: 3rem; }
@@ -1152,6 +1158,32 @@ img:last-child {
   /* Text */
   text-align: justify; }
 
+.manage-posts .image_container {
+  /* Display & Box Model */
+  width: 15%; }
+
+.manage-posts .image_container .img-box {
+  /* Positioning */
+  position: relative; }
+
+.manage-posts .image_container img {
+  /* Display & Box Model */
+  width: 100%;
+  margin-bottom: 0.1rem; }
+
+.manage-posts .image_container .closeBtn {
+  /* Positioning */
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Display & Box Model */
+  border-color: transparent; }
+
+.manage-posts .image_container .addPic {
+  padding: 0.5rem;
+  width: 100%;
+  margin-top: 1rem; }
+
 .manage-posts .date-time {
   /* Display & Box Model */
   width: 20%; }
@@ -1169,6 +1201,26 @@ img:last-child {
   margin: 0.1rem 0;
   /* Text */
   font-size: 0.8rem; }
+
+.manage-posts .modal_formanagePost {
+  /* Positioning */
+  position: absolute;
+  z-index: 998;
+  /* Display & Box Model */
+  display: none;
+  width: 20rem;
+  padding: 1rem;
+  box-shadow: 0 10px 20px 10px #00000033; }
+
+.manage-posts .modal_formanagePost i {
+  /* Text */
+  font-size: 2rem; }
+
+.manage-posts .modal_formanagePost h3 {
+  /* Display & Box Model */
+  padding: 0.5rem 0;
+  /* Text */
+  font-size: 1.2rem; }
 
 /* add news button ------------------------------------------------------------------------- */
 .colorful-border-button {

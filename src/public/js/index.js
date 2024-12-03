@@ -266,6 +266,7 @@ $(".manage-posts").on("click", ".table-group-divider .editBtn", function () {
     changeEditBtn(button, "btn-success", "btn-primary", "Edit", 0);
     saveContentTitle(button);
     pushOrUpdate(editContentJson, generateJsonForEdit(button));
+    check_update();
     console.log(editContentJson);
   }
 });
@@ -340,6 +341,15 @@ $(".manage-posts").on("click", ".update_manage", async function () {
   }
 });
 
+function check_update(obj) {
+  const isContainEditData = editContentJson.length;
+
+  if (!isContainEditData) {
+    return;
+  }
+  $(".manage-posts > div > div > .update_manage").removeAttr("disabled");
+}
+
 function pushOrUpdate(array, newObj) {
   const index = array.findIndex(
     (item) => item.id_content === newObj.id_content
@@ -368,9 +378,13 @@ function enableModal(obj) {
 
   modal.css({ left: windowWidth / 3, top: top - 90 });
   modal
-    .find(".btn_container .textss")
+    .find("p")
     .text(
-      `Choose ${numberOfPictures} picture${numberOfPictures > 1 ? "s" : ""}`
+      `Are you sure want to delete ${
+        numberOfPictures > 1
+          ? `these ${numberOfPictures} picturtes`
+          : "this picture"
+      }`
     );
 
   modal.fadeIn();
@@ -378,10 +392,11 @@ function enableModal(obj) {
 
 function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
   const { imageContainer, id } = getRowElements(button);
-  id.css({
-    "background-color": opacity ? "#60a5fa" : "",
-    color: opacity ? "white" : "",
-  });
+  $(button)
+    .parents("tr")
+    .css({
+      "background-color": opacity ? "#00000010" : "",
+    });
   imageContainer.find(".closeBtn").css("opacity", opacity);
   imageContainer.find(".addPic").css("opacity", opacity);
   button.removeClass(prevClass).addClass(newClass).html(innerText);
@@ -393,10 +408,10 @@ function editContentTitle(button) {
   const titleHeight = title.height();
   const maxHeight = Math.max(contentHeight, titleHeight);
   content.html(
-    `<textarea style="width:100% ; height:${maxHeight}px">${content.text()}</textarea>`
+    `<textarea style="width:100%; height:${maxHeight}px; background:transparent;">${content.text()}</textarea>`
   );
   title.html(
-    `<textarea style="width:100% ; height:${maxHeight}px">${title.text()}</textarea>`
+    `<textarea style="width:100%; height:${maxHeight}px; background:transparent;">${title.text()}</textarea>`
   );
 }
 
@@ -450,7 +465,7 @@ function resetCloseBtnStyles(btn) {
 }
 
 function highlightCloseBtn(btn) {
-  btn.css({ "background-color": "#007bff", padding: "10px" });
+  btn.css({ "background-color": "#dc3545" });
 }
 
 function extracDate(value) {
