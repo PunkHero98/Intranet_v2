@@ -4,7 +4,10 @@
     <h5>Manage Posts</h5>
     <div>
       <button class="refesh_manage btn btn-warning">Refresh</button>
-      <button class="update_manage btn btn-success mx-3" disabled>Update</button>
+      <button
+        class="update_manage btn btn-success mx-3"
+        disabled
+      >Update</button>
     </div>
   </div>
 
@@ -23,19 +26,23 @@
     <tbody class="table-group-divider">
 
       {{#each result}}
-      <tr>
-        <td class="newId">{{addindex @index}}</td>
-        <td class="title">{{this.title}}</td>
-        <td class="content">{{this.content}}</td>
-        <td class="image_container">
+        <tr>
+          <td class="newId">{{addindex @index}}</td>
+          <td class="title">{{this.title}}</td>
+          <td class="content">{{this.content}}</td>
+          <td class="image_container">
 
-          {{#if this.content_images}}
-          {{#each this.content_images}}
-          <div class="img-box container-{{addindex @this.index}}">
-            <img src={{this}} alt="" />
-            <button type="button" class="btn btn-outline-danger closeBtn rounded-0 m-0" style="opacity: 0">
-              <i class="fa-solid fa-x text-white"></i>
-            </button>
+            {{#if this.content_images}}
+              {{#each this.content_images}}
+                <div class="img-box container-{{addindex @this.index}}">
+                  <img src={{this}} alt="" />
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                    style="opacity: 0"
+                  >
+                    <i class="fa-solid fa-x text-white"></i>
+                  </button>
 
                   <input
                     id="stateCheck-{{addindex @this.index}}"
@@ -86,8 +93,7 @@
     </tbody>
   </table>
 </div>
-
-<div class="modal_formanagePost text-center bg-white modal-dialog-centered">
+<div class="modal_formanagePost text-center bg-white">
   <i class="fa-solid fa-circle-exclamation text-danger"></i>
   <h3 class="title_for_managePost">Confirm</h3>
   <p class="title_for_managePost">Are you sure want to delete this Picture?</p>

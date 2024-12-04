@@ -10,9 +10,9 @@ export default new (class SiteController {
   async homepage(req, res) {
     try {
       const contents = await getContents();
-      if (!contents || contents.length === 0) {
-        return res.status(404).json({ message: "No contents found" });
-      }
+      // if (!contents || contents.length === 0) {
+      //   return res.status(404).json({ message: "No contents found" });
+      // }
       contents.forEach((file) => {
         if (file.content_images) {
           try {
@@ -29,6 +29,7 @@ export default new (class SiteController {
           }
         }
       });
+      contents.sort((a, b) => b.id_content - a.id_content);
       res.render("home", {
         contents,
         role: req.session.userrole,
@@ -96,6 +97,7 @@ export default new (class SiteController {
           file.content_images = [];
         }
       });
+      contents.sort((a, b) => b.id_content - a.id_content);
       res.render("activity", {
         contents,
         url,

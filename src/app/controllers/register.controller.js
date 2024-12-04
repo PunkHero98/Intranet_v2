@@ -1,4 +1,5 @@
 export default new (class RegisterController {
+  // [GET] /register
   register(req, res) {
     try {
       res.render("register");
@@ -9,5 +10,13 @@ export default new (class RegisterController {
     }
   }
 
-  async tfa(req, res) {}
+  // [POST] /register/tfa
+  async tfa(req, res) {
+    try {
+      console.log(req.body);
+      res.send("request successfully!");
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
 })();
