@@ -323,15 +323,15 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   });
 });
 // --------------
-$(".manage-posts").on(
+$(".cancelBtn_for_managePost").on(
   "click",
-  ".modal_formanagePost .cancelBtn_for_managePost",
   function () {
     deletePicArray.forEach((f) =>
       resetCloseBtnStyles($(f).children(".closeBtn"))
     );
     deletePicArray = [];
     $(this).parents(".modal_formanagePost").fadeOut();
+    $("body").css("background-color","");
   }
 );
 
@@ -390,24 +390,28 @@ function pushOrUpdate(array, newObj) {
 }
 
 function deletePicWithModal() {
-  $(".manage-posts").on(
+  $(".yesBtn_for_managePost").on(
     "click",
-    ".modal_formanagePost .yesBtn_for_managePost",
     function () {
       deletePicArray.forEach((f) => $(f).remove());
       deletePicArray = [];
-      $(".manage-posts .modal_formanagePost").fadeOut();
+      $(".modal_formanagePost").fadeOut();
     }
   );
 }
 
 function enableModal(obj) {
-  const modal = $(".manage-posts .modal_formanagePost");
+  const modal = $(".modal_formanagePost");
   const { top, left } = $(obj).offset();
   const numberOfPictures = deletePicArray.length;
   const windowWidth = $(window).width();
 
-  modal.css({ left: windowWidth / 3, top: top - 90 });
+  // modal.css({ left: windowWidth / 3, top: top - 90 });
+  modal.css({top: top});
+
+  const body = $(".manage-posts");
+  body.css({'background-color': 'rgba(0,0,0,0.5)'});
+
   modal
     .find("p")
     .text(
