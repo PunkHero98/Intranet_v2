@@ -323,15 +323,15 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   });
 });
 // --------------
-$(".manage-posts").on(
+$(".cancelBtn_for_managePost").on(
   "click",
-  ".modal_formanagePost .cancelBtn_for_managePost",
   function () {
     deletePicArray.forEach((f) =>
       resetCloseBtnStyles($(f).children(".closeBtn"))
     );
     deletePicArray = [];
     $(this).parents(".modal_formanagePost").fadeOut();
+    $("body").css("background-color","");
   }
 );
 
@@ -390,13 +390,12 @@ function pushOrUpdate(array, newObj) {
 }
 
 function deletePicWithModal() {
-  $(".manage-posts").on(
+  $(".yesBtn_for_managePost").on(
     "click",
-    ".modal_formanagePost .yesBtn_for_managePost",
     function () {
       deletePicArray.forEach((f) => $(f).remove());
       deletePicArray = [];
-      $(".manage-posts .modal_formanagePost").fadeOut();
+      $(".modal_formanagePost").fadeOut();
     }
   );
 }
@@ -411,7 +410,7 @@ function enableModal(obj) {
   modal.css({top: top});
 
   const body = $(".manage-posts");
-  body.css({opacity: '0.8', 'background-color': 'rgba(0,0,0,0.1)'});
+  body.css({'background-color': 'rgba(0,0,0,0.5)'});
 
   modal
     .find("p")
