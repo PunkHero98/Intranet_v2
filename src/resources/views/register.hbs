@@ -5,20 +5,20 @@
       <!-- <div class="col-8"> -->
       <!-- logo QSL -->
       <img class="mb-4 container-fluid" src="imgs/qsl-logo.png" alt="logo-QSL" />
-      <form id="loginForm" action="/register-tfa" method="post">
+      <form id="loginForm" action="register/tfa" method="post" >
         <div class="d-flex">
           <div class="left col-6 container-fluid">
             <div class="mb-3">
               <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" placeholder="Nguyen Van A" required>
+              <input type="text" class="form-control" placeholder="Nguyen Van A" name="fullname">
             </div>
             <div class="mb-3">
               <label class="form-label">Email address</label>
-              <input type="email" class="form-control" placeholder="name@example.com" required>
+              <input type="email" class="form-control" placeholder="name@example.com" name="email" required>
             </div>
             <div class="mb-3">
               <label class="form-label">Password</label>
-              <input type="password" class="form-control" required>
+              <input type="password" class="form-control" name="password" required>
             </div>
             <div class="mb-3">
               <label class="form-label">Confirm Password</label>
@@ -26,7 +26,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Role</label>
-              <input class="form-control" list="datalistOptions1" placeholder="Type to search..." required>
+              <input class="form-control" list="datalistOptions1" placeholder="Type to search..." name="role" required>
               <datalist id="datalistOptions1">
                 <option value="Super Admin">
                 <option value="Admin">
@@ -37,7 +37,7 @@
           <div class="right col-6 container-fluid">
             <div class="mb-3">
               <label class="form-label">Department</label>
-              <input class="form-control" list="datalistOptions2" placeholder="Type to search..." required>
+              <input class="form-control" list="datalistOptions2" placeholder="Type to search..." name="department" required>
               <datalist id="datalistOptions2">
                 <option value="Corporate">
                 <option value="Operation">
@@ -47,7 +47,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Position</label>
-              <input class="form-control" list="datalistOptions3" placeholder="Type to search..." required>
+              <input class="form-control" list="datalistOptions3" placeholder="Type to search..." name="position" required>
               <datalist id="datalistOptions3">
                 <option value="Junior Developer">
                 <option value="Technician">
@@ -56,7 +56,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Site</label>
-              <input class="form-control" list="datalistOptions4" placeholder="Type to search..." required>
+              <input class="form-control" list="datalistOptions4" placeholder="Type to search..." name="site" required>
               <datalist id="datalistOptions4">
                 <option value="Australia">
                 <option value="Thailand">
@@ -67,7 +67,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Office Address</label>
-              <input class="form-control" list="datalistOptions5" placeholder="Type to search..." required>
+              <input class="form-control" list="datalistOptions5" placeholder="Type to search..." name="site_city" required>
               <datalist id="datalistOptions5">
                 <option value="Silverwater">
                 <option value="Auckland">
@@ -78,7 +78,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Office Number</label>
-              <input type="text" class="form-control" placeholder="01425566" required>
+              <input type="text" class="form-control" placeholder="01425566" name="office-number" required>
             </div>
           </div>
         </div>
