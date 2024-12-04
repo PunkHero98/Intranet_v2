@@ -253,6 +253,7 @@ function getRowElements(obj) {
     dateTime: row.find("td.date_time"),
   };
 }
+
 $(".manage-posts").on("click", ".table-group-divider .editBtn", function () {
   const button = $(this);
   const isEditing = button.html() === "Edit";
@@ -274,66 +275,69 @@ $(".manage-posts").on("click", ".image_container .closeBtn", function () {
   const closeBtn = $(this);
   const input = closeBtn.siblings("input");
   const isChecked = input.prop("checked");
-
+  const parent = closeBtn.parent();
   if (isChecked) {
     input.prop("checked", false);
-    deletePicArray = deletePicArray.filter(
-      (f) => f.get(0) !== closeBtn.parent().get(0)
-    );
+    deletePicArray = deletePicArray.filter((f) => f.get(0) !== parent.get(0));
     resetCloseBtnStyles(closeBtn);
     enableModal(closeBtn);
   } else {
     input.prop("checked", true);
-    deletePicArray.push(closeBtn.parent());
+    deletePicArray.push(parent);
     highlightCloseBtn(closeBtn);
     enableModal(closeBtn);
     deletePicWithModal();
   }
 });
-// ------------
+
+// --------------
 $(".manage-posts").on("click", ".image_container .addPic", function () {
   const addPicBtn = $(this);
   const input = addPicBtn.siblings("input.fileListForManage");
+  const lengthofImage = addPicBtn.parent().children(".img-box").length;
+
   input.click();
 
   input.change((e) => {
     handleChoosePicture(e);
-    const numberOfItems = $(this).siblings(".img-box").length;
+
     const imgElements = Imgsarray.map((f, index) => {
       const imgElement = `
-      <div class="img-box container-${index + numberOfItems + 1}">
-                  <img src=${URL.createObjectURL(f)} alt="" />
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger closeBtn rounded-0 m-0"
-                    style="opacity: 0"
-                  >
-                    <i class="fa-solid fa-x text-white"></i>
-                  </button>
-
-                  <input
-                    id="stateCheck-${index + numberOfItems + 1}"
-                    type="checkbox"
-                    style="display: none"
-                  />
-                </div>`;
+      <div class="img-box container-${index + lengthofImage + 1}">
+        <img src=${URL.createObjectURL(f)} alt="" />
+        <button
+          type="button"
+          class="btn btn-outline-danger closeBtn rounded-0 m-0"
+          style="opacity: 0"
+        >
+          <i class="fa-solid fa-x text-white"></i>
+        </button>
+        <input
+          id="stateCheck-${index + lengthofImage + 1}"
+          type="checkbox"
+          style="display: none"
+        />
+      </div>`;
       return imgElement;
     });
-    $(this).before(imgElements.join(""));
+    addPicBtn.before(imgElements.join(""));
   });
 });
-// --------------
-$(".cancelBtn_for_managePost").on(
-  "click",
-  function () {
-    deletePicArray.forEach((f) =>
-      resetCloseBtnStyles($(f).children(".closeBtn"))
-    );
-    deletePicArray = [];
-    $(this).parents(".modal_formanagePost").fadeOut();
-    $("body").css("background-color","");
-  }
-);
+
+// ------------
+$(".cancelBtn_for_managePost").on("click", function () {
+  deletePicArray.forEach((f) =>
+    resetCloseBtnStyles($(f).children(".closeBtn"))
+  );
+  deletePicArray = [];
+  $(".closeBtn").siblings("input").prop("checked", false);
+  $(this).parents(".modal_formanagePost").fadeOut();
+
+  $(".manage-posts").css({
+    "background-color": "",
+    opacity: "",
+  });
+});
 
 $(".manage-posts").on("click", ".update_manage", async function () {
   try {
@@ -347,15 +351,18 @@ $(".manage-posts").on("click", ".update_manage", async function () {
       display: "block",
       top: windowHeight / 3,
     });
+
     $(".manage-posts").css({
       filter: "blur(5px)",
       "background-color": "grey",
     });
+
     const result = await fetch("manage/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: dataJson,
     });
+
     const data = await result.text();
     setInterval(() => {
       window.location.href = "/manage";
@@ -372,13 +379,10 @@ $(".manage-posts").on("click", ".update_manage", async function () {
   }
 });
 
-function check_update(obj) {
-  const isContainEditData = editContentJson.length;
-
-  if (!isContainEditData) {
-    return;
+function check_update() {
+  if (editContentJson.length) {
+    $(".manage-posts > div > div > .update_manage").removeAttr("disabled");
   }
-  $(".manage-posts > div > div > .update_manage").removeAttr("disabled");
 }
 
 function pushOrUpdate(array, newObj) {
@@ -390,27 +394,31 @@ function pushOrUpdate(array, newObj) {
 }
 
 function deletePicWithModal() {
-  $(".yesBtn_for_managePost").on(
-    "click",
-    function () {
-      deletePicArray.forEach((f) => $(f).remove());
-      deletePicArray = [];
-      $(".modal_formanagePost").fadeOut();
-    }
-  );
+  $(".yesBtn_for_managePost").on("click", function () {
+    deletePicArray.forEach((f) => $(f).remove());
+    deletePicArray = [];
+    $(".modal_formanagePost").fadeOut();
+    $(".manage-posts").css({
+      "background-color": "",
+      opacity: "",
+    });
+  });
 }
 
 function enableModal(obj) {
   const modal = $(".modal_formanagePost");
+  const modalHeight = modal.height();
   const { top, left } = $(obj).offset();
   const numberOfPictures = deletePicArray.length;
-  const windowWidth = $(window).width();
+  const calculatedTop = `calc(${top + modalHeight / 2}px + 1rem)`;
 
-  // modal.css({ left: windowWidth / 3, top: top - 90 });
-  modal.css({top: top});
+  modal.css({ top: calculatedTop });
 
-  const body = $(".manage-posts");
-  body.css({'background-color': 'rgba(0,0,0,0.5)'});
+  const bodynews = $(".manage-posts");
+  bodynews.css({
+    "background-color": "grey",
+    opacity: "0.5",
+  });
 
   modal
     .find("p")
@@ -432,8 +440,10 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
     .css({
       "background-color": opacity ? "#00000010" : "",
     });
+
   imageContainer.find(".closeBtn").css("opacity", opacity);
   imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
+
   button.removeClass(prevClass).addClass(newClass).html(innerText);
 }
 
@@ -442,6 +452,7 @@ function editContentTitle(button) {
   const contentHeight = content.height();
   const titleHeight = title.height();
   const maxHeight = Math.max(contentHeight, titleHeight);
+
   content.html(
     `<textarea style="width:100%; height:${maxHeight}px; background:transparent;">${content.text()}</textarea>`
   );
@@ -469,18 +480,22 @@ function generateJsonForEdit(button) {
       return this.nodeType === 3;
     })
     .text();
+
   const anotherdatetime = extracDate(newdatetime);
 
   const images = imageContainer
     .find("img")
     .map((i, img) => $(img).attr("src"))
     .get();
+
   const timenow = getDate();
   const images_link = images[0].split("\\")[1];
+
   const content_images = images.map((item) => {
     const parts = item.split("\\");
     return parts[parts.length - 1];
   });
+
   return {
     id_content: contentId,
     title: title.text(),
@@ -513,12 +528,14 @@ function extracDate(value) {
   const seconds = dateObj.getSeconds();
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
 function getDate() {
   const now = new Date();
   return `${now.getFullYear()}-${
     now.getMonth() + 1
   }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 }
+
 // ------------------------------------------------------
 
 // ---------------------------------------------------
