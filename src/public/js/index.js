@@ -91,7 +91,6 @@ function handleChoosePicture(event) {
   Imgsarray = [];
 
   const files = event.target.files;
-  console.log(files);
   const filesArray = Array.prototype.slice.call(files);
   filesArray.forEach((f) => {
     if (!f.type.match("image.*")) {
@@ -291,7 +290,39 @@ $(".manage-posts").on("click", ".image_container .closeBtn", function () {
     deletePicWithModal();
   }
 });
+// ------------
+$(".manage-posts").on("click", ".image_container .addPic", function () {
+  const addPicBtn = $(this);
+  const input = addPicBtn.siblings("input.fileListForManage");
+  input.click();
 
+  input.change((e) => {
+    handleChoosePicture(e);
+    const numberOfItems = $(this).siblings(".img-box").length;
+    const imgElements = Imgsarray.map((f, index) => {
+      const imgElement = `
+      <div class="img-box container-${index + numberOfItems + 1}">
+                  <img src=${URL.createObjectURL(f)} alt="" />
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                    style="opacity: 0"
+                  >
+                    <i class="fa-solid fa-x text-white"></i>
+                  </button>
+
+                  <input
+                    id="stateCheck-${index + numberOfItems + 1}"
+                    type="checkbox"
+                    style="display: none"
+                  />
+                </div>`;
+      return imgElement;
+    });
+    $(this).before(imgElements.join(""));
+  });
+});
+// --------------
 $(".manage-posts").on(
   "click",
   ".modal_formanagePost .cancelBtn_for_managePost",
