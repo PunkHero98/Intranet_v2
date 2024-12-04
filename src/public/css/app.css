@@ -723,7 +723,9 @@ body {
 .homepage-intranet {
   /* Display & Box Model */
   margin-top: 3.5rem;
-  padding-bottom: 3rem; }
+  padding-bottom: 3rem;
+  /* Color */
+  background: radial-gradient(circle, rgba(23, 222, 230, 0.426208) 0%, rgba(8, 38, 230, 0.454219) 100%); }
 
 /* welcome */
 .welcome-homepage {
@@ -1138,8 +1140,8 @@ img:last-child {
   /* Positioning */
   position: relative;
   /* Display & Box Model */
-  margin-top: 5rem;
-  margin-bottom: 3rem; }
+  padding-top: 5rem;
+  padding-bottom: 3rem; }
 
 .manage-posts th {
   /* Text */
@@ -1183,8 +1185,10 @@ img:last-child {
   border-color: transparent; }
 
 .manage-posts .image_container .addPic {
-  padding: 0.5rem;
+  /* Display & Box Model */
+  display: none;
   width: 100%;
+  padding: 0.5rem;
   margin-top: 1rem; }
 
 .manage-posts .date-time {
@@ -1205,9 +1209,11 @@ img:last-child {
   /* Text */
   font-size: 0.8rem; }
 
-.manage-posts .modal_formanagePost {
+.modal_formanagePost {
   /* Positioning */
   position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 998;
   /* Display & Box Model */
   display: none;
@@ -1215,15 +1221,19 @@ img:last-child {
   padding: 1rem;
   box-shadow: 0 10px 20px 10px #00000033; }
 
-.manage-posts .modal_formanagePost i {
+.modal_formanagePost i {
   /* Text */
   font-size: 2rem; }
 
-.manage-posts .modal_formanagePost h3 {
+.modal_formanagePost h3 {
   /* Display & Box Model */
   padding: 0.5rem 0;
   /* Text */
   font-size: 1.2rem; }
+
+.modal_formanagePost button {
+  /* Text */
+  font-size: 0.8rem; }
 
 /* add news button ------------------------------------------------------------------------- */
 .colorful-border-button {

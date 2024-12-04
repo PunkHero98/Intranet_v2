@@ -371,12 +371,17 @@ function deletePicWithModal() {
 }
 
 function enableModal(obj) {
-  const modal = $(".manage-posts .modal_formanagePost");
+  const modal = $(".modal_formanagePost");
   const { top, left } = $(obj).offset();
   const numberOfPictures = deletePicArray.length;
   const windowWidth = $(window).width();
 
-  modal.css({ left: windowWidth / 3, top: top - 90 });
+  // modal.css({ left: windowWidth / 3, top: top - 90 });
+  modal.css({top: top});
+
+  const body = $(".manage-posts");
+  body.css({opacity: '0.8', 'background-color': 'rgba(0,0,0,0.1)'});
+
   modal
     .find("p")
     .text(
@@ -398,7 +403,7 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
       "background-color": opacity ? "#00000010" : "",
     });
   imageContainer.find(".closeBtn").css("opacity", opacity);
-  imageContainer.find(".addPic").css("opacity", opacity);
+  imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
   button.removeClass(prevClass).addClass(newClass).html(innerText);
 }
 

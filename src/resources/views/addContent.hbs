@@ -2,70 +2,84 @@
 <div class="create-content-intranet">
   <div class="content-container m-0 p-0">
     <div class="create-content-box">
-      <form
-        action="content/add"
-        method="POST"
-        enctype="multipart/form-data"
-        id="uploadform"
-      >
+      <form action="content/add" method="POST" enctype="multipart/form-data" id="uploadform">
         <div class="first-row">
           <label class="fw-bold" for="title-input">Title</label>
-          <input
-            class="input-box border-0"
-            type="text"
-            name="title"
-            id="title-input"
-            placeholder="Enter your content title.."
-          />
+          <input class="input-box border-0" type="text" name="title" id="title-input"
+            placeholder="Enter your content title.." />
         </div>
 
         <div class="third-row">
           <label class="fw-bold" for="content-area">Content</label>
-          <textarea
-            class="input-box border-0"
-            name="text_content"
-            id="content-area"
-            placeholder="Write something.."
-          ></textarea>
+          <textarea class="input-box border-0" name="text_content" id="content-area"
+            placeholder="Write something.."></textarea>
         </div>
 
         <div class="fourth-row">
           <label class="fw-bold">Upload Pictures</label>
-          <label class="fw-bold bg-dark-subtle" for="Upload"><i
-              class="fa-regular fa-folder-open"
-            ></i>
+          <label class="fw-bold bg-dark-subtle" for="Upload"><i class="fa-regular fa-folder-open"></i>
             Choose</label>
-          <label class="fw-bold bg-dark-subtle"><i
-              class="fa-solid fa-delete-left"
-            ></i>
+          <label class="fw-bold bg-dark-subtle"><i class="fa-solid fa-delete-left"></i>
             Clear</label>
-          <input
-            type="file"
-            accept="image/jpeg , image/png , image/jpg"
-            id="Upload"
-            name="Imgfiles"
-            hidden
-            multiple
-          />
+          <input type="file" accept="image/jpeg , image/png , image/jpg" id="Upload" name="Imgfiles" hidden multiple />
           <div class="img-container"></div>
         </div>
 
         <div class="last-row text-center">
-          <input
-            class="fw-bold"
-            data-bs-toggle="modal"
-            data-bs-target="#modal-news"
-            type="button"
-            value="Review"
-          />
-          <input
-            class="fw-bold text-white"
-            type="submit"
-            value="Submit"
-            id="submit-btn"
-          />
+          <input class="fw-bold" data-bs-toggle="modal" data-bs-target="#modal-news" type="button" value="Review" />
+          <input class="fw-bold text-white" type="submit" value="Submit" id="submit-btn" />
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="review-content-intranet">
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-outline-danger closeBtn rounded-0 m-0">
+      <i class="fa-solid fa-x text-black"></i>
+    </button>
+  </div>
+  <div class="view-content-intranet">
+    <div class="row justify-content-center m-0">
+      <div class="col-12 bg-white content-view">
+        <div class="slideshow-container position-relative">
+          {{#each result.content_images}}
+          <div class="mySlides">
+            <div class="numbertext text-white"> {{addindex @index}} / {{@root.total}}</div>
+            <div><img src={{this}}></div>
+          </div>
+          {{/each}}
+          <a class="prev text-decoration-none text-white fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
+          <a class="next text-decoration-none text-white fw-bold" onclick="plusSlides1(1)">&#10095;</a>
+        </div>
+
+        <div class="text-center">
+          {{#each result.content_images}}
+          <span class="dot" onclick="currentSlide({{addindex @index}})"></span>
+          {{/each}}
+        </div>
+
+        <h5>{{result.title}}</h5>
+        <p>
+          {{result.content}}
+        </p>
+
+        <ul class="p-0 list-unstyled m-0">
+          <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa fa-user"></i>Mong
+              Thuong</a></li>
+          <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                class="fa-solid fa-clock"></i>2024-11-09</a></li>
+          <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-eye"></i>100
+              Views</a></li>
+          <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-heart"></i></i>Lily
+              and 50 others</a></li>
+          <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-comment"></i>03
+              Comments</a></li>
+          <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-share"></i>02
+              Shares</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
