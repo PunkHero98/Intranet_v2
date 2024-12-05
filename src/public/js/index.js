@@ -308,7 +308,7 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
         <button
           type="button"
           class="btn btn-outline-danger closeBtn rounded-0 m-0"
-          style="opacity: 0"
+          style="opacity: 1"
         >
           <i class="fa-solid fa-x text-white"></i>
         </button>
