@@ -220,8 +220,8 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     });
 
     try {
-      // const response = await fetch("http://localhost:3000/content/add", {
-        const response = await fetch("https://5843-118-69-122-202.ngrok-free.app/content/add", {
+      const response = await fetch("http://localhost:3000/content/add", {
+        // const response = await fetch("https://5843-118-69-122-202.ngrok-free.app/content/add", {
         method: "POST",
         body: formData,
       });
@@ -346,20 +346,17 @@ $(".manage-posts").on("click", ".update_manage", async function () {
 
     const dataJson = JSON.stringify(editContentJson);
     console.log(dataJson);
-    const windowHeight = $(window).height();
 
     $(".loader").css({
       display: "block",
-      // top: windowHeight / 3,
     });
 
     $(".manage-posts").css({
       filter: "blur(5px)",
-      "background-color": "",
     });
 
-    // const result = await fetch("http://localhost:3000/manage/update", {
-    const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
+    const result = await fetch("http://localhost:3000/manage/update", {
+      // const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: dataJson,
@@ -367,8 +364,19 @@ $(".manage-posts").on("click", ".update_manage", async function () {
 
     const data = await result.text();
     setInterval(() => {
-      window.location.href = "/manage";
-    }, 3000);
+      $(".alert-intranet").css("display", "block");
+
+      setInterval(() => {
+        window.location.href = "/manage";
+      }, 3000);
+      $(".loader").css({
+        display: "none",
+      });
+
+      $(".manage-posts").css({
+        filter: "",
+      });
+    }, 1000);
   } catch (err) {
     $(".loader").css({
       display: "none",

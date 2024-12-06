@@ -1,10 +1,12 @@
 import sql from "mssql";
+import dotevn from "dotenv";
+dotevn.config();
 
 const config = {
-  server: "localhost",
-  database: "Intranet_v2",
-  user: "huylam",
-  password: "1234",
+  server: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   options: {
     trustServerCertificate: true,
     trustedConnection: true,
