@@ -1,16 +1,16 @@
 <!-- view-content-intranet -->
-<div class="view-content-intranet">
+<div class="view-content-intranet bg-white">
     <div class="row justify-content-center m-0">
-        <div class="col-12 bg-white content-view mt-4">
+        <div class="col-12 content-view">
             <div class="slideshow-container position-relative">
                 {{#each result.content_images}}
                 <div class="mySlides">
-                    <div class="numbertext text-white"> {{addindex @index}} / {{@root.total}}</div>
-                    <div><img src={{this}}></div>
+                    <div class="numbertext text-body-tertiary"> {{addindex @index}} / {{@root.total}}</div>
+                    <div class="d-flex justify-content-center"><img src={{this}}></div>
                 </div>
                 {{/each}}
-                <a class="prev text-decoration-none text-white fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
-                <a class="next text-decoration-none text-white fw-bold" onclick="plusSlides1(1)">&#10095;</a>
+                <a class="prev text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
+                <a class="next text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(1)">&#10095;</a>
             </div>
 
             <div class="text-center">
@@ -39,8 +39,8 @@
                         Shares</a></li>
             </ul>
         </div>
-        <hr>
-        <div class="col-12 bg-white comments-view">
+        {{!-- <hr>
+        <div class="col-12 comments-view">
             <h5>05 Comments</h5>
             <hr>
             <div class="row mb-3 m-0">
@@ -93,6 +93,6 @@
                     <input class="btn btn-primary btn-sm" id="submitbtn" type="submit" value="Send" />
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
