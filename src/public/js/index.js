@@ -309,7 +309,7 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
         <button
           type="button"
           class="btn btn-outline-danger closeBtn rounded-0 m-0"
-          style="opacity: 0"
+          style="opacity: 1"
         >
           <i class="fa-solid fa-x text-white"></i>
         </button>
@@ -346,16 +346,13 @@ $(".manage-posts").on("click", ".update_manage", async function () {
 
     const dataJson = JSON.stringify(editContentJson);
     console.log(dataJson);
-    const windowHeight = $(window).height();
 
     $(".loader").css({
       display: "block",
-      // top: windowHeight / 3,
     });
 
     $(".manage-posts").css({
       filter: "blur(5px)",
-      "background-color": "",
     });
 
     $("body").css({
@@ -371,8 +368,19 @@ $(".manage-posts").on("click", ".update_manage", async function () {
 
     const data = await result.text();
     setInterval(() => {
-      window.location.href = "/manage";
-    }, 10000);
+      $(".alert-intranet").css("display", "block");
+
+      setInterval(() => {
+        window.location.href = "/manage";
+      }, 3000);
+      $(".loader").css({
+        display: "none",
+      });
+
+      $(".manage-posts").css({
+        filter: "",
+      });
+    }, 1000);
   } catch (err) {
     $(".loader").css({
       display: "none",

@@ -11,17 +11,18 @@ import sequelize from "./config/db/sequelize.js";
 import sessionStore from "./config/db/sessionstore.js";
 import { addindex, totalindex } from "./app/helpers/adIndex.js";
 import Handlebars from "handlebars";
+import dotenv from "dotenv";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const app = express();
-const port = 3000;
+dotenv.config();
 
+const app = express();
 // connect to Database
 // connectToDB();
 
 app.use(
   session({
-    secret: "low-row-rate",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
@@ -68,8 +69,10 @@ app.use((err, req, res, next) => {
 });
 
 // SERVER Port INIT
-app.listen(port, () => {
-  console.log(`This server is running at http://localhost${port}`);
+app.listen(process.env.SRV_PORT, () => {
+  console.log(
+    `This server is running at http://localhost${process.env.SRV_PORT}`
+  );
 });
 
 sequelize.sync().then(() => {
