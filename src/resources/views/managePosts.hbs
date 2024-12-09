@@ -35,7 +35,7 @@
             {{#if this.content_images}}
               {{#each this.content_images}}
                 <div class="img-box container-{{addindex @this.index}}">
-                  <img src={{this}} alt="" />
+                  <img class="basic_image" src={{this}} alt="" />
                   <button
                     type="button"
                     class="btn btn-outline-danger closeBtn rounded-0 m-0"
@@ -79,7 +79,7 @@
               {{this.id_content}}
             </div>
           </td>
-          <td>Active</td>
+          <td class="content_stage">Active</td>
           <td class="btn_container_table">
             <button
               type="button"

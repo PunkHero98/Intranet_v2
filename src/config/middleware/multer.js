@@ -4,11 +4,15 @@ import { createDir } from "./filsystem.js";
 import { simPliFizeString } from "./assets.js";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const { title, textcontent } = req.body;
-    const newTitle = simPliFizeString(title, true);
+    const { title, imgFolderName } = req.body;
+    const newTitle = title && simPliFizeString(title, true);
     cb(
       null,
-      createDir(req.session.site + "_" + req.session.username + "_" + newTitle)
+      imgFolderName
+        ? path.join("D:\\IMG_Storage", imgFolderName)
+        : createDir(
+            req.session.site + "_" + req.session.username + "_" + newTitle
+          )
     );
   },
   filename: (req, file, cb) => {

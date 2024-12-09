@@ -1,5 +1,12 @@
-import { getContentsByUser, updateContents } from "../models/Contents.model.js";
-import { updateImageinFolder } from "../../config/middleware/filsystem.js";
+import {
+  getContentsByUser,
+  updateContents,
+  updateContentByImageLink,
+} from "../models/Contents.model.js";
+import {
+  updateImageinFolder,
+  getfileinDir,
+} from "../../config/middleware/filsystem.js";
 export default new (class ManageController {
   // [GET] /manage
   async manage(req, res) {
@@ -48,6 +55,24 @@ export default new (class ManageController {
 
       console.log(updateResult);
       res.send("Update data successfully");
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "error fetching profile", error: err.message });
+    }
+  }
+
+  // [POST] /manage/add_news_pics
+  async uploadNewPic(req, res) {
+    try {
+      const { imgFolderName } = req.body;
+      const imageArray = await getfileinDir(imgFolderName);
+      const Jsonarray = JSON.stringify(imageArray);
+      const result = await updateContentByImageLink(
+        imgFolderName,
+        JSON.stringify(imageArray)
+      );
+      res.send(JSON.stringify(result));
     } catch (err) {
       res
         .status(500)

@@ -15,6 +15,18 @@ const getContentByID = async (id) => {
   return (await result).recordset[0];
 };
 
+const updateContentByImageLink = async (link, imgs) => {
+  const pool = await connectToDB();
+  const result = await pool
+    .request()
+    .input("images_link", sql.NVarChar, link)
+    .input("content_images", sql.NVarChar, imgs)
+    .query(
+      "UPDATE contents SET content_images = @content_images OUTPUT inserted.* WHERE images_link =@images_link"
+    );
+  return (await result).recordset;
+};
+
 const getContentsByUser = async (user) => {
   const pool = await connectToDB();
   const result = (await pool)
@@ -101,4 +113,5 @@ export {
   getContentsByUser,
   addContent,
   updateContents,
+  updateContentByImageLink,
 };

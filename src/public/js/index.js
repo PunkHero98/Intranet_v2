@@ -252,25 +252,31 @@ function getRowElements(obj) {
     title: row.find("td.title"),
     imageContainer: row.find("td.image_container"),
     dateTime: row.find("td.date_time"),
+    contentStage: row.find("td.content_stage"),
   };
 }
 
-$(".manage-posts").on("click", ".table-group-divider .editBtn", function () {
-  const button = $(this);
-  const isEditing = button.html() === "Edit";
-  const isSaving = button.html() === "Save";
+$(".manage-posts").on(
+  "click",
+  ".table-group-divider .editBtn",
+  async function () {
+    const button = $(this);
+    const isEditing = button.html() === "Edit";
+    const isSaving = button.html() === "Save";
 
-  if (isEditing) {
-    changeEditBtn(button, "btn-primary", "btn-success", "Save", 1);
-    editContentTitle(button);
-  } else if (isSaving) {
-    changeEditBtn(button, "btn-success", "btn-primary", "Edit", 0);
-    saveContentTitle(button);
-    pushOrUpdate(editContentJson, generateJsonForEdit(button));
-    check_update();
-    console.log(editContentJson);
+    if (isEditing) {
+      changeEditBtn(button, "btn-primary", "btn-success", "Save", 1);
+      editContentTitle(button);
+    } else if (isSaving) {
+      changeEditBtn(button, "btn-success", "btn-primary", "Edit", 0);
+      saveContentTitle(button);
+      await pushNewPicToServer(button);
+      pushOrUpdate(editContentJson, generateJsonForEdit(button));
+      check_update();
+      console.log(editContentJson);
+    }
   }
-});
+);
 
 $(".manage-posts").on("click", ".image_container .closeBtn", function () {
   const closeBtn = $(this);
@@ -296,12 +302,22 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   const addPicBtn = $(this);
   const input = addPicBtn.siblings("input.fileListForManage");
   const lengthofImage = addPicBtn.parent().children(".img-box").length;
-
+  console.log(lengthofImage);
+  if (lengthofImage >= 6) {
+    $(".alert-intranet").css("display", "block");
+    $(".alert-intranet strong").html("Warning ! ");
+    $(".alert-intranet span").html("Maximum number of pictures are 6.");
+    $(".alert-intranet").removeClass("alert-success");
+    $(".alert-intranet").addClass("alert-warning");
+    return;
+  }
   input.click();
-
-  input.change((e) => {
+  input.off("change").change((e) => {
     handleChoosePicture(e);
-
+    const limitNum = Imgsarray.length + lengthofImage;
+    if (limitNum > 6) {
+      Imgsarray = Imgsarray.slice(0, 6 - lengthofImage);
+    }
     const imgElements = Imgsarray.map((f, index) => {
       const imgElement = `
       <div class="img-box container-${index + lengthofImage + 1}">
@@ -322,9 +338,9 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
       return imgElement;
     });
     addPicBtn.before(imgElements.join(""));
+    input.val("");
   });
 });
-
 // ------------
 $(".cancelBtn_for_managePost").on("click", function () {
   deletePicArray.forEach((f) =>
@@ -388,6 +404,111 @@ $(".manage-posts").on("click", ".update_manage", async function () {
     console.log("error fetching data: ", err);
   }
 });
+
+// btn for deleted (not fully functional)
+$(".manage-posts").on("click", ".btn-danger", function () {
+  getRowElements(this).contentStage.html("deleted");
+});
+
+async function pushNewPicToServer(obj) {
+  const { imageContainer } = getRowElements(obj);
+  const afterEditImgArray = [];
+  const childOfImageContainer = imageContainer.children("div");
+  const numOfBasic = childOfImageContainer.children("img.basic_image").length;
+  const numOfPic = childOfImageContainer.children("img").length;
+
+  if (numOfPic > numOfBasic) {
+    childOfImageContainer.children('img[src^="blob:"]').each(function () {
+      afterEditImgArray.push($(this).attr("src"));
+    });
+    const basic_image = childOfImageContainer
+      .children("img.basic_image")
+      .attr("src")
+      .split("\\")[1];
+    const formData = new FormData();
+    formData.append("imgFolderName", basic_image);
+
+    try {
+      const fetchPromises = afterEditImgArray.map((blobUrl, index) => {
+        return fetch(blobUrl)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const file = new File([blob], `image_${index + 1}.jpg`, {
+              type: blob.type,
+            });
+            formData.append("Imgfiles", file);
+          });
+      });
+
+      await Promise.all(fetchPromises);
+
+      const response = await fetch(
+        "http://localhost:3000/manage/add_news_pics",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const result = await response.json();
+      renderNewPic(obj, result, numOfBasic);
+    } catch (err) {
+      console.error("Error:", err);
+      alert("There was an error submitting the form. Please try again.");
+    }
+  }
+}
+
+function renderNewPic(obj, json, piclength) {
+  const { imageContainer } = getRowElements(obj);
+
+  const basicImage = imageContainer
+    .find("img.basic_image")
+    .map((i, img) => $(img).attr("src"))
+    .get();
+  const content_images = basicImage.map((item) => {
+    const parts = item.split("\\");
+    return parts[parts.length - 1];
+  });
+
+  imageContainer
+    .children("div")
+    .children('img[src^="blob:"]')
+    .parent()
+    .remove();
+
+  const addPic = imageContainer.children(".addPic");
+  const images = JSON.parse(json[0].content_images);
+  const set1 = new Set(content_images);
+  const set2 = new Set(images);
+
+  const diff1 = [...set1].filter((item) => !set2.has(item));
+  const diff2 = [...set2].filter((item) => !set1.has(item));
+
+  const result = [...diff1, ...diff2];
+
+  const link = json[0].images_link;
+  const imageElements = result.map((f, index) => {
+    return `
+      <div class="img-box container-${piclength + index + 1}">
+        <img class="basic_image" src=\\${link}\\${f} alt="" />
+        <button
+          type="button"
+          class="btn btn-outline-danger closeBtn rounded-0 m-0"
+          style="opacity: 0"
+        >
+          <i class="fa-solid fa-x text-white"></i>
+        </button>
+        <input
+          id="stateCheck-${piclength + index + 1}"
+          type="checkbox"
+          style="display: none"
+        />
+      </div>`;
+  });
+
+  addPic.before(imageElements.join(""));
+}
 
 function check_update() {
   if (editContentJson.length) {
@@ -494,7 +615,7 @@ function generateJsonForEdit(button) {
   const anotherdatetime = extracDate(newdatetime);
 
   const images = imageContainer
-    .find("img")
+    .find("img.basic_image")
     .map((i, img) => $(img).attr("src"))
     .get();
 
