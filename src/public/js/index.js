@@ -371,8 +371,12 @@ $(".manage-posts").on("click", ".update_manage", async function () {
       filter: "blur(5px)",
     });
 
+    $("body").css({
+      "user-select": "none"
+    });
+
     const result = await fetch("http://localhost:3000/manage/update", {
-      // const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
+    // const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: dataJson,
@@ -400,6 +404,9 @@ $(".manage-posts").on("click", ".update_manage", async function () {
     $(".manage-posts").css({
       filter: "",
       "background-color": "",
+    });
+    $("body").css({
+      "user-select": ""
     });
     console.log("error fetching data: ", err);
   }

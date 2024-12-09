@@ -1,8 +1,64 @@
 /* Mobile L 425px - 767px */
 @media (min-width: 425px) and (max-width: 767px) {
-  body {
+  body,
+  .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
+  .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
+  .colorful-border-button {
     /* Text */
     font-size: 0.75rem;
+  }
+
+  .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
+  .login-intranet .login input,
+  .welcome-homepage button,
+  .whats-new-intranet .news-content h5,
+  .profile .profile-card h3,
+  .view-content-intranet .prev, 
+  .view-content-intranet .next,
+  .view-content-intranet .comments-view .col-11 input {
+    /* Text */
+    font-size: 0.8rem;
+  }
+
+  .whats-new-intranet .news-content i,
+  .profile .profile-card a,
+  .manage-posts button {
+    /* Text */
+    font-size: 0.7rem;
+  }
+
+  .profile .profile-card h2,
+  .profile .profile-overview h5,
+  .view-content-intranet .col-12 h5 {
+    /* Text */
+    font-size: 1rem;
+  }
+
+  .whats-new-intranet .content-news,
+  .whats-new-intranet .news-img img {
+    /* Display & Box Model */
+    height: 5.8rem;
+  }
+
+  .homepage-intranet,
+  .activities-header,
+  .create-content-intranet,
+  .profile,
+  .view-content-intranet,
+  .manage-posts {
+    /* Display & Box Model */
+    margin-top: 2.5rem;
+    min-height: calc(100vh - 4rem);
+  }
+
+  .homepage-intranet,
+  .activities-body,
+  .create-content-intranet,
+  .profile,
+  .view-content-intranet,
+  .manage-posts {
+    /* Display & Box Model */
+    padding-bottom: 2rem;
   }
 
   /* header ---------------------------------------------------------------------------------- */
@@ -31,21 +87,6 @@
     width: 1%;
   }
 
-  .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6 {
-    /* Text */
-    font-size: 0.8rem;
-  }
-
-  .header-intranet ul.user ul.dropdown-menu li.dropdown-header span {
-    /* Text */
-    font-size: 0.75rem;
-  }
-
-  .header-intranet ul.user ul.dropdown-menu li a.dropdown-item {
-    /* Text */
-    font-size: 0.75rem;
-  }
-
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item i {
     /* Display & Box Model */
     margin-right: 0.5rem;
@@ -63,17 +104,7 @@
     width: 10rem;
   }
 
-  .login-intranet .login input {
-    /* Text */
-    font-size: 0.8rem;
-  }
-
   /* home ------------------------------------------------------------------------------------ */
-  .homepage-intranet {
-    /* Display & Box Model */
-    margin-top: 2.5rem;
-  }
-
   .welcome-homepage h2 {
     /* Text */
     font-size: 1rem;
@@ -84,9 +115,6 @@
     width: auto;
     height: auto;
     margin: 0.1rem !important;
-
-    /* Text */
-    font-size: 0.8rem;
   }
 
   .whats-new-intranet {
@@ -96,18 +124,7 @@
 
   .whats-new-intranet .content-news {
     /* Display & Box Model */
-    height: 5.8rem;
     margin: 0.1rem 0;
-  }
-
-  .whats-new-intranet .news-img img {
-    /* Display & Box Model */
-    height: 5.8rem;
-  }
-
-  .whats-new-intranet .news-content h5 {
-    /* Text */
-    font-size: 0.8rem;
   }
 
   .whats-new-intranet .news-content p {
@@ -118,17 +135,9 @@
   .whats-new-intranet .news-content i {
     /* Display & Box Model */
     -webkit-line-clamp: 1;
-
-    /* Text */
-    font-size: 0.7rem;
   }
 
   /* activities ------------------------------------------------------------------------------ */
-  .activities-header {
-    /* Display & Box Model */
-    margin-top: 2.5rem;
-  }
-
   .activities-header .header-img {
     /* Display & Box Model */
     height: calc(100vh - 2.5rem);
@@ -158,27 +167,9 @@
   }
 
   /* profile --------------------------------------------------------------------------------- */
-  .profile {
-    /* Display & Box Model */
-    margin: 4rem 0 2rem 0;
-  }
-
-  .profile .profile-card a {
-    /* Text */
-    font-size: 0.7rem;
-  }
-
   .profile .profile-card h2 {
     /* Display & Box Model */
     margin: 0.8rem 0;
-
-    /* Text */
-    font-size: 1rem;
-  }
-
-  .profile .profile-card h3 {
-    /* Text */
-    font-size: 0.8rem;
   }
 
   .profile .profile-overview .row {
@@ -189,9 +180,6 @@
   .profile .profile-overview h5 {
     /* Display & Box Model */
     padding: 0.5rem 0;
-
-    /* Text */
-    font-size: 1rem;
   }
 
   .profile .profile-edit button {
@@ -200,16 +188,6 @@
   }
 
   /* view content ---------------------------------------------------------------------------- */
-  .view-content-intranet {
-    /* Display & Box Model */
-    padding-top: 2.5rem;
-  }
-
-  .view-content-intranet .col-12 h5 {
-    /* Text */
-    font-size: 1rem;
-  }
-
   .view-content-intranet .mySlides div:last-child {
     /* Display & Box Model */
     height: 15rem;
@@ -228,9 +206,6 @@
 
     /* Display & Box Model */
     padding: 0.7rem;
-
-    /* Text */
-    font-size: 0.8rem;
   }
 
   .view-content-intranet .numbertext {
@@ -252,17 +227,7 @@
     font-size: 0.9rem;
   }
 
-  .view-content-intranet .comments-view .col-11 input {
-    /* Text */
-    font-size: 0.8rem;
-  }
-
   /* create content -------------------------------------------------------------------------- */
-  .create-content-intranet {
-    /* Display & Box Model */
-    padding-top: 3rem;
-  }
-
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
     padding: 1rem;
@@ -296,21 +261,13 @@
   /* manage posts ---------------------------------------------------------------------------- */
   .manage-posts {
     /* Display & Box Model */
-    margin-top: 3rem;
-  }
-
-  .manage-posts button {
-    /* Text */
-    font-size: 0.7rem;
+    padding-top: 0.5rem;
   }
 
   /* add news button ------------------------------------------------------------------------- */
   .colorful-border-button {
     /* Positioning */
-    bottom: 0.6rem;
+    bottom: 0.7rem;
     right: -1.5rem;
-
-    /* Text */
-    font-size: 0.75rem;
   }
 }

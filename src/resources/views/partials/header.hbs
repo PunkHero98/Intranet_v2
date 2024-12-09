@@ -44,38 +44,38 @@
         <ul class="navbar-nav countries">
           <!-- australia -->
           <li class="nav-item mx-1">
-            <form action="http://localhost:3000/activities" method="post">
-              {{! <form action="https://5843-118-69-122-202.ngrok-free.app/activities" method="post"> }}
-              <button name="site" value="Australia">Australia</button>
+            <form class="d-flex h-100" action="http://localhost:3000/activities" method="post">
+            {{!-- <form action="https://5843-118-69-122-202.ngrok-free.app/activities" method="post"> --}}
+              <button class="fw-bold" name="site" value="Australia">Australia</button>
             </form>
           </li>
 
           <!-- new zealand -->
           <li class="nav-item mx-1">
-            <form action="http://localhost:3000/activities" method="post">
-              <button name="site" value="New Zealand">New Zealand</button>
+            <form class="d-flex h-100" action="http://localhost:3000/activities" method="post">
+              <button class="fw-bold" name="site" value="New Zealand">New Zealand</button>
             </form>
           </li>
 
           <!-- thailand -->
           <li class="nav-item mx-1">
-            <form action="http://localhost:3000/activities" method="post">
-              <button name="site" value="Thailand">Thailand</button>
+            <form class="d-flex h-100" action="http://localhost:3000/activities" method="post">
+              <button class="fw-bold" name="site" value="Thailand">Thailand</button>
             </form>
           </li>
 
           <!-- vietnam -->
           <li class="nav-item mx-1">
-            <form action="http://localhost:3000/activities" method="post">
-              {{! <form action="https://5843-118-69-122-202.ngrok-free.app/activities" method="post"> }}
-              <button name="site" value="Vietnam">Vietnam</button>
+            <form class="d-flex h-100" action="http://localhost:3000/activities" method="post">
+            {{!-- <form action="https://5843-118-69-122-202.ngrok-free.app/activities" method="post"> --}}
+              <button class="fw-bold" name="site" value="Vietnam">Vietnam</button>
             </form>
           </li>
 
           <!-- philippines -->
           <li class="nav-item mx-1">
-            <form action="http://localhost:3000/activities" method="post">
-              <button name="site" value="Philippines">Philippines</button>
+            <form class="d-flex h-100" action="http://localhost:3000/activities" method="post">
+              <button class="fw-bold" name="site" value="Philippines">Philippines</button>
             </form>
           </li>
         </ul>
@@ -99,12 +99,12 @@
               <span class="ps-2">{{username}}</span>
             </a>
             <ul
-              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile border-0 rounded-0"
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow border-0 rounded-0"
             >
               <!-- full name and role -->
               <li class="dropdown-header text-black text-center">
                 {{#if username}}
-                  <h6>{{username}}</h6>
+                  <h6>{{fullname}}</h6>
                   <span>{{role}}</span>
                 {{else}}
                   <h6>huylam</h6>
