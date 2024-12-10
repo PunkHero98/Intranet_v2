@@ -482,6 +482,23 @@ label:nth-child(n + 2) {
 .create-content-box
 .fourth-row
 .img-container
+.added-pic-x {
+  position: relative;
+  left: 18rem;
+  top: 0.7rem;
+  color: white; }
+
+.create-content-intranet
+.create-content-box
+.fourth-row
+.img-container
+.added-pic-x:hover {
+  padding: 0 0, 2rem; }
+
+.create-content-intranet
+.create-content-box
+.fourth-row
+.img-container
 img:last-child {
   /* Display & Box Model */
   margin-right: 0; }

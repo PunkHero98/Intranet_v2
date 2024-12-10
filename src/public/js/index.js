@@ -73,9 +73,9 @@ var Imgsarray = [];
 $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
   const imgElements = Imgsarray.map((f, index) => {
-    const imgElement = `<img src="${URL.createObjectURL(
-      f
-    )}" id="added-picture-${index}" />`;
+    const imgElement = `
+    <i class="fa-solid fa-x added-pic-x delete-${index + 1}"></i>
+    <img src="${URL.createObjectURL(f)}" id="added-picture-${index + 1}" />`;
     return imgElement;
   });
   const imgContainer = $($(this).next());
@@ -99,6 +99,9 @@ function handleChoosePicture(event) {
     }
     Imgsarray.push(f);
   });
+  if (Imgsarray.length > 6) {
+    Imgsarray = Imgsarray.slice(0, 6);
+  }
 }
 $(".create-content-intranet .fourth-row label").on("click", function () {
   Imgsarray = [];
@@ -372,11 +375,11 @@ $(".manage-posts").on("click", ".update_manage", async function () {
     });
 
     $("body").css({
-      "user-select": "none"
+      "user-select": "none",
     });
 
     const result = await fetch("http://localhost:3000/manage/update", {
-    // const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
+      // const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: dataJson,
@@ -406,7 +409,7 @@ $(".manage-posts").on("click", ".update_manage", async function () {
       "background-color": "",
     });
     $("body").css({
-      "user-select": ""
+      "user-select": "",
     });
     console.log("error fetching data: ", err);
   }
@@ -580,6 +583,9 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
     });
 
   imageContainer.find(".closeBtn").css("opacity", opacity);
+  imageContainer
+    .find(".closeBtn")
+    .prop("disabled", !imageContainer.find(".closeBtn").prop("disabled"));
   imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
 
   button.removeClass(prevClass).addClass(newClass).html(innerText);
