@@ -4,7 +4,7 @@ import { createDir } from "./filsystem.js";
 import { simPliFizeString } from "./assets.js";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const { title, imgFolderName } = req.body;
+    const { title, textcontent, imgFolderName } = req.body;
     const newTitle = title && simPliFizeString(title, true);
     cb(
       null,

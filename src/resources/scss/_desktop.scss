@@ -552,6 +552,14 @@ body,
   /* Text */
   font-size: 1.1rem;
 }
+/* review content -------------------------------------------------------------------------- */
+.review-content-intranet {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  display: none;
+}
 
 /* create content -------------------------------------------------------------------------- */
 .create-content-intranet .create-content-box form {

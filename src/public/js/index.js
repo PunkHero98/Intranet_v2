@@ -69,7 +69,8 @@ $(".welcome-homepage .col-12 #team").on("click", function () {
 // ---------------Choose Picture function---------------
 
 var Imgsarray = [];
-
+var ImageAfterDelete = [];
+var latestArray = [];
 $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
   const imgElements = Imgsarray.map((f, index) => {
@@ -112,93 +113,67 @@ $(".create-content-intranet .fourth-row label").on("click", function () {
   fileInput.value = "";
 });
 
+// delete individual pictures (not fully functional)
+$(".create-content-intranet .fourth-row .img-container").on(
+  "click",
+  ".added-pic-x",
+  function () {
+    const id = $(this).next().attr("id");
+    const newID = parseInt(id.slice(id.length - 1, id.length)) - 1;
+    ImageAfterDelete.push(Imgsarray[newID]);
+    $(this).next().remove();
+    $(this).remove();
+    let uniqueArr1 = Imgsarray.filter(
+      (item) => !new Set(ImageAfterDelete).has(item)
+    );
+    let uniqueArr2 = ImageAfterDelete.filter(
+      (item) => !new Set(Imgsarray).has(item)
+    );
+
+    latestArray = [...uniqueArr1, ...uniqueArr2];
+  }
+);
+
 // ----------------------------------------------------
 
 // review function
-$('.activities-body .last-row input[type="button"]').on("click", function (e) {
-  bindingContentandTitle();
-
-  Imgsarray.forEach((f, index) => {
-    if (index === 0) {
-      $(".modal-news .modal-body .col-4 .button.row").before(
-        `<img src="" class="first-imgs" id="modal-added-picture-${index}" />`
-      );
-      $(".modal-news .modal-body .col-4 .button.row").after(`
-        <div class="row-thumbnail">
-        <div class="column-${index}"><img src="" onclick="currentSlide(${
-        index + 1
-      })" id="thumbnail-pictured-${index}"/></div>
-        </div>`);
-    } else if (index >= 1 && index <= 5) {
-      $(
-        `.modal-news .modal-body .col-4 #modal-added-picture-${index - 1}`
-      ).after(
-        `<img src="" class="first-imgs" id="modal-added-picture-${index}" />`
-      );
-      $(`.modal-news .modal-body .col-4 .column-${index - 1}`).after(
-        `<div class="column-${index}"><img src="" onclick="currentSlide(${
-          index + 1
-        })" id="thumbnail-pictured-${index}"/></div>`
-      );
-    }
-    $($(`.modal-news .modal-body .col-4 img`)[index]).attr(
-      "src",
-      URL.createObjectURL(f)
-    );
-    $(`.modal-news .modal-body .col-4 #thumbnail-pictured-${index}`).attr(
-      "src",
-      URL.createObjectURL(f)
-    );
-  });
-  e.preventDefault();
+$(".review-content-intranet .col-12 > div  .closeBtn").on("click", function () {
+  $(this).parents(".review-content-intranet").css("display", "none");
 });
-
-function bindingContentandTitle() {
-  const title = $("#title-input").val();
-  const content = $(".activities-body .third-row textarea").val();
-  if (!Imgsarray.length == 0) {
-    $(".modal-news .modal-body .col-4").html(
-      '<div class="button row"><span onclick="plusSlides(-1)" class="prev"></span><span onclick="plusSlides(1)" class="next"></span></div>'
-    );
+$('.create-content-intranet .last-row input[value="Review"]').on(
+  "click",
+  function (e) {
+    $(".review-content-intranet").css("display", "block");
+    const title = $(".create-content-intranet #title-input").val().trim();
+    const content = $(".create-content-intranet #content-area").val().trim();
+    const reviewModal = $(".review-content-intranet .slideshow-container");
+    const review = $(".review-content-intranet .col-12");
+    review.children("h5").text(title);
+    review.children("p").text(content);
+    const imgLength = latestArray.length;
+    const upperImageElements = latestArray.map((f, index) => {
+      return `<div class="mySlides">
+              <div class="numbertext text-body-tertiary">
+                ${index + 1}
+                /${imgLength}</div>
+              <div class="d-flex justify-content-center"><img src=${URL.createObjectURL(
+                f
+              )} /></div>
+            </div>`;
+    });
+    const lowerImageElements = latestArray.map((f, index) => {
+      return `<span
+              class="dot"
+              onclick="currentSlide(${index + 1})"
+            ></span>
+            `;
+    });
+    reviewModal.children(".prev").before(upperImageElements.join(""));
+    review.children(".text-center").append(lowerImageElements.join(""));
+    e.preventDefault();
+    showSlides1(1);
   }
-  $(".modal-news .modal-body .col-8").children("h5").text(title);
-  $(".modal-news .modal-body .col-8").children("p").text(content);
-}
-let slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-  showSlides((slideIndex += n));
-}
-
-function currentSlide(n) {
-  showSlides((slideIndex = n));
-}
-
-function showSlides(n) {
-  let i;
-  let slides = $(".modal-news .modal-content .modal-body .col-4 .first-imgs");
-  let dots = $(
-    ".modal-news .modal-content .modal-body .col-4 .row-thumbnail img"
-  );
-  let captionText = document.getElementById("caption");
-  if (n > slides.length) {
-    slideIndex = 1;
-  }
-  if (n < 1) {
-    slideIndex = slides.length;
-  }
-  for (i = 0; i < slides.length; i++) {
-    $(slides[i]).css("display", "none");
-  }
-  for (i = 0; i < dots.length; i++) {
-    $(dots[i]).removeClass("active-modal");
-  }
-  $(slides[slideIndex - 1]).css("display", "block");
-  $(dots[slideIndex - 1]).addClass("active-modal");
-  // captionText.innerHTML = dots[slideIndex - 1].alt;
-}
-
+);
 // ----------------------------------------------------
 
 // submit function
@@ -208,9 +183,10 @@ $(".create-content-intranet .create-content-box #uploadform").on(
   async function (event) {
     event.preventDefault();
 
+    console.log(latestArray);
     const title = $(".create-content-intranet .first-row input").val();
     const textcontent = $(".create-content-intranet .third-row textarea").val();
-    if (Imgsarray.length === 0) {
+    if (latestArray.length === 0) {
       alert("Please choose at least 1 picture");
       return;
     }
@@ -218,7 +194,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     const formData = new FormData();
     formData.append("title", title);
     formData.append("textcontent", textcontent);
-    Imgsarray.forEach((image, index) => {
+    latestArray.forEach((image, index) => {
       formData.append("Imgfiles", image);
     });
 
