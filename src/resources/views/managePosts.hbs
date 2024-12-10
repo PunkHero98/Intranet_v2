@@ -4,10 +4,7 @@
     <h5>Manage Posts</h5>
     <div>
       <button class="refesh_manage btn btn-warning">Refresh</button>
-      <button
-        class="update_manage btn btn-success mx-3"
-        disabled
-      >Update</button>
+      <button class="update_manage btn btn-success mx-3" disabled>Update</button>
     </div>
   </div>
 
@@ -26,70 +23,47 @@
     <tbody class="table-group-divider">
 
       {{#each result}}
-        <tr>
-          <td class="newId">{{addindex @index}}</td>
-          <td class="title">{{this.title}}</td>
-          <td class="content">{{this.content}}</td>
-          <td class="image_container">
+      <tr>
+        <td class="newId">{{addindex @index}}</td>
+        <td class="title">{{this.title}}</td>
+        <td class="content">{{this.content}}</td>
+        <td class="image_container">
 
-            {{#if this.content_images}}
-              {{#each this.content_images}}
-                <div class="img-box container-{{addindex @this.index}}">
-                  <img class="basic_image" src={{this}} alt="" />
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger closeBtn rounded-0 m-0"
-                    style="opacity: 0 "
-                    disabled
-                  >
-                    <i class="fa-solid fa-x text-white"></i>
-                  </button>
+          {{#if this.content_images}}
+          {{#each this.content_images}}
+          <div class="img-box container-{{addindex @this.index}}">
+            <img class="basic_image" src={{this}} alt="" />
+            <button type="button" class="btn btn-outline-danger closeBtn rounded-0 m-0" style="opacity: 0 " disabled>
+              <i class="fa-solid fa-x text-white"></i>
+            </button>
 
-                  <input
-                    id="stateCheck-{{addindex @this.index}}"
-                    type="checkbox"
-                    style="display: none"
-                  />
-                </div>
-              {{/each}}
-            {{else}}
-              <div class="container-0">
-                <input
-                  id="stateCheck-0"
-                  type="checkbox"
-                  style="display: none"
-                />
-                <img src='alt=""' />
-              </div>
-            {{/if}}
+            <input id="stateCheck-{{addindex @this.index}}" type="checkbox" style="display: none" />
+          </div>
+          {{/each}}
+          {{else}}
+          <div class="container-0">
+            <input id="stateCheck-0" type="checkbox" style="display: none" />
+            <img src='alt=""' />
+          </div>
+          {{/if}}
 
-            <button type="button" class="btn btn-outline-success addPic"><i
-                class="fa-solid fa-plus"
-              ></i>
-              Add more pictures</button>
-            <input
-              accept="image/jpeg , image/png , image/jpg"
-              style="display: none;"
-              type="file"
-              class="fileListForManage input-{{addindex @index}}"
-              multiple
-            />
-          </td>
-          <td class="date_time">{{this.date_time}}
-            <div style="display:none">
-              {{this.id_content}}
-            </div>
-          </td>
-          <td class="content_stage">Active</td>
-          <td class="btn_container_table">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm editBtn d-flex"
-            >Edit</button>
-            <button type="button" class="btn btn-secondary btn-sm">Hide</button>
-            <button type="button" class="btn btn-danger btn-sm">Delete</button>
-          </td>
-        </tr>
+          <button type="button" class="btn btn-outline-success addPic"><i class="fa-solid fa-plus"></i>
+            Add more pictures</button>
+          <input accept="image/jpeg , image/png , image/jpg" style="display: none;" type="file"
+            class="fileListForManage input-{{addindex @index}}" multiple />
+        </td>
+        <td class="date_time">{{this.date_time}}
+          <div style="display:none">
+            {{this.id_content}}
+          </div>
+        </td>
+        <td class="content_stage">Active</td>
+        <td class="btn_container_table">
+          <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button>
+          <button type="button" class="btn btn-secondary btn-sm">Hide</button>
+          <button type="button" class="btn btn-danger btn-sm">Delete</button>
+        </td>
+      </tr>
       {{/each}}
     </tbody>
   </table>

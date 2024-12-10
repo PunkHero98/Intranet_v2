@@ -172,7 +172,7 @@ body,
 }
 
 .profile .profile-card img,
-.create-content-intranet .create-content-box .fourth-row .img-container img {
+.create-content-intranet .create-content-box .fourth-row .img-container .small-img-container img {
   /* Other */
   object-fit: cover;
 }
@@ -552,6 +552,7 @@ body,
   /* Text */
   font-size: 1.1rem;
 }
+
 /* review content -------------------------------------------------------------------------- */
 .review-content-intranet {
   position: absolute;
@@ -572,46 +573,40 @@ body,
   height: 10rem;
 }
 
-.create-content-intranet
-  .create-content-box
-  .fourth-row
-  label:nth-child(n + 2) {
+.create-content-intranet .create-content-box .fourth-row label:nth-child(n + 2) {
   /* Display & Box Model */
   margin-left: 0.5rem;
   padding: 0.2rem 0.5rem;
   border: 1px solid $white-color;
 }
 
-.create-content-intranet .create-content-box .fourth-row .img-container img {
+.create-content-intranet .create-content-box .fourth-row .img-container .small-img-container {
+  /* Positioning */
+  position: relative;
+
   /* Display & Box Model */
   width: calc((100% - 20px) / 6);
   height: 10rem;
   margin-right: 4px;
 }
 
-.create-content-intranet
-  .create-content-box
-  .fourth-row
-  .img-container
-  .added-pic-x {
-  position: relative;
-  left: 18rem;
-  top: 0.7rem;
-  color: white;
-}
-.create-content-intranet
-  .create-content-box
-  .fourth-row
-  .img-container
-  .added-pic-x:hover {
-  padding: 0 0, 2rem;
+.create-content-intranet .create-content-box .fourth-row .img-container .small-img-container img {
+  /* Display & Box Model */
+  width: 100%;
+  height: 100%;
 }
 
-.create-content-intranet
-  .create-content-box
-  .fourth-row
-  .img-container
-  img:last-child {
+.create-content-intranet .create-content-box .fourth-row .img-container .small-img-container .added-pic-x {
+  /* Positioning */
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  /* Text */
+  font-size: 0.8rem;
+}
+
+.create-content-intranet .create-content-box .fourth-row .img-container img:last-child {
   /* Display & Box Model */
   margin-right: 0;
 }
@@ -807,13 +802,13 @@ body,
   transform: translate(-50%, -50%);
 }
 
-.loader div > div:first-child {
+.loader div>div:first-child {
   /* Display & Box Model */
   width: 3rem;
   height: 3rem;
 }
 
-.loader div > div:last-child {
+.loader div>div:last-child {
   /* Display & Box Model */
   margin-left: 1rem !important;
 
