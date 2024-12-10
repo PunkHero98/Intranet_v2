@@ -75,8 +75,12 @@ $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
   const imgElements = Imgsarray.map((f, index) => {
     const imgElement = `
-    <i class="fa-solid fa-x added-pic-x delete-${index + 1}"></i>
-    <img src="${URL.createObjectURL(f)}" id="added-picture-${index + 1}" />`;
+    <div class="small-img-container">
+      <img src="${URL.createObjectURL(f)}" id="added-picture-${index + 1}" />
+      <button type="button" class="btn btn-outline-danger rounded-0 m-0 added-pic-x delete-${index + 1}">
+        <i class="fa-solid fa-x"></i>
+      </button>
+    </div>`;
     return imgElement;
   });
   const imgContainer = $($(this).next());
@@ -121,8 +125,7 @@ $(".create-content-intranet .fourth-row .img-container").on(
     const id = $(this).next().attr("id");
     const newID = parseInt(id.slice(id.length - 1, id.length)) - 1;
     ImageAfterDelete.push(Imgsarray[newID]);
-    $(this).next().remove();
-    $(this).remove();
+    $(this).parent().parent.remove();
     let uniqueArr1 = Imgsarray.filter(
       (item) => !new Set(ImageAfterDelete).has(item)
     );
