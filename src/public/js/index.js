@@ -73,17 +73,21 @@ var ImageAfterDelete = [];
 var latestArray = [];
 $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
+  displayImage(this);
+});
+function displayImage(obj) {
   const imgElements = Imgsarray.map((f, index) => {
     const imgElement = `
-    <i class="fa-solid fa-x added-pic-x delete-${index + 1}"></i>
-    <img src="${URL.createObjectURL(f)}" id="added-picture-${index + 1}" />`;
+    
+    <img src="${URL.createObjectURL(f)}" id="added-picture-${
+      index + 1
+    }" data-index='${index}' />`;
     return imgElement;
   });
-  const imgContainer = $($(this).next());
+  const imgContainer = $($(obj).next());
   imgContainer.empty();
   imgContainer.append(imgElements.join(""));
-});
-
+}
 function handleChoosePicture(event) {
   $($(".create-content-intranet .fourth-row input").next()).css(
     "display",
@@ -134,6 +138,15 @@ $(".create-content-intranet .fourth-row .img-container").on(
   }
 );
 
+// sort function for add-news
+$(".create-content-intranet .fourth-row .img-container").sortable({
+  update: function (event, ui) {
+    const neworder = $(this).sortable("toArray", { attribute: "data-index" });
+    Imgsarray = neworder.map((index) => Imgsarray[parseInt(index)]);
+    displayImage($(".create-content-intranet .fourth-row input"));
+    console.log(Imgsarray);
+  },
+});
 // ----------------------------------------------------
 
 // review function
