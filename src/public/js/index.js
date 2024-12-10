@@ -390,7 +390,7 @@ $(".manage-posts").on("click", ".update_manage", async function () {
       $(".alert-intranet").css("display", "block");
 
       setInterval(() => {
-        window.location.href = "/manage";
+        location.reload();
       }, 3000);
       $(".loader").css({
         display: "none",
@@ -428,6 +428,7 @@ async function pushNewPicToServer(obj) {
   const numOfPic = childOfImageContainer.children("img").length;
 
   if (numOfPic > numOfBasic) {
+    obj.html('<i class="fa fa-spinner fa-spin"></i>Saving');
     childOfImageContainer.children('img[src^="blob:"]').each(function () {
       afterEditImgArray.push($(this).attr("src"));
     });
@@ -462,6 +463,9 @@ async function pushNewPicToServer(obj) {
 
       const result = await response.json();
       renderNewPic(obj, result, numOfBasic);
+      setTimeout(() => {
+        obj.html("Edit");
+      }, 1000);
     } catch (err) {
       console.error("Error:", err);
       alert("There was an error submitting the form. Please try again.");
