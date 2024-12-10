@@ -24,7 +24,8 @@ body,
 
 .whats-new-intranet .news-content i,
 .profile .profile-card a,
-.manage-posts button {
+.manage-posts button,
+.manage-posts button i {
   /* Text */
   font-size: 0.8rem; }
 
@@ -585,6 +586,9 @@ img:last-child {
   /* Display & Box Model */
   margin: 0.1rem 0; }
 
+.manage-posts button i {
+  margin: auto 0.2rem auto 0; }
+
 .modal_formanagePost {
   /* Positioning */
   position: absolute;
@@ -683,7 +687,8 @@ img:last-child {
     font-size: 0.9rem; }
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
-  .manage-posts button {
+  .manage-posts button,
+  .manage-posts button i {
     /* Text */
     font-size: 0.7rem; }
   .profile .profile-card h2,
@@ -859,7 +864,8 @@ img:last-child {
     font-size: 0.8rem; }
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
-  .manage-posts button {
+  .manage-posts button,
+  .manage-posts button i {
     /* Text */
     font-size: 0.7rem; }
   .profile .profile-card h2,
@@ -1043,7 +1049,8 @@ label:nth-child(n + 2) {
     font-size: 0.75rem; }
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
-  .manage-posts button {
+  .manage-posts button,
+  .manage-posts button i {
     /* Text */
     font-size: 0.7rem; }
   .profile .profile-card h2,
