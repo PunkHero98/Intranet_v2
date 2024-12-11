@@ -24,7 +24,7 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn kích thước file là 5MB
   fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png|gif/;
+    const fileTypes = /jpeg|jpg|png|gif|webp/;
     const mimeType = fileTypes.test(file.mimetype);
     const extName = fileTypes.test(
       path.extname(file.originalname).toLowerCase()

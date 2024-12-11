@@ -77,21 +77,27 @@ $(".create-content-intranet .fourth-row input").on("change", function (e) {
 });
 function displayImage(obj) {
   const imgElements = Imgsarray.map((f, index) => {
-    const imgElement = `
-    <div class="small-img-container">
-      <img src="${URL.createObjectURL(f)}" id="added-picture-${index + 1}" />
-      <button type="button" class="btn btn-outline-danger rounded-0 m-0 added-pic-x delete-${
+    if (f && f instanceof File) {
+      const imgElement = `
+        <div class="small-img-container" data-index="${index}">
+          <img src="${URL.createObjectURL(f)}" id="added-picture-${
         index + 1
-      }">
-        <i class="fa-solid fa-x"></i>
-      </button>
-    </div>`;
-    return imgElement;
+      }" />
+          <button type="button" class="btn btn-outline-danger rounded-0 m-0 added-pic-x delete-${
+            index + 1
+          }">
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>`;
+      return imgElement;
+    }
+    return "";
   });
   const imgContainer = $($(obj).next());
   imgContainer.empty();
   imgContainer.append(imgElements.join(""));
 }
+
 function handleChoosePicture(event) {
   $($(".create-content-intranet .fourth-row input").next()).css(
     "display",
@@ -121,25 +127,30 @@ $(".create-content-intranet .fourth-row label").on("click", function () {
   fileInput.value = "";
 });
 
-// delete individual pictures (not fully functional)
-$(".create-content-intranet .fourth-row .img-container").on(
+$(".create-content-intranet").on(
   "click",
-  ".added-pic-x",
+  ".img-container .small-img-container .added-pic-x",
   function () {
-    const id = $(this).next().attr("id");
-    const newID = parseInt(id.slice(id.length - 1, id.length)) - 1;
-    ImageAfterDelete.push(Imgsarray[newID]);
-    $(this).parent().parent.remove();
-    let uniqueArr1 = Imgsarray.filter(
-      (item) => !new Set(ImageAfterDelete).has(item)
-    );
-    let uniqueArr2 = ImageAfterDelete.filter(
-      (item) => !new Set(Imgsarray).has(item)
-    );
-
-    latestArray = [...uniqueArr1, ...uniqueArr2];
+    const id = $(this).parent().attr("data-index");
+    Imgsarray.splice(id, 1);
+    $(this).parent().remove();
+    restructureTabindex();
   }
 );
+
+function restructureTabindex(index) {
+  const array = [];
+  const image_container = $(
+    ".create-content-intranet .fourth-row .img-container .small-img-container"
+  );
+
+  image_container.each(function () {
+    array.push($(this));
+  });
+  array.forEach((f, num) => {
+    f.attr("data-index", num);
+  });
+}
 
 // sort function for add-news
 $(".create-content-intranet .fourth-row .img-container").sortable({
@@ -147,7 +158,6 @@ $(".create-content-intranet .fourth-row .img-container").sortable({
     const neworder = $(this).sortable("toArray", { attribute: "data-index" });
     Imgsarray = neworder.map((index) => Imgsarray[parseInt(index)]);
     displayImage($(".create-content-intranet .fourth-row input"));
-    console.log(Imgsarray);
   },
 });
 // ----------------------------------------------------
@@ -166,8 +176,10 @@ $('.create-content-intranet .last-row input[value="Review"]').on(
     const review = $(".review-content-intranet .col-12");
     review.children("h5").text(title);
     review.children("p").text(content);
-    const imgLength = latestArray.length;
-    const upperImageElements = latestArray.map((f, index) => {
+    reviewModal.children().not("a").remove();
+    review.children(".text-center").empty();
+    const imgLength = Imgsarray.length;
+    const upperImageElements = Imgsarray.map((f, index) => {
       return `<div class="mySlides">
               <div class="numbertext text-body-tertiary">
                 ${index + 1}
@@ -177,7 +189,7 @@ $('.create-content-intranet .last-row input[value="Review"]').on(
               )} /></div>
             </div>`;
     });
-    const lowerImageElements = latestArray.map((f, index) => {
+    const lowerImageElements = Imgsarray.map((f, index) => {
       return `<span
               class="dot"
               onclick="currentSlide(${index + 1})"
@@ -198,11 +210,9 @@ $(".create-content-intranet .create-content-box #uploadform").on(
   "submit",
   async function (event) {
     event.preventDefault();
-
-    console.log(latestArray);
     const title = $(".create-content-intranet .first-row input").val();
     const textcontent = $(".create-content-intranet .third-row textarea").val();
-    if (latestArray.length === 0) {
+    if (Imgsarray.length === 0) {
       alert("Please choose at least 1 picture");
       return;
     }
@@ -210,7 +220,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     const formData = new FormData();
     formData.append("title", title);
     formData.append("textcontent", textcontent);
-    latestArray.forEach((image, index) => {
+    Imgsarray.forEach((image, index) => {
       formData.append("Imgfiles", image);
     });
 
