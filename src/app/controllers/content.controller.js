@@ -7,6 +7,7 @@ export default new (class ContentController {
   async show(req, res) {
     try {
       const result = await getContentByID(req.params.slug);
+      result.content = JSON.parse(result.content);
       result.content_images = JSON.parse(result.content_images).map((file) => {
         return `\\${result.images_link}\\${file}`;
       });

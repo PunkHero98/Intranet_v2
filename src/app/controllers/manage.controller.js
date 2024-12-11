@@ -14,6 +14,7 @@ export default new (class ManageController {
       const username = req.session.username;
       const result = await getContentsByUser(username);
       result.forEach((f) => {
+        f.content = JSON.parse(f.content);
         f.content_images = JSON.parse(f.content_images).map((item) => {
           return "\\" + f.images_link + "\\" + item;
         });

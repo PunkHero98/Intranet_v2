@@ -24,7 +24,15 @@ const getfileinDir = (name) => {
         reject("Lỗi khi đọc thư mục: " + err);
         return;
       }
-      const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
+      const imageExtensions = [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".gif",
+        ".webp",
+        ".heif",
+        ".svg",
+      ];
       const imageFiles = files.filter((file) => {
         const extname = path.extname(file).toLowerCase();
         return imageExtensions.includes(extname);

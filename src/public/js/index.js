@@ -213,8 +213,11 @@ $(".create-content-intranet .create-content-box #uploadform").on(
   async function (event) {
     event.preventDefault();
     const title = $(".create-content-intranet .first-row input").val();
-    const textcontent =  $(".create-content-intranet .third-row #editor textarea");
-    textcontent.value = quill.root.innerHTML;
+    const textcontent = $(
+      ".create-content-intranet .third-row #quill-editor-content textarea"
+    );
+    textcontent.value = JSON.stringify(quill.root.innerHTML.trim());
+
     if (Imgsarray.length === 0) {
       alert("Please choose at least 1 picture");
       return;
@@ -238,6 +241,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
       const responseText = await response.text();
       console.log(responseText);
       window.location.href = "/homepage";
+      Imgsarray = [];
     } catch (error) {
       console.error("Error:", error);
       alert("There was an error submitting the form. Please try again.");
@@ -587,7 +591,7 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
   $(button)
     .parents("tr")
     .css({
-      "background-color": opacity ? "rgba(0,0,0,0.063)" : "",
+      "background-color": opacity ? "rgba(0, 0, 0, 0.063)" : "",
     });
 
   imageContainer.find(".closeBtn").css("opacity", opacity);
