@@ -86,6 +86,7 @@ export default new (class SiteController {
       const contents = await getContentsBySite(site);
       contents.forEach((file) => {
         try {
+          file.content = JSON.parse(file.content);
           file.content_images = JSON.parse(file.content_images);
           file.content_images = path.join(
             file.images_link,
