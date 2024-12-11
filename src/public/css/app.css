@@ -457,18 +457,25 @@ body,
 
 /* review content -------------------------------------------------------------------------- */
 .review-content-intranet {
-  position: absolute;
-  top: 10%;
-  left: 5%;
-  width: 90%;
-  display: none; }
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 1001;
+  overflow-y: scroll; }
+
+.review-content-intranet .view-content-intranet {
+  padding: 0;
+  margin: 0; }
 
 /* create content -------------------------------------------------------------------------- */
 .create-content-intranet .create-content-box form {
   /* Display & Box Model */
   padding: 1.5rem; }
 
-.create-content-intranet .create-content-box textarea {
+.create-content-intranet .create-content-box #editor {
   /* Display & Box Model */
   height: 10rem; }
 
