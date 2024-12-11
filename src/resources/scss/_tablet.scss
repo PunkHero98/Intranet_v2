@@ -1,11 +1,13 @@
 /* Tablet 768px - 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
+
     body,
     .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
     .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
+    .create-content-intranet .create-content-box #quill-editor-content,
     .colorful-border-button {
-      /* Text */
-      font-size: 0.85rem;
+        /* Text */
+        font-size: 0.85rem;
     }
 
     .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
@@ -14,31 +16,31 @@
     .whats-new-intranet .news-content h5,
     .profile .profile-card h3,
     .view-content-intranet .prev,
-     .view-content-intranet .next,
+    .view-content-intranet .next,
     .view-content-intranet .comments-view .col-11 input {
-      /* Text */
-      font-size: 0.9rem;
+        /* Text */
+        font-size: 0.9rem;
     }
 
     .whats-new-intranet .news-content i,
     .profile .profile-card a,
     .manage-posts button,
     .manage-posts button i {
-      /* Text */
-      font-size: 0.7rem;
+        /* Text */
+        font-size: 0.7rem;
     }
 
     .profile .profile-card h2,
     .profile .profile-overview h5,
     .view-content-intranet .col-12 h5 {
-      /* Text */
-      font-size: 1.1rem;
+        /* Text */
+        font-size: 1.1rem;
     }
 
     .whats-new-intranet .content-news,
     .whats-new-intranet .news-img img {
-      /* Display & Box Model */
-      height: 7.5rem;
+        /* Display & Box Model */
+        height: 7.5rem;
     }
 
     .homepage-intranet,
@@ -47,9 +49,9 @@
     .profile,
     .view-content-intranet,
     .manage-posts {
-      /* Display & Box Model */
-      margin-top: 3rem;
-      min-height: calc(100vh - 4.5rem);
+        /* Display & Box Model */
+        margin-top: 3rem;
+        min-height: calc(100vh - 4.5rem);
     }
 
     .homepage-intranet,
@@ -58,8 +60,8 @@
     .profile,
     .view-content-intranet,
     .manage-posts {
-      /* Display & Box Model */
-      padding-bottom: 2.1rem;
+        /* Display & Box Model */
+        padding-bottom: 2.1rem;
     }
 
     /* header ---------------------------------------------------------------------------------- */
@@ -80,8 +82,8 @@
     }
 
     .header-intranet ul.user ul.dropdown-menu li a.dropdown-item i {
-      /* Display & Box Model */
-      margin-right: 0.6rem;
+        /* Display & Box Model */
+        margin-right: 0.6rem;
     }
 
     /* footer ---------------------------------------------------------------------------------- */
@@ -215,14 +217,14 @@
     }
 
     .view-content-intranet .comments-view .col-11 h6 {
-      /* Text */
-      font-size: 1rem;
+        /* Text */
+        font-size: 1rem;
     }
 
-      /* create content -------------------------------------------------------------------------- */
+    /* create content -------------------------------------------------------------------------- */
     .create-content-intranet .create-content-box form {
-    /* Display & Box Model */
-    padding: 1.5rem;
+        /* Display & Box Model */
+        padding: 1.5rem;
     }
 
     .create-content-intranet .create-content-box .fourth-row label:nth-child(n+2) {
@@ -246,17 +248,17 @@
         margin: 0.5rem;
         padding: 0.3rem;
     }
-    
+
     /* manage posts ---------------------------------------------------------------------------- */
     .manage-posts {
-      /* Display & Box Model */
-      padding-top: 1rem;
+        /* Display & Box Model */
+        padding-top: 1rem;
     }
 
     /* add news button ------------------------------------------------------------------------- */
     .colorful-border-button {
-      /* Positioning */
-      bottom: 0.7rem;
-      right: -1.5rem;
-    }    
+        /* Positioning */
+        bottom: 0.7rem;
+        right: -1.5rem;
+    }
 }

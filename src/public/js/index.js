@@ -165,11 +165,13 @@ $(".create-content-intranet .fourth-row .img-container").sortable({
 // review function
 $(".review-content-intranet .col-12 > div  .closeBtn").on("click", function () {
   $(this).parents(".review-content-intranet").css("display", "none");
+  $("body").css("overflow-y", "initial")
 });
 $('.create-content-intranet .last-row input[value="Review"]').on(
   "click",
   function (e) {
     $(".review-content-intranet").css("display", "block");
+    $("body").css("overflow-y", "hidden")
     const title = $(".create-content-intranet #title-input").val().trim();
     const content = $(".create-content-intranet #content-area").val().trim();
     const reviewModal = $(".review-content-intranet .slideshow-container");
@@ -220,7 +222,6 @@ $(".create-content-intranet .create-content-box #uploadform").on(
       alert("Please choose at least 1 picture");
       return;
     }
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("textcontent", textcontent.value);

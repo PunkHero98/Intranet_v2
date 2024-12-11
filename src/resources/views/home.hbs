@@ -7,15 +7,8 @@
         <h2 class="text-black m-0">Welcome, {{fullname}}!</h2>
 
         <!-- buttons link -->
-        <button
-          class="btn m-2 text-light fw-bold border-0"
-          type="button"
-        >Teams</button>
-        <button
-          id="TicketSystem"
-          class="btn m-2 text-light fw-bold border-0"
-          type="button"
-        >Ticket System</button>
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Teams</button>
+        <button id="TicketSystem" class="btn m-2 text-light fw-bold border-0" type="button">Ticket System</button>
         <button class="btn m-2 text-light fw-bold border-0" type="button">Time
           Sheets</button>
         <button class="btn m-2 text-light fw-bold border-0" type="button">Time
@@ -33,32 +26,29 @@
 
       {{#each contents}}
 
-        <div class="col-xl-6 col-md-6 col-sm-12">
-          <div class="row content-news">
-            <!-- image content -->
-            <div class="col-3 news-img p-0">
-              <a href="content/{{this.id_content}}">
-                <img class="object-fit-cover" src={{this.content_images}} />
-              </a>
-            </div>
-            <!-- body content -->
-            <div class="col-9 news-content position-relative text-justify">
-              <a
-                href="content/{{this.id_content}}"
-                class="text-black text-decoration-none"
-              >
-                <h5 class="m-0">{{this.title}}</h5>
-              </a>
-              <div class="m-0 content_area">{{{this.content}}}</div>
-              <i class="text-light-emphasis position-absolute">Posted:
-                {{this.poster}}
-                |
-                {{this.date_time}}
-                |
-                {{this.poster_site}}</i>
-            </div>
+      <div class="col-xl-6 col-md-6 col-sm-12">
+        <div class="row content-news">
+          <!-- image content -->
+          <div class="col-3 news-img p-0">
+            <a href="content/{{this.id_content}}">
+              <img class="object-fit-cover" src={{this.content_images}} />
+            </a>
+          </div>
+          <!-- body content -->
+          <div class="col-9 news-content position-relative text-justify">
+            <a href="content/{{this.id_content}}" class="text-black text-decoration-none">
+              <h5 class="m-0">{{this.title}}</h5>
+            </a>
+            <div class="m-0 content_area">{{{this.content}}}</div>
+            <i class="text-light-emphasis position-absolute">Posted:
+              {{this.poster}}
+              |
+              {{this.date_time}}
+              |
+              {{this.poster_site}}</i>
           </div>
         </div>
+      </div>
 
       {{/each}}
 

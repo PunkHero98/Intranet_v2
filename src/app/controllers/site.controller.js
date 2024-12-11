@@ -108,6 +108,7 @@ export default new (class SiteController {
         site,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
       });
     } catch (err) {
       res
@@ -125,6 +126,7 @@ export default new (class SiteController {
         result,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
       });
       console.log(result);
     } catch (err) {
