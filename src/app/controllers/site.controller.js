@@ -14,6 +14,7 @@ export default new (class SiteController {
       //   return res.status(404).json({ message: "No contents found" });
       // }
       contents.forEach((file) => {
+        file.content = JSON.parse(file.content);
         if (file.content_images) {
           try {
             file.content_images = JSON.parse(file.content_images);
@@ -30,6 +31,7 @@ export default new (class SiteController {
         }
       });
       contents.sort((a, b) => b.id_content - a.id_content);
+      console.log(contents);
       res.render("home", {
         contents,
         role: req.session.userrole,

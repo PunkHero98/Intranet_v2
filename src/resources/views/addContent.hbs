@@ -16,12 +16,14 @@
 
         <div class="third-row">
           <label class="fw-bold" for="content-area">Content</label>
-          <textarea
-            class="input-box border-0"
-            name="text_content"
-            id="content-area"
-            placeholder="Write something.."
-          ></textarea>
+          <div id="quill-editor-content" style="background-color: white;">
+            <textarea
+              class="input-box border-0"
+              name="text_content"
+              id="content-area"
+              placeholder="Write something.."
+            ></textarea>
+          </div>
         </div>
 
         <div class="fourth-row">
@@ -36,7 +38,7 @@
             Clear All Pictures</label>
           <input
             type="file"
-            accept="image/jpeg , image/png , image/jpg , image/webp"
+            accept="image/jpeg , image/png , image/jpg , image/webp , image/heif , image/svg"
             id="Upload"
             name="Imgfiles"
             hidden
