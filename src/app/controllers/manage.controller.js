@@ -23,6 +23,7 @@ export default new (class ManageController {
         result,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
       });
     } catch (err) {
       res.status(500).json({

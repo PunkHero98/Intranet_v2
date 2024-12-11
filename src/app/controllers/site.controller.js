@@ -86,6 +86,7 @@ export default new (class SiteController {
       const contents = await getContentsBySite(site);
       contents.forEach((file) => {
         try {
+          file.content = JSON.parse(file.content);
           file.content_images = JSON.parse(file.content_images);
           file.content_images = path.join(
             file.images_link,
@@ -107,6 +108,7 @@ export default new (class SiteController {
         site,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
       });
     } catch (err) {
       res
@@ -124,6 +126,7 @@ export default new (class SiteController {
         result,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
       });
       console.log(result);
     } catch (err) {

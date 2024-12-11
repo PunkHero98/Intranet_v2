@@ -17,6 +17,7 @@ export default new (class ContentController {
         result,
         role: req.session.userrole,
         username: req.session.username,
+        fullname: req.session.fullname,
         total: result.content_images.length,
       });
     } catch (err) {
