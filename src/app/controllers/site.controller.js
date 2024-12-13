@@ -67,7 +67,7 @@ export default new (class SiteController {
           url: "../imgs/activities/sydney-opera-house-354375.jpg",
           city: "Sydney City",
         },
-        "New Zealand": {
+        NewZealand: {
           url: "../imgs/activities/NZ.jpg",
           city: "Auckland City",
         },
