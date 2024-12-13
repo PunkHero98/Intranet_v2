@@ -14,6 +14,7 @@ export default new (class SiteController {
       //   return res.status(404).json({ message: "No contents found" });
       // }
       contents.forEach((file) => {
+        file.title = Buffer.from(file.title, "base64").toString();
         file.content = JSON.parse(file.content);
         if (file.content_images) {
           try {
@@ -86,6 +87,7 @@ export default new (class SiteController {
       const contents = await getContentsBySite(site);
       contents.forEach((file) => {
         try {
+          file.title = Buffer.from(file.title, "base64").toString();
           file.content = JSON.parse(file.content);
           file.content_images = JSON.parse(file.content_images);
           file.content_images = path.join(

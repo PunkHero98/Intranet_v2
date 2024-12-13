@@ -101,6 +101,16 @@
         ],
       },
     });
+
+    quill.root.addEventListener('paste', function(event) {
+      event.preventDefault();
+      const pastedText = event.clipboardData.getData('text');
+      const range = quill.getSelection();
+
+      if (range) {
+        quill.formatText(0, pastedText.length, 'background', false);
+      }
+    });
   </script>
 </body>
 

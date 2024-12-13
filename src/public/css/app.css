@@ -919,7 +919,10 @@ img:last-child {
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
     padding: 1.5rem; }
-  .create-content-intranet .create-content-box .fourth-row label:nth-child(n+2) {
+  .create-content-intranet
+.create-content-box
+.fourth-row
+label:nth-child(n + 2) {
     /* Display & Box Model */
     padding: 0.2rem 0.5rem; }
   .create-content-intranet .create-content-box .fourth-row .img-container {
@@ -1288,7 +1291,10 @@ label:nth-child(n + 2) {
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
     padding: 1rem; }
-  .create-content-intranet .create-content-box .fourth-row label:nth-child(n+2) {
+  .create-content-intranet
+.create-content-box
+.fourth-row
+label:nth-child(n + 2) {
     /* Display & Box Model */
     padding: 0.1rem 0.3rem; }
   .create-content-intranet .create-content-box .fourth-row .img-container {

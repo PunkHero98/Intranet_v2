@@ -14,6 +14,7 @@ export default new (class ManageController {
       const username = req.session.username;
       const result = await getContentsByUser(username);
       result.forEach((f) => {
+        f.title = Buffer.from(f.title, "base64").toString();
         f.content = JSON.parse(f.content);
         f.content_images = JSON.parse(f.content_images).map((item) => {
           return "\\" + f.images_link + "\\" + item;
@@ -40,6 +41,7 @@ export default new (class ManageController {
       const { site, username } = req.session;
 
       const extractData = data.map((f) => {
+        f.title = Buffer.from(f.title).toString("base64");
         f.poster_site = site;
         f.poster = username;
         f.content_images = JSON.stringify(f.content_images);

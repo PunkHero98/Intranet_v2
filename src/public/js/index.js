@@ -165,19 +165,20 @@ $(".create-content-intranet .fourth-row .img-container").sortable({
 // review function
 $(".review-content-intranet .col-12 > div  .closeBtn").on("click", function () {
   $(this).parents(".review-content-intranet").css("display", "none");
-  $("body").css("overflow-y", "initial")
+  $("body").css("overflow-y", "initial");
 });
 $('.create-content-intranet .last-row input[value="Review"]').on(
   "click",
   function (e) {
     $(".review-content-intranet").css("display", "block");
-    $("body").css("overflow-y", "hidden")
+    $("body").css("overflow-y", "hidden");
     const title = $(".create-content-intranet #title-input").val().trim();
-    const content = $(".create-content-intranet #content-area").val().trim();
+    const content = quill.root.innerHTML;
     const reviewModal = $(".review-content-intranet .slideshow-container");
     const review = $(".review-content-intranet .col-12");
     review.children("h5").text(title);
-    review.children("p").text(content);
+    console.log(content);
+    review.children(".content_area_for_review").html(content);
     reviewModal.children().not("a").remove();
     review.children(".text-center").empty();
     const imgLength = Imgsarray.length;
@@ -216,7 +217,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     const textcontent = $(
       ".create-content-intranet .third-row #quill-editor-content textarea"
     );
-    textcontent.value = JSON.stringify(quill.root.innerHTML.trim());
+    textcontent.value = JSON.stringify(quill.root.innerHTML);
 
     if (Imgsarray.length === 0) {
       alert("Please choose at least 1 picture");
@@ -605,24 +606,47 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
 
 function editContentTitle(button) {
   const { content, title } = getRowElements(button);
-  const contentHeight = content.height();
-  const titleHeight = title.height();
-  const maxHeight = Math.max(contentHeight, titleHeight);
-
+  const contentValue = content.html();
   content.html(
-    `<textarea style="width:100%; height:${maxHeight}px; background:transparent;">${content.text()}</textarea>`
+    `<div id="quill-editor-content" class="bg-white">
+            <textarea
+              style="width:100%;"
+              class="input-box border-0"
+              name="text_content"
+              id="content-area"
+              placeholder="Write something.."
+            ></textarea>
+          </div>`
   );
+
+  const quill = new Quill("#quill-editor-content", {
+    theme: "snow",
+    placeholder: "Write something..",
+    modules: {
+      toolbar: [
+        ["bold", "italic", "underline"],
+        [{ align: [] }, { color: [] }, { background: [] }],
+        [{ indent: "-1" }, { indent: "+1" }],
+        ["clean"],
+      ],
+    },
+  });
+  quill.clipboard.dangerouslyPasteHTML(contentValue);
+  content.children(".ql-toolbar").css("padding", "0");
+  const toolbarHeight = content.children(".ql-toolbar").height();
+  const quillHeight = quill.root.offsetHeight;
+  const finalHeight = toolbarHeight + quillHeight;
   title.html(
-    `<textarea style="width:100%; height:${maxHeight}px; background:transparent;">${title.text()}</textarea>`
+    `<textarea style="width:100%; height:${finalHeight}px; background:white;">${title.text()}</textarea>`
   );
 }
 
 function saveContentTitle(button) {
   const { content, title } = getRowElements(button);
-  const innerContent = content.children().val();
+  const quill = new Quill("#quill-editor-content");
+  const innerContent = quill.root.innerHTML;
   const innerTitle = title.children().val();
-
-  content.text(innerContent);
+  content.html(innerContent);
   title.text(innerTitle);
 }
 
@@ -630,6 +654,7 @@ function generateJsonForEdit(button) {
   const { title, content, dateTime, imageContainer } = getRowElements(button);
   const contentId = dateTime.find("div").text().trim();
 
+  const contentNew = JSON.stringify(content.html());
   const newdatetime = dateTime
     .contents()
     .filter(function () {
@@ -655,7 +680,7 @@ function generateJsonForEdit(button) {
   return {
     id_content: contentId,
     title: title.text(),
-    content: content.html(),
+    content: contentNew,
     images_link: images_link,
     content_images: content_images,
     poster: "",
