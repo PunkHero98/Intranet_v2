@@ -137,4 +137,23 @@ export default new (class SiteController {
         .json({ message: "error fetching profile", error: err.message });
     }
   }
+
+  // [GET] /manage-users
+  async manageUsers(req, res) {
+    try {
+      const idUser = req.session.idUser;
+      const result = await getUserById(idUser);
+      res.render("manageUsers", {
+        result,
+        role: req.session.userrole,
+        username: req.session.username,
+        fullname: req.session.fullname,
+      });
+      console.log(result);
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "error fetching profile", error: err.message });
+    }
+  }
 })();
