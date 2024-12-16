@@ -9,7 +9,8 @@ body,
 .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
 .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
 .create-content-intranet .create-content-box #quill-editor-content,
-.colorful-border-button {
+.colorful-border-button,
+.manage-users input {
   /* Text */
   font-size: 0.9rem; }
 
@@ -224,7 +225,8 @@ img {
 
 .header-intranet ul.user ul.dropdown-menu li a.dropdown-item i {
   /* Display & Box Model */
-  margin-right: 0.7rem; }
+  margin-right: 0.7rem;
+  width: 1.5rem !important; }
 
 /* footer ---------------------------------------------------------------------------------- */
 .footer-intranet {

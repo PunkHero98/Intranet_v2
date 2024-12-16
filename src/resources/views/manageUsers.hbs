@@ -1,0 +1,71 @@
+<!-- manage-posts-intranet -->
+<div class="manage-users manage-posts container-fluid">
+  <div style="display: flex; justify-content:space-between" class="mb-2">
+    <h5>Manage Users</h5>
+    <div>
+      <button class="refesh_manage btn btn-warning">Refresh</button>
+      <button
+        class="update_manage btn btn-success mx-3"
+        disabled
+      >Update</button>
+    </div>
+  </div>
+
+  <table class="table datatable" style="border: 1px solid black; width: 100%;">
+    <thead>
+      <tr>
+        <th class="fullname">Full Name</th>
+        <th class="email">Email</th>
+        <th class="role">Role</th>
+        <th class="department">Department</th>
+        <th class="position">Position</th>
+        <th class="site">Site</th>
+        <th class="address">Address</th>
+        <th class="officeNumber">Office</th>
+        <th class="isResetPassword">Reset Password</th>
+        <th class="isActived">Actived</th>
+        <th class="select">Select</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr>
+          <td class="">Pham Huynh Nhat Huy</td>
+          <td class="">pham.huy@qsl.net.vn</td>
+          <td class="">HR
+            <div style="display: none;">
+              <input class="form-control" list="roleList" placeholder="Type to search..." name="role">
+              <datalist id="roleList">
+                <option value="Super Admin">
+                <option value="Admin">
+                <option value="Member">
+              </datalist>
+            </div>
+          </td>
+          <td class="">IT</td>
+          <td class="">Junior Developer</td>
+          <td class="">
+            <div style="display: none;">
+              <input class="form-control" list="siteList" placeholder="Type to search..." name="site">
+              <datalist id="siteList">
+                <option value="Australia">
+                <option value="Thailand">
+                <option value="NewZealand">
+                <option value="Philippines">
+                <option value="Vietnam">
+              </datalist>
+            </div>
+          </td>
+          <td class="">HoChiMinh</td>
+          <td class="">0123456789</td>
+          <td class="">No</td>
+          <td class="">Active</td>
+          <td class="">
+            <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button>
+            <button type="button" class="btn btn-secondary btn-sm">Hide</button>
+            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+            <button type="button" class="btn btn-danger btn-sm">Reset Password</button>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
