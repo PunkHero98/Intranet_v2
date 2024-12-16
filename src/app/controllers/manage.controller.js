@@ -72,15 +72,22 @@ export default new (class ManageController {
       const { imgFolderName } = req.body;
       const imageArray = await getfileinDir(imgFolderName);
       const Jsonarray = JSON.stringify(imageArray);
-      const result = await updateContentByImageLink(
-        imgFolderName,
-        JSON.stringify(imageArray)
-      );
+      const result = await updateContentByImageLink(imgFolderName, Jsonarray);
       res.send(JSON.stringify(result));
     } catch (err) {
       res
         .status(500)
         .json({ message: "error fetching profile", error: err.message });
+    }
+  }
+
+  // [POST] /manage_user
+  async manageUsers(req, res) {
+    try {
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "error fetching user", error: err.message });
     }
   }
 })();
