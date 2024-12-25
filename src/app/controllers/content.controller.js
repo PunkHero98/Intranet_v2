@@ -12,10 +12,9 @@ export default new (class ContentController {
       result.content_images = JSON.parse(result.content_images).map((file) => {
         return `\\${result.images_link}\\${file}`;
       });
-
-      console.log(result);
       res.render("contentViews", {
         result,
+        isContentView: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,
@@ -65,6 +64,7 @@ export default new (class ContentController {
   // [GET] /content/add-news
   getAddpage(req, res) {
     res.render("addContent", {
+      isAddNew: true,
       role: req.session.userrole,
       username: req.session.username,
       fullname: req.session.fullname,

@@ -3,10 +3,12 @@ import {
   updateContents,
   updateContentByImageLink,
 } from "../models/Contents.model.js";
+import { getUsers } from "../models/Users.model.js";
 import {
   updateImageinFolder,
   getfileinDir,
 } from "../../config/middleware/filsystem.js";
+import bcrypt from "bcrypt";
 export default new (class ManageController {
   // [GET] /manage
   async manage(req, res) {
@@ -22,6 +24,7 @@ export default new (class ManageController {
       });
       res.render("managePosts", {
         result,
+        isManageContent: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,
@@ -81,9 +84,32 @@ export default new (class ManageController {
     }
   }
 
-  // [POST] /manage_user
+  // [GET] /manage/user
   async manageUsers(req, res) {
     try {
+      const result = await getUsers();
+      const hashBasicPass = await bcrypt.hash("P@55w0rd", 10);
+      result.forEach((f) => {
+        return (f.user_password = f.user_password === hashBasicPass);
+      });
+      res.render("manageUsers", {
+        result,
+        role: req.session.userrole,
+        username: req.session.username,
+        fullname: req.session.fullname,
+      });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "error fetching user", error: err.message });
+    }
+  }
+
+  // [POST] /manage/user_updated
+  async updateUser(req, res) {
+    try {
+      console.log(req.body);
+      res.send("Success");
     } catch (err) {
       res
         .status(500)

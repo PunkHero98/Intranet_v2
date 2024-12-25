@@ -28,44 +28,78 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
+      {{#each result}}
         <tr>
-          <td class="">Pham Huynh Nhat Huy</td>
-          <td class="">pham.huy@qsl.net.vn</td>
-          <td class="">HR
+          <td class="fullname">{{this.fullname}}</td>
+          <td class="email">{{this.email}}</td>
+          <td class="role">
+            <span>{{this.user_role}}</span>
             <div style="display: none;">
-              <input class="form-control" list="roleList" placeholder="Type to search..." name="role">
-              <datalist id="roleList">
-                <option value="Super Admin">
-                <option value="Admin">
-                <option value="Member">
-              </datalist>
+              <select id="roleList">
+                <option value="Super Admin">Super Admin</option>
+                <option value="Admin">Admin</option>
+                <option value="Member">Member</option>
+                <option value="HR">HR</option>
+              </select>
             </div>
           </td>
-          <td class="">IT</td>
-          <td class="">Junior Developer</td>
-          <td class="">
+          <td class="department">{{this.department}}</td>
+          <td class="position">{{this.position}}</td>
+          <td class="site">
+            <span>{{this.user_working_site}}</span>
             <div style="display: none;">
-              <input class="form-control" list="siteList" placeholder="Type to search..." name="site">
-              <datalist id="siteList">
-                <option value="Australia">
-                <option value="Thailand">
-                <option value="NewZealand">
-                <option value="Philippines">
-                <option value="Vietnam">
-              </datalist>
+              <select id="siteList">
+                <option value="Australia">Australia</option>
+                <option value="Thailand">Thailand</option>
+                <option value="NewZealand">NewZealand</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Vietnam">Vietnam</option>
+              </select>
             </div>
           </td>
-          <td class="">HoChiMinh</td>
-          <td class="">0123456789</td>
-          <td class="">No</td>
-          <td class="">Active</td>
-          <td class="">
-            <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button>
-            <button type="button" class="btn btn-secondary btn-sm">Hide</button>
-            <button type="button" class="btn btn-danger btn-sm">Delete</button>
-            <button type="button" class="btn btn-danger btn-sm">Reset Password</button>
+          <td class="address">{{this.user_address}}</td>
+          <td class="phone_number">{{this.office_phone_number}}</td>
+          <td class="is_reset_password">{{this.user_password}}</td>
+          <td class="is_activated">{{this.isActived}}</td>
+          <td class="btn_container">
+            <button
+              type="button"
+              class="btn edit_user_Btn btn-primary btn-sm d-flex"
+            >Edit</button>
+            {{! <button
+              type="button"
+              class="btn hideBtn btn-secondary btn-sm"
+            >Hide</button> }}
+            {{#if this.isActived}}
+              <button
+                type="button"
+                class="btn toggleActiveBtn btn-danger btn-sm"
+                hidden
+              > Deactivated</button>
+            {{else}}
+              <button
+                type="button"
+                class="btn toggleActiveBtn btn-success btn-sm"
+                hidden
+              > Activated</button>
+            {{/if}}
+            <button
+              type="button"
+              class="btn resetBtn btn-danger btn-sm"
+              hidden
+            >Reset Password</button>
           </td>
         </tr>
+      {{/each}}
     </tbody>
   </table>
+</div>
+<div class="modal_formanageUser text-center bg-white">
+  <i class="fa-solid fa-circle-exclamation text-danger"></i>
+  <h3 class="title_for_manageUser">Confirm</h3>
+  <p class="title_for_manageUser">Are you sure want to delete this Picture?</p>
+  <div class="btn_container">
+    <button class="yesBtn_for_manageUser btn btn-primary">Yes, Delete!</button>
+    <button class="cancelBtn_for_manageUser btn btn-danger ms-2">Cancel</button>
+  </div>
 </div>

@@ -32,9 +32,9 @@ export default new (class SiteController {
         }
       });
       contents.sort((a, b) => b.id_content - a.id_content);
-      console.log(contents);
       res.render("home", {
         contents,
+        isHomePage: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,
@@ -145,6 +145,7 @@ export default new (class SiteController {
       const result = await getUserById(idUser);
       res.render("manageUsers", {
         result,
+        isManageUser: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,
