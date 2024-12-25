@@ -773,7 +773,8 @@ img:last-child {
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
   .create-content-intranet .create-content-box #quill-editor-content,
-  .colorful-border-button {
+  .colorful-border-button,
+  .manage-users input {
     /* Text */
     font-size: 0.85rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
@@ -951,7 +952,8 @@ img:last-child {
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
   .create-content-intranet .create-content-box #quill-editor-content,
-  .colorful-border-button {
+  .colorful-border-button,
+  .manage-users input {
     /* Text */
     font-size: 0.75rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
@@ -1137,7 +1139,8 @@ label:nth-child(n + 2) {
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
   .create-content-intranet .create-content-box #quill-editor-content,
-  .colorful-border-button {
+  .colorful-border-button,
+  .manage-users input {
     /* Text */
     font-size: 0.7rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
