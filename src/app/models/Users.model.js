@@ -18,7 +18,14 @@ const getUserByEmail = async (email, password) => {
     );
   return result.recordset.length > 0 ? result.recordset[0] : null;
 };
-
+const checkUserByEmail = async (email) => {
+  const pool = await connectToDB();
+  const result = await pool
+    .request()
+    .input("email", sql.NVarChar, email)
+    .query("SELECT * from users where email = @email");
+  return result.recordset.length > 0 ? result.recordset[0] : null;
+};
 const getUserById = async (id) => {
   const pool = await connectToDB();
   const result = await pool
@@ -42,7 +49,6 @@ const createUser = async (
   const pool = await connectToDB();
   const result = await pool
     .request()
-    .input("id_user", sql.NVarChar, uuidv4())
     .input("username", sql.NVarChar, email.split("@")[0])
     .input("fullname", sql.NVarChar, fullname)
     .input("email", sql.NVarChar, email)
@@ -55,7 +61,7 @@ const createUser = async (
     .input("office_phone_number", sql.NVarChar, phonenumber)
     .input("isActived", sql.Bit, 0)
     .query(
-      "INSERT INTO users (id_user, username, fullname ,email,user_password,user_role,department,position,user_working_site,user_address,office_phone_number,isActived) VALUES (@id_user, @username, @fullname ,@email,@user_password,@user_role,@department,@position,@user_working_site,@user_address,@office_phone_number,@isActived)"
+      "INSERT INTO users ( username, fullname ,email,user_password,user_role,department,position,user_working_site,user_address,office_phone_number,isActived) VALUES ( @username, @fullname ,@email,@user_password,@user_role,@department,@position,@user_working_site,@user_address,@office_phone_number,@isActived)"
     );
   return result.rowsAffected;
 };
@@ -69,4 +75,11 @@ const deleteUser = async (id) => {
   return result.rowsAffected;
 };
 
-export { getUsers, getUserByEmail, createUser, deleteUser, getUserById };
+export {
+  getUsers,
+  getUserByEmail,
+  createUser,
+  deleteUser,
+  getUserById,
+  checkUserByEmail,
+};

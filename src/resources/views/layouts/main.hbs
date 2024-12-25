@@ -85,10 +85,15 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
   <!-- Custom JS -->
-  <script src="/js/index.js"></script>
+  {{!-- <script src="/js/index.js"></script> --}}
 
-  <!-- Initialize Quill -->
-  <script>
+  {{#if isLoginPage}}
+    <script src="/js/login.js"></script>
+  {{/if}}
+
+  {{#if isAddNew}}
+    <script src="/js/addNew.js"></script>
+    <script>
     const quill = new Quill("#quill-editor-content", {
       theme: "snow",
       placeholder: "Write something..",
@@ -101,7 +106,42 @@
         ],
       },
     });
+
+    quill.root.addEventListener('paste', function(event) {
+      event.preventDefault();
+      const pastedText = event.clipboardData.getData('text');
+      const range = quill.getSelection();
+
+      if (range) {
+        quill.formatText(0, pastedText.length, 'background', false);
+      }
+    });
   </script>
+    
+  {{/if}}
+
+  {{#if isHomePage}}
+    <script src="/js/homepage.js"></script>
+  {{/if}}
+
+  {{#if isManageContent}}
+    <script src="/js/manageContent.js"></script>
+  {{/if}}
+
+  {{#if isManageUser}}
+    <script src="/js/manageUser.js"></script>
+  {{/if}}
+
+  {{#if isRegister}}
+    <script src="/js/register.js"></script>
+  {{/if}}
+
+  {{#if isContentView}}
+    <script src="/js/contentView.js"></script>
+  {{/if}}
+
+  <!-- Initialize Quill -->
+  
 </body>
 
 </html>

@@ -14,6 +14,7 @@ export default new (class SiteController {
       //   return res.status(404).json({ message: "No contents found" });
       // }
       contents.forEach((file) => {
+        file.title = Buffer.from(file.title, "base64").toString();
         file.content = JSON.parse(file.content);
         if (file.content_images) {
           try {
@@ -31,9 +32,9 @@ export default new (class SiteController {
         }
       });
       contents.sort((a, b) => b.id_content - a.id_content);
-      console.log(contents);
       res.render("home", {
         contents,
+        isHomePage: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,
@@ -86,6 +87,7 @@ export default new (class SiteController {
       const contents = await getContentsBySite(site);
       contents.forEach((file) => {
         try {
+          file.title = Buffer.from(file.title, "base64").toString();
           file.content = JSON.parse(file.content);
           file.content_images = JSON.parse(file.content_images);
           file.content_images = path.join(
@@ -143,6 +145,7 @@ export default new (class SiteController {
       const result = await getUserById(idUser);
       res.render("manageUsers", {
         result,
+        isManageUser: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,

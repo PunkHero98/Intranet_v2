@@ -1,84 +1,95 @@
 <!-- register intranet -->
-<div class="login-intranet container-fluid">
+<div class="login-intranet register-intranet container-fluid">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
       <!-- <div class="col-8"> -->
       <!-- logo QSL -->
       <img class="mb-4 container-fluid" src="imgs/qsl-logo.png" alt="logo-QSL" />
-      <form id="loginForm" action="register/tfa" method="post" >
+      <form id="registerForm" action="register/tfa" method="post" >
         <div class="d-flex">
           <div class="left col-6 container-fluid">
-            <div class="mb-3">
+            <div class="mb-3 fullname">
               <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" placeholder="Nguyen Van A" name="fullname">
+              <input type="text" id="regis-fullname" class="form-control" placeholder="Nguyen Van A" name="fullname" autocomplete="username">
+              <span></span>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 email ">
               <label class="form-label">Email address</label>
-              <input type="email" class="form-control" placeholder="name@example.com" name="email" required>
+              <div class="input-group">
+                <input id="regis-email" class="form-control" placeholder="name@example.com" name="email" autocomplete="email">
+                <button class="btn btn-outline-primary" type="button" id="button-addon1">Check</button>
+              </div>
+              <div class="d-flex justify-content-between"><span class="notification-email"></span></div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 password ">
               <label class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" required>
+              <div class="input-group">
+                <input type="password" id="regis-pass" class="form-control" name="password" autocomplete="new-password">
+                <button class="btn btn-outline-primary" type="button" id="button-addon2"><i class="fa-regular fa-eye-slash"></i></button>
+              </div>
+              <div class="d-flex flex-column align-items-between"><span></span><ul class="ps-0">Password must contain:
+                <li class="ms-4">Minimum 8 letters</li>
+                <li class="ms-4">At least 1 capital letter</li>
+                <li class="ms-4">At least 1 number</li>
+                <li class="ms-4">At least 1 special letter</li>
+              </ul></div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 confirmPass">
               <label class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" required>
+              <input type="password" id="regis-confirmPas" class="form-control" autocomplete="new-password">
+              <span></span>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 role">
               <label class="form-label">Role</label>
-              <input class="form-control" list="datalistOptions1" placeholder="Type to search..." name="role" required>
-              <datalist id="datalistOptions1">
-                <option value="Super Admin">
-                <option value="Admin">
-                <option value="Member">
-              </datalist>
+              <select id="datalistOptions1">
+                <option value="Member">Member</option>
+              </select>
             </div>
           </div>
           <div class="right col-6 container-fluid">
-            <div class="mb-3">
+            <div class="mb-3 deparment">
               <label class="form-label">Department</label>
-              <input class="form-control" list="datalistOptions2" placeholder="Type to search..." name="department" required>
-              <datalist id="datalistOptions2">
-                <option value="Corporate">
-                <option value="Operation">
-                <option value="Inventory">
-                <option value="Logistics">
-              </datalist>
+              <select id="datalistOptions2">
+                <option value="Corporate">Corporate</option>
+                <option value="Operation">Operation</option>
+                <option value="Inventory">Inventory</option>
+                <option value="Logistics">Logistics</option>
+              </select>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 position">
               <label class="form-label">Position</label>
-              <input class="form-control" list="datalistOptions3" placeholder="Type to search..." name="position" required>
+              <input class="form-control" id="regis-position" list="datalistOptions3" placeholder="Type to search..." name="position" >
+              <span></span>
               <datalist id="datalistOptions3">
                 <option value="Junior Developer">
                 <option value="Technician">
                 <option value="HR Officer">
               </datalist>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 site">
               <label class="form-label">Site</label>
-              <input class="form-control" list="datalistOptions4" placeholder="Type to search..." name="site" required>
-              <datalist id="datalistOptions4">
-                <option value="Australia">
-                <option value="Thailand">
-                <option value="New Zealand">
-                <option value="Philippines">
-                <option value="Vietnam">
-              </datalist>
+              <select id="datalistOptions4">
+                <option value="Australia">Australia</option>
+                <option value="Thailand">Thailand</option>
+                <option value="New Zealand">Zealand</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Vietnam">Vietnam</option>
+              </select>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 address">
               <label class="form-label">Office Address</label>
-              <input class="form-control" list="datalistOptions5" placeholder="Type to search..." name="site_city" required>
-              <datalist id="datalistOptions5">
-                <option value="Silverwater">
-                <option value="Auckland">
-                <option value="Bangkok">
-                <option value="HoChiMinh">
-                <option value="Manila">
-              </datalist>
+              <select id="datalistOptions5">
+                <option value="Silverwater">Silverwater</option>
+                <option value="Auckland">Auckland</option>
+                <option value="Bangkok">Bangkok</option>
+                <option value="HoChiMinh">HoChiMinh</option>
+                <option value="Manila">Manila</option>
+              </select>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 offNum">
               <label class="form-label">Office Number</label>
-              <input type="text" class="form-control" placeholder="01425566" name="office-number" required>
+              <input type="text" id="regis-phone" class="form-control" placeholder="01425566" name="office-number" >
+              <span></span>
             </div>
           </div>
         </div>

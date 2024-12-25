@@ -6,7 +6,6 @@ router.get("/teams", siteController.teams);
 router.post("/activities", siteController.activity);
 router.get("/homepage", siteController.homepage);
 router.get("/profile", siteController.profile);
-router.get("/manage-users", siteController.manageUsers);
 router.get("/", siteController.redirecT);
 
 export default router;
