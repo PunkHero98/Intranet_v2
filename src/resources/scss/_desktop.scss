@@ -941,10 +941,10 @@ body,
   position: absolute;
   top: 4.5rem;
   right: 0;
+
+  display: none;
+  transition: opacity 0.5s ease;
 }
-
-
-
 
 // .content-news {
 //   background-image: url(/imgs/new-news.png);

@@ -1,3 +1,9 @@
+const HTTP_Request_address = "http://localhost:3000";
+
+const isValidEmail = (email) => {
+  const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return re.test(String(email).toLowerCase());
+};
 const validatePassword = (password) => {
   const regex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
@@ -57,7 +63,7 @@ $(".register-intranet #submitbtn ").on("click", async function () {
       user_address: address.val(),
       office_phone_number: phone.val(),
     });
-    const respone = await fetch("http://localhost:3000/register/tfa", {
+    const respone = await fetch(`${HTTP_Request_address}/register/tfa`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: data,
@@ -74,7 +80,6 @@ $(".register-intranet #submitbtn ").on("click", async function () {
         window.location.href = "/login";
       }, 1000);
     }
-    console.log(result);
   } catch (err) {
     console.error("Error:", err);
     alert("There was an error checking the email. Please try again.");

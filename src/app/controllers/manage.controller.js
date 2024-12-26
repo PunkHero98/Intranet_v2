@@ -94,6 +94,7 @@ export default new (class ManageController {
       });
       res.render("manageUsers", {
         result,
+        isManageUser: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,
