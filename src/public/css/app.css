@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body,
 .create-content-intranet .create-content-box #quill-editor-content {
   /* Text */
@@ -767,8 +768,27 @@ img:last-child {
   top: 4.5rem;
   right: 0; }
 
+/* register --------------------------------------------------------------------------------- */
+.login-intranet form input:focus,
+.login-intranet form datalist:focus,
+.login-intranet form select:focus {
+  outline: none;
+  /* Đảm bảo không có outline */
+  box-shadow: none;
+  /* Tắt bóng mặc định khi focus */ }
+
+.login-intranet form button {
+  width: 3rem; }
+
 /* Tablet 768px - 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
+  body,
+  .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
+  .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
+  .create-content-intranet .create-content-box #quill-editor-content,
+  .colorful-border-button {
+    /* Text */
+    font-size: 0.85rem; }
   body,
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
@@ -777,16 +797,6 @@ img:last-child {
   .manage-users input {
     /* Text */
     font-size: 0.85rem; }
-  .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
-  .login-intranet .login input,
-  .welcome-homepage button,
-  .whats-new-intranet .news-content h5,
-  .profile .profile-card h3,
-  .view-content-intranet .prev,
-  .view-content-intranet .next,
-  .view-content-intranet .comments-view .col-11 input {
-    /* Text */
-    font-size: 0.9rem; }
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
   .manage-posts button,

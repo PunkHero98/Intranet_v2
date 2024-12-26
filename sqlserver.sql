@@ -1,10 +1,10 @@
 ---Table USER-----
 CREATE TABLE users(
-    id_user nvarchar(30) primary key not null,
+    id_user int identity(1,1) primary key,
 	username nvarchar(30) not null unique,
 	fullname nvarchar(50) not null,
 	email nvarchar(100) not null unique,
-	user_password nvarchar(50) not null,
+	user_password nvarchar(max) not null,
 	user_role nvarchar(10) not null,
 	department nvarchar(100) not null,
 	position nvarchar(50) not null,
