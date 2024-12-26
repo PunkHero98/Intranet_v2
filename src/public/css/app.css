@@ -766,7 +766,9 @@ img:last-child {
   /* Positioning */
   position: absolute;
   top: 4.5rem;
-  right: 0; }
+  right: 0;
+  display: none;
+  transition: opacity 0.5s ease; }
 
 /* register --------------------------------------------------------------------------------- */
 .login-intranet form input:focus,

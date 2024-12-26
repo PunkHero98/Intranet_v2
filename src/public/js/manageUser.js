@@ -83,6 +83,8 @@ $(".manage-users").on(
   }
 );
 
+$(".btn_container .resetBtn").on("click", function () {});
+
 function collectEditedUser(button) {
   const { role, workingSite, isResetPass, isActivated, email } =
     getRowElementsForManageUser(button);

@@ -16,11 +16,19 @@ export default new (class LoginController {
     try {
       const { emailAddress, password } = req.body;
       if (!emailAddress || !password) {
-        return res.render("login", {
-          status: "Email and password are required",
+        return res.json({
+          success: false,
+          message: "Email and password are required",
         });
       }
+
       const user = await checkUserByEmail(emailAddress);
+      if (!user) {
+        return res.json({
+          success: false,
+          message: "Email not found",
+        });
+      }
       const isMatch = await bcrypt.compare(password, user.user_password);
       if (isMatch) {
         req.session.username = user.username;
@@ -30,10 +38,9 @@ export default new (class LoginController {
         req.session.idUser = user.id_user;
         return res.redirect("/homepage");
       }
-      return res.render("login", {
-        isLoginPage: true,
-        email: emailAddress,
-        status: "Invalid Email or Password",
+      return res.json({
+        success: false,
+        message: "Invalid Email or Password",
       });
     } catch (err) {
       console.error("Error during user authentication:", err);
