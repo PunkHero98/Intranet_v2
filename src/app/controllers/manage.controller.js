@@ -3,7 +3,7 @@ import {
   updateContents,
   updateContentByImageLink,
 } from "../models/Contents.model.js";
-import { getUsers } from "../models/Users.model.js";
+import { getUsers, updateUser } from "../models/Users.model.js";
 import {
   updateImageinFolder,
   getfileinDir,
@@ -109,8 +109,36 @@ export default new (class ManageController {
   // [POST] /manage/user_updated
   async updateUser(req, res) {
     try {
-      console.log(req.body);
-      res.send("Success");
+      const { userrole } = req.session;
+      if (userrole !== "Admin") {
+        res.json({
+          success: false,
+          message: "You are not authorized to update user",
+        });
+        return;
+      }
+      const {
+        email,
+        user_role,
+        user_working_site,
+        reset_password,
+        isActivated,
+      } = req.body;
+
+      const result = await updateUser(
+        email,
+        user_role,
+        user_working_site,
+        isActivated
+      );
+      if (result[0] === 1) {
+        res.json({ success: true, message: "Update user successfully" });
+        return;
+      } else {
+        res.json({ success: false, message: "Update user fail" });
+        return;
+      }
+      console.log(result);
     } catch (err) {
       res
         .status(500)

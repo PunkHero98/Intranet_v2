@@ -5,54 +5,96 @@ const isValidEmail = (email) => {
   return re.test(String(email).toLowerCase());
 };
 
-let passwordVisible = false;
-
-function togglePasswordVisibility() {
-  $("#inputPassword").attr("type", passwordVisible ? "password" : "text");
-  passwordVisible = !passwordVisible;
-}
-
-function handleInputBlur(input, alertSelector, validationFunc = null) {
-  const value = input.val();
-  const alertMessage =
-    value === ""
-      ? "Cannot leave this field blank!"
-      : validationFunc && !validationFunc(value)
-      ? "Provide a valid email address"
-      : "";
-  $(alertSelector).text(alertMessage);
-}
-
-function toggleSubmitButton() {
-  const isEmailValid =
-    $("#inputEmail").val() !== "" && isValidEmail($("#inputEmail").val());
-  const isPasswordValid = $("#inputPassword").val() !== "";
-  $("#submitbtn").prop("disabled", !(isEmailValid && isPasswordValid));
-}
-
-$("#inputEmail").on("blur", function () {
-  handleInputBlur($(this), ".login-intranet .emailalert", isValidEmail);
-});
-
-$("#inputPassword").on("blur", function () {
-  handleInputBlur($(this), ".login-intranet .passwordalert");
-  toggleSubmitButton();
-});
-
-$("#inputPassword").on("keyup", function (e) {
-  if (e.key === "Enter") {
-    toggleSubmitButton();
-    if (!$("#submitbtn").prop("disabled")) {
-      submitFunction();
-    }
+$("#inputShowPassword").on("click", function () {
+  if ($("#inputPassword").attr("type") === "password") {
+    $("#inputPassword").attr("type", "text");
+    $("#inputShowPassword").html('<i class="fa-regular fa-eye"></i>');
+  } else {
+    $("#inputPassword").attr("type", "password");
+    $("#inputShowPassword").html('<i class="fa-regular fa-eye-slash"></i>');
   }
 });
-$("#inputEmail, #inputPassword").on("focus", function () {
-  $(this).siblings(".emailalert, .passwordalert").text("");
+$(".login-intranet #inputEmail").on("keyup", function () {
+  if ($(this).val().trim() === "") {
+    $(this)
+      .parent()
+      .next()
+      .children("p")
+      .text("Cannot leave this field empty")
+      .addClass("text-danger");
+    return;
+  }
+  if (!isValidEmail($(this).val())) {
+    $(this).next().html('<i class="text-danger fa-solid fa-circle-xmark"></i>');
+    $(this)
+      .parent()
+      .next()
+      .children("p")
+      .text("Invalid email address !")
+      .addClass("text-danger")
+      .removeClass("text-transparent");
+  } else {
+    $(this)
+      .next()
+      .html('<i class="text-success fa-solid fa-circle-check"></i>');
+    $(this)
+      .parent()
+      .next()
+      .children("p")
+      .text("Valid email address")
+      .addClass("text-success")
+      .removeClass("text-danger");
+  }
 });
-$("#inputShowPassword").on("click", togglePasswordVisibility);
-$("#inputEmail").on("blur", () => toggleSubmitButton());
-$("#inputPassword").on("blur", () => toggleSubmitButton());
+
+$(".login-intranet #inputEmail").on("blur", function () {
+  if ($(this).val().trim() === "") {
+    $(this)
+      .parent()
+      .next()
+      .children("p")
+      .text("Cannot leave this field empty")
+      .addClass("text-danger");
+    return;
+  }
+});
+
+$(".login-intranet #inputPassword").on("keyup", function () {
+  if ($(this).val().trim() === "") {
+    $(this)
+      .parent()
+      .next()
+      .children("p")
+      .text("Cannot leave this field empty")
+      .addClass("text-danger");
+    return;
+  }
+  $(this)
+    .parent()
+    .next()
+    .children("p")
+    .text("---")
+    .addClass("text-transparent")
+    .removeClass("text-danger");
+});
+$(".login-intranet #inputPassword").on("blur", function () {
+  if ($(this).val().trim() === "") {
+    $(this)
+      .parent()
+      .next()
+      .children("p")
+      .text("Cannot leave this field empty")
+      .addClass("text-danger");
+    return;
+  }
+  $(this)
+    .parent()
+    .next()
+    .children("p")
+    .text("---")
+    .addClass("text-transparent")
+    .removeClass("text-danger");
+});
 
 $(".login-intranet #submitbtn").on("click", function (e) {
   e.preventDefault();
@@ -60,6 +102,34 @@ $(".login-intranet #submitbtn").on("click", function (e) {
 });
 
 async function submitFunction() {
+  if ($("#inputEmail").val().trim() === "") {
+    $("#inputEmail")
+      .parent()
+      .next()
+      .children("p")
+      .text("Please fill in this field")
+      .addClass("text-danger");
+    return;
+  }
+  if ($("#inputPassword").val().trim() === "") {
+    $("#inputPassword")
+      .parent()
+      .next()
+      .children("p")
+      .text("Please fill in this field")
+      .addClass("text-danger");
+    return;
+  }
+  if (!isValidEmail($("#inputEmail").val())) {
+    $("#inputEmail")
+      .parent()
+      .next()
+      .children("p")
+      .text("Invalid email address !")
+      .addClass("text-danger")
+      .removeClass("text-transparent");
+    return;
+  }
   const email = $("#inputEmail").val();
   const password = $("#inputPassword").val();
 

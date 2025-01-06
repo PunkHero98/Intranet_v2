@@ -1,5 +1,9 @@
 import { getUsers, getUserById } from "../models/Users.model.js";
-import { getContents, getContentsBySite } from "../models/Contents.model.js";
+import {
+  getContents,
+  getContentsBySite,
+  getContentsByPage,
+} from "../models/Contents.model.js";
 import path from "path";
 export default new (class SiteController {
   // [GET] /
@@ -10,10 +14,26 @@ export default new (class SiteController {
   async homepage(req, res) {
     try {
       const contents = await getContents();
-      // if (!contents || contents.length === 0) {
-      //   return res.status(404).json({ message: "No contents found" });
-      // }
-      contents.forEach((file) => {
+      res.render("home", {
+        numOfPages: Math.ceil(contents.length / 8),
+        isHomePage: true,
+        role: req.session.userrole,
+        username: req.session.username,
+        fullname: req.session.fullname,
+      });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "Error fetching contents", error: err.message });
+    }
+  }
+
+  // [GET] /homepage/:page
+  async navigatePages(req, res) {
+    try {
+      const { page } = req.params;
+      const result = await getContentsByPage(page * 8);
+      result.forEach((file) => {
         file.title = Buffer.from(file.title, "base64").toString();
         file.content = JSON.parse(file.content);
         if (file.content_images) {
@@ -31,14 +51,7 @@ export default new (class SiteController {
           }
         }
       });
-      contents.sort((a, b) => b.id_content - a.id_content);
-      res.render("home", {
-        contents,
-        isHomePage: true,
-        role: req.session.userrole,
-        username: req.session.username,
-        fullname: req.session.fullname,
-      });
+      res.json({ result });
     } catch (err) {
       res
         .status(500)

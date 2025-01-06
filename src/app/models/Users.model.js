@@ -1,5 +1,4 @@
 import { connectToDB, sql } from "../../config/db/index.js";
-import { v4 as uuidv4 } from "uuid";
 
 const getUsers = async () => {
   const pool = await connectToDB();
@@ -35,6 +34,20 @@ const getUserById = async (id) => {
   return result.recordset.length > 0 ? result.recordset[0] : null;
 };
 
+const updateUser = async (email, user_role, user_working_site, isActived) => {
+  const pool = await connectToDB();
+  const result = await pool
+    .request()
+    .input("email", sql.NVarChar, email)
+    .input("user_role", sql.NVarChar, user_role)
+    .input("user_working_site", sql.NVarChar, user_working_site)
+    .input("isActived", sql.Bit, isActived)
+    .query(
+      "UPDATE users SET user_role = @user_role, user_working_site = @user_working_site,  isActived = @isActived WHERE email = @email"
+    );
+  return result.rowsAffected;
+};
+
 const createUser = async (
   fullname,
   email,
@@ -59,7 +72,7 @@ const createUser = async (
     .input("user_working_site", sql.NVarChar, site)
     .input("user_address", sql.NVarChar, address)
     .input("office_phone_number", sql.NVarChar, phonenumber)
-    .input("isActived", sql.Bit, 0)
+    .input("isActived", sql.Bit, 1)
     .query(
       "INSERT INTO users ( username, fullname ,email,user_password,user_role,department,position,user_working_site,user_address,office_phone_number,isActived) VALUES ( @username, @fullname ,@email,@user_password,@user_role,@department,@position,@user_working_site,@user_address,@office_phone_number,@isActived)"
     );
@@ -82,4 +95,5 @@ export {
   deleteUser,
   getUserById,
   checkUserByEmail,
+  updateUser,
 };

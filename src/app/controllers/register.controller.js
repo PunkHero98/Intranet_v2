@@ -30,6 +30,7 @@ export default new (class RegisterController {
       } = req.body;
       const hashedPassword = await bcrypt.hash(user_password, 10);
       console.log(hashedPassword);
+
       const result = await createUser(
         fullname,
         email,
@@ -41,6 +42,7 @@ export default new (class RegisterController {
         user_address,
         office_phone_number
       );
+      console.log(result);
       if (result.length !== 0) {
         res.json({ success: true, message: "Register successfully !" });
         return;

@@ -782,6 +782,24 @@ img:last-child {
 .login-intranet form button {
   width: 3rem; }
 
+.text-transparent {
+  color: transparent; }
+
+/* notification ---------------------------------------------------------------------------- */
+.header_notification span {
+  font-size: 1rem; }
+
+.header_notification {
+  color: black; }
+
+.header_notification:hover {
+  border-radius: 11px;
+  background-color: #f26c6c;
+  color: white; }
+
+.omg {
+  bottom: -90px; }
+
 /* Tablet 768px - 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
   body,

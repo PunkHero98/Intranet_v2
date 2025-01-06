@@ -958,22 +958,9 @@ body,
   width: 3rem;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.text-transparent {
+  color: transparent;
+}
 
 // .content-news {
 //   background-image: url(/imgs/new-news.png);
@@ -981,3 +968,18 @@ body,
 //   background-repeat: no-repeat;
 //   background-position: top right;
 // }
+/* notification ---------------------------------------------------------------------------- */
+.header_notification span {
+  font-size: 1rem;
+}
+.header_notification {
+  color: black;
+}
+.header_notification:hover {
+  border-radius: 11px;
+  background-color: rgb(242, 108, 108);
+  color: white;
+}
+.omg {
+  bottom: -90px;
+}

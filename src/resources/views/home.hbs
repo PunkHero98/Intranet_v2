@@ -31,37 +31,26 @@
   <div class="whats-new-intranet container-fluid">
     <div class="row d-flex">
 
-      {{#each contents}}
-
-        <div class="col-xl-6 col-md-6 col-sm-12">
-          <div class="row content-news">
-            <!-- image content -->
-            <div class="col-3 news-img p-0">
-              <a href="content/{{this.id_content}}">
-                <img class="object-fit-cover" src={{this.content_images}} />
-              </a>
-            </div>
-            <!-- body content -->
-            <div class="col-9 news-content position-relative text-justify">
-              <a
-                href="content/{{this.id_content}}"
-                class="text-black text-decoration-none"
-              >
-                <h5 class="m-0">{{this.title}}</h5>
-              </a>
-              <div class="m-0 content_area">{{{this.content}}}</div>
-              <i class="text-light-emphasis position-absolute">Posted:
-                {{this.poster}}
-                |
-                {{this.date_time}}
-                |
-                {{this.poster_site}}</i>
-            </div>
-          </div>
-        </div>
-
-      {{/each}}
-
     </div>
   </div>
+  <nav
+    aria-label="Page navigation example"
+    class="d-flex flex-row justify-content-center"
+  >
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#"><i
+            class="fa-solid fa-chevron-left"
+          ></i></a></li>
+      {{#for 1 numOfPages}}
+        <li class="page-item"><a
+            class="page-link"
+            href="#"
+            data-page={{this}}
+          >{{this}}</a></li>
+      {{/for}}
+      <li class="page-item"><a class="page-link" href="#"><i
+            class="fa-solid fa-chevron-right"
+          ></i></a></li>
+    </ul>
+  </nav>
 </div>

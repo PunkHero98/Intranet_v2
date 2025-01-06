@@ -114,6 +114,24 @@
               >Philippines</button>
             </form>
           </li>
+          <li class="nav-item mx-1 header_notification">
+            {{! <form class="d-flex h-100" action="" method="post">
+              <button class="fw-bold" name="site" value="Philippines"><i
+                  class="fa-solid fa-bell fa-shake fa-xl"
+                ></i></button>
+              <span class="header_notification bg-danger text-light">1</span>
+            </form> }}
+            <button
+              class="btn"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fa-solid fa-bell fa-xl"></i>
+              <span>0</span></button>
+            <ul class="dropdown-menu">
+            </ul>
+          </li>
         </ul>
 
         <ul class="navbar-nav user">
@@ -142,9 +160,6 @@
                 {{#if username}}
                   <h6>{{fullname}}</h6>
                   <span>{{role}}</span>
-                {{else}}
-                  <h6>huylam</h6>
-                  <span>HR</span>
                 {{/if}}
               </li>
               <li>

@@ -100,7 +100,7 @@ function collectEditedUser(button) {
     user_role: roleVal,
     user_working_site: siteVal,
     is_reset_password: resetPasVal,
-    isActivated: activeVal,
+    isActivated: activeVal == "true" ? 1 : 0,
   });
   return data;
 }
@@ -114,10 +114,28 @@ async function updateToServer(obj) {
     if (!respone.ok) {
       throw new Error("Error submitting form");
     }
-    const responseText = await respone.text();
+    const responseText = await respone.json();
+    if (responseText.success === false) {
+      $(".alert-intranet")
+        .css("display", "block")
+        .removeClass("alert-success")
+        .addClass("alert-danger");
+      $(".alert-intranet strong").html("Fail ! ");
+      $(".alert-intranet span").html(responseText.message);
+    } else {
+      $(".alert-intranet")
+        .css("display", "block")
+        .removeClass("alert-danger")
+        .addClass("alert-success");
+      $(".alert-intranet strong").html("Success ! ");
+      $(".alert-intranet span").html(responseText.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
     console.log(responseText);
   } catch (err) {
-    console.error("Error:", error);
+    console.error("Error:", err);
     alert("There was an error updating user. Please try again.");
   }
 }

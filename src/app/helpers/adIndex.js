@@ -16,3 +16,11 @@ export const totalindex = (a) => {
     return i;
   }
 };
+
+export const forBuildHelper = (from, to, block) => {
+  let result = "";
+  for (let i = from; i <= to; i++) {
+    result += block.fn(i);
+  }
+  return result;
+};

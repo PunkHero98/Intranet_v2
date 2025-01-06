@@ -9,7 +9,7 @@ import createError from "http-errors";
 import session from "express-session";
 import sequelize from "./config/db/sequelize.js";
 import sessionStore from "./config/db/sessionstore.js";
-import { addindex, totalindex } from "./app/helpers/adIndex.js";
+import { addindex, totalindex, forBuildHelper } from "./app/helpers/adIndex.js";
 import Handlebars from "handlebars";
 import dotenv from "dotenv";
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -43,6 +43,13 @@ app.use(express.json());
 
 Handlebars.registerHelper("totalindex", totalindex);
 Handlebars.registerHelper("addindex", addindex);
+Handlebars.registerHelper("for", function (from, to, block) {
+  let result = "";
+  for (let i = from; i <= to; i++) {
+    result += block.fn(i);
+  }
+  return result;
+});
 // Template Engine
 app.engine(
   "hbs",

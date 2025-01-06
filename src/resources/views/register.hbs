@@ -23,9 +23,8 @@
               <div class="input-group">
                 <input id="regis-email" class="form-control border-white" name="email"
                   autocomplete="email">
-                {{!-- <button class="btn btn-light" type="button" id="button-addon1"><i class="text-danger fa-solid fa-circle-xmark"></i><i class="text-success fa-solid fa-circle-check"></i></button> --}}
+                <button class="btn btn-light" type="button" id="button-addon1" tabindex="-1"></button>
               </div>
-              <div class="d-flex justify-content-between"><span class="notification-email"></span></div>
               <!-- alert error email -->
               <div class="alert m-0 p-0">
                 <p class="emailalert mx-2 my-0 text-danger fst-italic text-end fw-light" for="alert-error-email">Enter email
@@ -34,7 +33,7 @@
             </div>
             <div class="role">
               <label class="form-label fw-bold">Role <span class="text-danger">*</span></label>
-              <select class="form-select border-white" aria-label="Default select example" disabled>
+              <select class="form-select border-white" id="regis-role" aria-label="Default select example" disabled>
                 <option value="Member">Member</option>
               </select>
               <!-- alert error email -->
@@ -46,7 +45,7 @@
               <label class="form-label fw-bold">Password <span class="text-danger">*</span></label>
               <div class="input-group">
                 <input type="password" id="regis-pass" class="form-control border-white" name="password" autocomplete="new-password">
-                <button type="button" class="btn btn-light"><i class="fa-regular fa-eye-slash"></i></button>
+                <button type="button" tabindex="-1" class="btn btn-light"><i class="fa-regular fa-eye-slash"></i></button>
               </div>
               <!-- alert error email -->
               <div class="alert m-0 p-0">
@@ -56,10 +55,7 @@
             </div>
             <div class="confirmPass">
               <label class="form-label fw-bold">Confirm Password <span class="text-danger">*</span></label>
-              <div class="input-group">
-                <input type="password" id="regis-confirmPas" class="form-control border-white" autocomplete="new-password">
-                {{!-- <button type="button" class="btn btn-light"><i class="fa-regular fa-eye-slash"></i></button> --}}
-              </div>
+              <input type="password" id="regis-confirmPas" class="form-control border-white" autocomplete="new-password">
               <!-- alert error email -->
               <div class="alert m-0 p-0">
                 <p class="emailalert mx-2 my-0 text-danger fst-italic text-end fw-light" for="alert-error-email">Enter password
@@ -72,14 +68,13 @@
           <div class="right col-6 container-fluid">
             <div class="deparment">
               <label class="form-label fw-bold">Department <span class="text-danger">*</span></label>
-              <input class="form-control border-white" id="regis-position" list="datalistOptions3"
-                name="deparment">
-              <datalist id="datalistOptions3">
-                <option value="Corporate">
-                <option value="Operation">
-                <option value="Inventory">
-                <option value="Logistics">
-              </datalist>
+              <select class="form-select border-white" aria-label="Default select example" id="datalistOptions6">
+                <option value="Corporate">Coporate</option>
+                <option value="Operation">Operation</option>
+                <option value="Inventory">Inventory</option>
+                <option value="Logistics">Logistics</option>
+                <option value="Guest">Guest</option>
+              </select>
               <!-- alert error email -->
               <div class="alert m-0 p-0">
                 <p class="emailalert mx-2 my-0 text-danger fst-italic text-end fw-light" for="alert-error-email">Enter deparment
@@ -94,6 +89,7 @@
                 <option value="Junior Developer">
                 <option value="Technician">
                 <option value="HR Officer">
+                <option value="Guest">
               </datalist>
               <!-- alert error email -->
               <div class="alert m-0 p-0">
@@ -143,7 +139,7 @@
         </div>
 
         <div class="login text-center mt-2 pt-2 d-flex justify-content-between mx-2">
-          <button type="button" class="btn btn-outline-secondary w-auto border-0"><i class="fa-solid fa-circle-left"></i> Go Back</button>
+          <button type="button" class="btn backBtn btn-outline-secondary w-auto border-0"><i class="fa-solid fa-circle-left"></i> Go Back</button>
           <!-- login button -->
           <input class="btn btn-primary btn-lg" id="submitbtn" type="submit" value="Submit" />
         </div>

@@ -5,6 +5,7 @@ const router = express.Router();
 router.get("/teams", siteController.teams);
 router.post("/activities", siteController.activity);
 router.get("/homepage", siteController.homepage);
+router.post("/homepage/:page", siteController.navigatePages);
 router.get("/profile", siteController.profile);
 router.get("/", siteController.redirecT);
 
