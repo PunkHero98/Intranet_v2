@@ -43,12 +43,13 @@ app.use(express.json());
 
 Handlebars.registerHelper("totalindex", totalindex);
 Handlebars.registerHelper("addindex", addindex);
-Handlebars.registerHelper("for", function (from, to, block) {
-  let result = "";
-  for (let i = from; i <= to; i++) {
-    result += block.fn(i);
+Handlebars.registerHelper("for", forBuildHelper);
+Handlebars.registerHelper("compare", function (value1, value2, options) {
+  if (value1 === value2) {
+    return options.fn(this); // Nếu các giá trị bằng nhau, trả về nội dung bên trong {{#compare ...}}.
+  } else {
+    return options.inverse(this); // Nếu không bằng nhau, trả về nội dung trong {{else}}.
   }
-  return result;
 });
 // Template Engine
 app.engine(

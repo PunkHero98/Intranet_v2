@@ -416,8 +416,9 @@ function generateJsonForEdit(button) {
     .get();
 
   const timenow = getDate();
-  const images_link = images[0].split("\\")[1];
-
+  const images_link1 = images[0].split("\\")[1];
+  const images_link2 = images[0].split("\\")[2];
+  const images_link = images_link1 + "\\" + images_link2;
   const content_images = images.map((item) => {
     const parts = item.split("\\");
     return parts[parts.length - 1];

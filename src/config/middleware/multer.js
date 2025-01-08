@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     cb(
       null,
       imgFolderName
-        ? path.join("D:\\IMG_Storage", imgFolderName)
+        ? path.join("D:\\IMG_Storage\\Contents", imgFolderName)
         : createDir(
             req.session.site + "_" + req.session.username + "_" + newTitle
           )
@@ -61,16 +61,11 @@ const uploadforUserImg = multer({
 
 const handleImageUpload = async (req, res, next) => {
   try {
-    // Nếu có tệp được tải lên
     if (req.files && req.files.length > 0) {
       const { title, textcontent, imgFolderName } = req.body;
       const newTitle = title && simPliFizeString(title, true);
-      // Lấy các tệp đã tải lên
       const imageFiles = req.files;
-
-      // Lặp qua tất cả các tệp hình ảnh để xử lý
       for (const file of imageFiles) {
-        // Sử dụng Sharp để thay đổi kích thước hình ảnh (hoặc xử lý thêm)
         const resizedImageBuffer = await sharp(file.buffer)
           .resize(300, 300) // Thay đổi kích thước hình ảnh (300x300 px)
           .toFormat("jpeg") // Chuyển đổi định dạng thành JPEG
@@ -78,7 +73,7 @@ const handleImageUpload = async (req, res, next) => {
           .toBuffer();
 
         const uploadPath = imgFolderName
-          ? path.join("D:\\IMG_Storage", imgFolderName)
+          ? path.join("D:\\IMG_Storage\\Contents", imgFolderName)
           : createDir(
               req.session.site + "_" + req.session.username + "_" + newTitle
             );

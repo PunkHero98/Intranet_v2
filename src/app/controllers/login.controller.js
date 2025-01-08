@@ -31,6 +31,12 @@ export default new (class LoginController {
       }
       const isMatch = await bcrypt.compare(password, user.user_password);
       if (isMatch) {
+        if (!user.isActived) {
+          return res.json({
+            success: false,
+            message: "Account is not active , please contact admin",
+          });
+        }
         req.session.username = user.username;
         req.session.userrole = user.user_role;
         req.session.site = user.user_working_site;

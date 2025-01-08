@@ -1,4 +1,4 @@
-let currentPage = 1;
+let currentPage = 0;
 $(".welcome-homepage .col-12 #TicketSystem").on("click", function () {
   window.open("https://helpdesk.qsl.support", "_blank");
 });
@@ -25,7 +25,7 @@ $(".pagination").on("click", ".page-item a", async function (e) {
   e.preventDefault();
   const page = $(this).data("page");
   const newPage = page - 1;
-  if (currentPage === page) return;
+  if (currentPage === newPage) return;
   try {
     const respone = await fetch("http://localhost:3000/homepage/" + newPage, {
       method: "POST",
@@ -42,6 +42,48 @@ $(".pagination").on("click", ".page-item a", async function (e) {
   }
 });
 
+$(".pagination .navigation-left").on("click", async function (e) {
+  e.preventDefault();
+  if (currentPage === 0) return;
+  const page = currentPage - 1;
+
+  try {
+    const respone = await fetch("http://localhost:3000/homepage/" + page, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ someData: "" }),
+    });
+    const data = await respone.json();
+    renderPage(data.result);
+    currentPage = page;
+  } catch (err) {
+    console.log(err);
+  }
+});
+$(".pagination .navigation-right").on("click", async function (e) {
+  e.preventDefault();
+  const numPage = $(".pagination .page-item").length - 1;
+
+  if (currentPage >= numPage) return;
+  const page = currentPage + 1;
+
+  try {
+    const respone = await fetch("http://localhost:3000/homepage/" + page, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ someData: "" }),
+    });
+    const data = await respone.json();
+    renderPage(data.result);
+    currentPage = page;
+  } catch (err) {
+    console.log(err);
+  }
+});
 function renderPage(array) {
   $(".whats-new-intranet .d-flex").empty();
   array.forEach((f) => {

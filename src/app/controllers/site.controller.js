@@ -13,9 +13,13 @@ export default new (class SiteController {
   // [GET] /homepage
   async homepage(req, res) {
     try {
+      const { userrole } = req.session;
+      console.log("userrole", userrole);
       const contents = await getContents();
+
       res.render("home", {
         numOfPages: Math.ceil(contents.length / 8),
+        role: userrole,
         isHomePage: true,
         role: req.session.userrole,
         username: req.session.username,
@@ -129,45 +133,6 @@ export default new (class SiteController {
       res
         .status(500)
         .json({ message: "Error fetching activity", error: err.message });
-    }
-  }
-
-  // [GET] /profile
-  async profile(req, res) {
-    try {
-      const idUser = req.session.idUser;
-      const result = await getUserById(idUser);
-      res.render("profile", {
-        result,
-        role: req.session.userrole,
-        username: req.session.username,
-        fullname: req.session.fullname,
-      });
-      console.log(result);
-    } catch (err) {
-      res
-        .status(500)
-        .json({ message: "error fetching profile", error: err.message });
-    }
-  }
-
-  // [GET] /manage-users
-  async manageUsers(req, res) {
-    try {
-      const idUser = req.session.idUser;
-      const result = await getUserById(idUser);
-      res.render("manageUsers", {
-        result,
-        isManageUser: true,
-        role: req.session.userrole,
-        username: req.session.username,
-        fullname: req.session.fullname,
-      });
-      console.log(result);
-    } catch (err) {
-      res
-        .status(500)
-        .json({ message: "error fetching profile", error: err.message });
     }
   }
 })();

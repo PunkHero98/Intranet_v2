@@ -1,3 +1,4 @@
+let prevValue = {};
 function getRowElementsForManageUser(obj) {
   const row = $(obj).closest("tr");
   return {
@@ -17,6 +18,7 @@ $(".manage-users").on(
     const isEditing = button.html() === "Edit";
     const isSaving = button.html() === "Save";
     if (isEditing) {
+      collectDataBeforeEdit(button);
       changeEditUserBtn(button, "btn-primary", "btn-success", "Save", 1);
     } else if (isSaving) {
       changeEditUserBtn(button, "btn-success", "btn-primary", "Edit", 0);
@@ -83,7 +85,38 @@ $(".manage-users").on(
   }
 );
 
-$(".btn_container .resetBtn").on("click", function () {});
+$(".manage-users").on(
+  "click",
+  ".table-group-divider td.btn_container .resetBtn",
+  function () {
+    const button = $(this);
+    const { isResetPass } = getRowElementsForManageUser(button);
+    if (isResetPass.html() == "true") {
+      isResetPass.html("false");
+      button.addClass("btn-danger").removeClass("btn-success");
+    } else {
+      isResetPass.html("true");
+      button.addClass("btn-success").removeClass("btn-danger");
+    }
+  }
+);
+
+function collectDataBeforeEdit(button) {
+  const { role, workingSite, isResetPass, isActivated, email } =
+    getRowElementsForManageUser(button);
+  const roleVal = role.children("span").text();
+  const siteVal = workingSite.children("span").text();
+  const resetPasVal = isResetPass.text();
+  const activeVal = isActivated.text();
+  const emailVal = email.text();
+  prevValue = {
+    email: emailVal,
+    user_role: roleVal,
+    user_working_site: siteVal,
+    is_reset_password: resetPasVal,
+    isActivated: activeVal == "true" ? 1 : 0,
+  };
+}
 
 function collectEditedUser(button) {
   const { role, workingSite, isResetPass, isActivated, email } =
@@ -94,18 +127,36 @@ function collectEditedUser(button) {
   const resetPasVal = isResetPass.text();
   const activeVal = isActivated.text();
   const emailVal = email.text();
-
-  const data = JSON.stringify({
+  const data = {
     email: emailVal,
     user_role: roleVal,
     user_working_site: siteVal,
     is_reset_password: resetPasVal,
     isActivated: activeVal == "true" ? 1 : 0,
-  });
-  return data;
+  };
+
+  return areObjectsEqual(prevValue, data) ? null : JSON.stringify(data);
+}
+
+function areObjectsEqual(obj1, obj2) {
+  // Kiểm tra nếu obj1 và obj2 có cùng số lượng thuộc tính
+  if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+    return false;
+  }
+
+  // Duyệt qua các thuộc tính của obj1
+  for (let key in obj1) {
+    // Kiểm tra nếu thuộc tính không tồn tại trong obj2 hoặc giá trị không giống nhau
+    if (!obj2.hasOwnProperty(key) || obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+
+  return true;
 }
 async function updateToServer(obj) {
   try {
+    if (obj == null) return;
     const respone = await fetch("http://localhost:3000/manage/user_updated", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

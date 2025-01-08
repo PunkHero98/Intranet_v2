@@ -4,7 +4,7 @@ import fs from "fs";
 import path, { resolve } from "path";
 
 const createDir = (name) => {
-  const dirPath = path.join("D:\\IMG_Storage", `${name}`);
+  const dirPath = path.join("D:\\IMG_Storage\\Contents", `${name}`);
 
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
@@ -19,6 +19,7 @@ const createDir = (name) => {
 const getfileinDir = (name) => {
   return new Promise((resolve, reject) => {
     const dirPath = path.join("D:\\IMG_Storage", `${name}`);
+    console.log(dirPath);
     fs.readdir(dirPath, (err, files) => {
       if (err) {
         reject("Lỗi khi đọc thư mục: " + err);

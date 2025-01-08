@@ -34,11 +34,11 @@
     </div>
   </div>
   <nav
-    aria-label="Page navigation example"
-    class="d-flex flex-row justify-content-center"
+    aria-label="Page navigation "
+    class="position-absolute omg d-flex justify-content-center"
   >
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#"><i
+      <li class="navigation-left"><a class="page-link" href="#"><i
             class="fa-solid fa-chevron-left"
           ></i></a></li>
       {{#for 1 numOfPages}}
@@ -48,7 +48,7 @@
             data-page={{this}}
           >{{this}}</a></li>
       {{/for}}
-      <li class="page-item"><a class="page-link" href="#"><i
+      <li class="navigation-right"><a class="page-link" href="#"><i
             class="fa-solid fa-chevron-right"
           ></i></a></li>
     </ul>

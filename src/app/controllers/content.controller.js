@@ -40,7 +40,7 @@ export default new (class ContentController {
       const newTitle = simPliFizeString(title, true);
       // const simpleTitle = title.replace(/[<>:"/\\|?*]/g, "");
       const simpleTitle = Buffer.from(title).toString("base64");
-      const folderName = `${site}_${username}_${newTitle}`;
+      const folderName = `Contents\\${site}_${username}_${newTitle}`;
       const imgArray = await getfileinDir(folderName);
       const imgJsonArray = JSON.stringify(imgArray);
       await addContent(

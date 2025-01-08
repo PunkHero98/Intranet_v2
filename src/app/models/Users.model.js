@@ -48,6 +48,27 @@ const updateUser = async (email, user_role, user_working_site, isActived) => {
   return result.rowsAffected;
 };
 
+const updateUserWithPass = async (
+  email,
+  user_role,
+  user_working_site,
+  isActived,
+  password
+) => {
+  const pool = await connectToDB();
+  const result = await pool
+    .request()
+    .input("email", sql.NVarChar, email)
+    .input("user_role", sql.NVarChar, user_role)
+    .input("user_working_site", sql.NVarChar, user_working_site)
+    .input("user_password", sql.NVarChar, password)
+    .input("isActived", sql.Bit, isActived)
+    .query(
+      "UPDATE users SET user_password = @user_password, user_role = @user_role, user_working_site = @user_working_site,  isActived = @isActived WHERE email = @email"
+    );
+  return result.rowsAffected;
+};
+
 const createUser = async (
   fullname,
   email,
@@ -96,4 +117,5 @@ export {
   getUserById,
   checkUserByEmail,
   updateUser,
+  updateUserWithPass,
 };

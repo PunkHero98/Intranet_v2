@@ -83,18 +83,27 @@
                 hidden
               > Activated</button>
             {{/if}}
-            <button
-              type="button"
-              class="btn resetBtn btn-danger btn-sm"
-              hidden
-            >Reset Password</button>
+            {{#if this.user_password}}
+              <button
+                type="button"
+                class="btn resetBtn btn-success btn-sm"
+                hidden
+              >Reset Password</button>
+            {{else}}
+              <button
+                type="button"
+                class="btn resetBtn btn-danger btn-sm"
+                hidden
+              >Reset Password</button>
+            {{/if}}
+
           </td>
         </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
-<div class="modal_formanageUser text-center bg-white">
+{{! <div class="modal_formanageUser text-center bg-white">
   <i class="fa-solid fa-circle-exclamation text-danger"></i>
   <h3 class="title_for_manageUser">Confirm</h3>
   <p class="title_for_manageUser">Are you sure want to delete this Picture?</p>
@@ -102,4 +111,4 @@
     <button class="yesBtn_for_manageUser btn btn-primary">Yes, Delete!</button>
     <button class="cancelBtn_for_manageUser btn btn-danger ms-2">Cancel</button>
   </div>
-</div>
+</div> }}

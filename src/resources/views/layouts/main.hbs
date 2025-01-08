@@ -33,26 +33,47 @@
 
 <body>
   <div class="app">
-    {{#if username}}
-    {{> header}}
+  {{#if username}}
+    
+    {{#compare role 'Member'}}
+      {{> headerForMem}}
+    {{/compare}}
+    
+    {{#compare role 'HR'}}
+      {{> headerForPost}}
+    {{/compare}}
+    
+    {{#compare role 'Admin'}}
+      {{> header}}
+    {{/compare}}
 
     <main>
       {{{body}}}
 
-      <button type="button" class="btn text-white position-fixed translate-middle colorful-border-button border-0"
-        onclick=window.location.href='http://localhost:3000/content/add-news'>
-        <i class="fa-solid fa-circle-plus"></i> Add News
-      </button>
+      {{#compare role 'HR'}}
+        <button type="button" class="btn text-white position-fixed translate-middle colorful-border-button border-0"
+          onclick="window.location.href='http://localhost:3000/content/add-news'">
+          <i class="fa-solid fa-circle-plus"></i> Add News
+        </button>
+      {{/compare}}
       
+      {{#compare role 'Admin'}}
+        <button type="button" class="btn text-white position-fixed translate-middle colorful-border-button border-0"
+          onclick="window.location.href='http://localhost:3000/content/add-news'">
+          <i class="fa-solid fa-circle-plus"></i> Add News
+        </button>
+      {{/compare}}
     </main>
 
     {{> footer}}
-    {{else}}
+
+  {{else}}
     <main>
       {{{body}}}
     </main>
-    {{/if}}
-  </div>
+  {{/if}}
+</div>
+
 
   <!-- Loader -->
   <div class="loader">
@@ -139,6 +160,10 @@
 
   {{#if isContentView}}
     <script src="/js/contentView.js"></script>
+  {{/if}}
+
+  {{#if isProfile}}
+    <script src="/js/profile.js"></script>
   {{/if}}
 
   <!-- Initialize Quill -->

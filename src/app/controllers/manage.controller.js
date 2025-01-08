@@ -3,7 +3,11 @@ import {
   updateContents,
   updateContentByImageLink,
 } from "../models/Contents.model.js";
-import { getUsers, updateUser } from "../models/Users.model.js";
+import {
+  getUsers,
+  updateUser,
+  updateUserWithPass,
+} from "../models/Users.model.js";
 import {
   updateImageinFolder,
   getfileinDir,
@@ -88,10 +92,11 @@ export default new (class ManageController {
   async manageUsers(req, res) {
     try {
       const result = await getUsers();
-      const hashBasicPass = await bcrypt.hash("P@55w0rd", 10);
-      result.forEach((f) => {
-        return (f.user_password = f.user_password === hashBasicPass);
-      });
+      await Promise.all(
+        result.map(async (f) => {
+          f.user_password = await bcrypt.compare("P@55w0rd", f.user_password);
+        })
+      );
       res.render("manageUsers", {
         result,
         isManageUser: true,
@@ -121,16 +126,29 @@ export default new (class ManageController {
         email,
         user_role,
         user_working_site,
-        reset_password,
+        is_reset_password,
         isActivated,
       } = req.body;
+      const hashBasicPass = await bcrypt.hash("P@55w0rd", 10);
+      console.log(hashBasicPass);
+      let result = "";
+      if (is_reset_password) {
+        result = await updateUserWithPass(
+          email,
+          user_role,
+          user_working_site,
+          isActivated,
+          hashBasicPass
+        );
+      } else {
+        result = await updateUser(
+          email,
+          user_role,
+          user_working_site,
+          isActivated
+        );
+      }
 
-      const result = await updateUser(
-        email,
-        user_role,
-        user_working_site,
-        isActivated
-      );
       if (result[0] === 1) {
         res.json({ success: true, message: "Update user successfully" });
         return;
@@ -138,7 +156,6 @@ export default new (class ManageController {
         res.json({ success: false, message: "Update user fail" });
         return;
       }
-      console.log(result);
     } catch (err) {
       res
         .status(500)
