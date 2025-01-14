@@ -1,26 +1,30 @@
-// Đăng ký helper "uppercase" trong Handlebars
-
-// helpers/sum.js
-export const addindex = (a) => {
-  return a + 1;
+export const totalindex = (value) => {
+  return value;
 };
 
-export const totalindex = (a) => {
-  let i = 0;
-  i = a.map((f) => {
-    return i++;
-  });
-  if (i === 0) {
-    return 1;
-  } else {
-    return i;
-  }
+export const addindex = (value) => {
+  return value + 1;
 };
 
-export const forBuildHelper = (from, to, block) => {
+export const forHelper = (from, to, block) => {
   let result = "";
   for (let i = from; i <= to; i++) {
     result += block.fn(i);
   }
   return result;
+};
+
+export const compare = (value1, value2, options) => {
+  if (value1 === value2) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+};
+
+export default {
+  totalindex,
+  addindex,
+  for: forHelper,
+  compare,
 };

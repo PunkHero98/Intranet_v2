@@ -3,23 +3,26 @@ import morgan from "morgan";
 import { dirname } from "path";
 import path from "path";
 import { fileURLToPath } from "url";
-import handlebars from "express-handlebars";
+import handlebarsNew from "express-handlebars";
 import route from "./routes/index.js";
 import createError from "http-errors";
 import session from "express-session";
 import sequelize from "./config/db/sequelize.js";
 import sessionStore from "./config/db/sessionstore.js";
-import { addindex, totalindex, forBuildHelper } from "./app/helpers/adIndex.js";
-import Handlebars from "handlebars";
+import helpers from "./app/helpers/adIndex.js";
 import dotenv from "dotenv";
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-// connect to Database
-// connectToDB();
 
+// Connect to Database
+sequelize.sync().then(() => {
+  console.log("Database synced");
+});
+
+// Middleware
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -31,58 +34,40 @@ app.use(
     },
   })
 );
-
-// Setup static folder
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("D:\\IMG_Storage"));
+app.use(express.static("D:\\IMG_Storage")); // Static folder for Img update
 app.use(morgan("combined"));
-
-// middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-Handlebars.registerHelper("totalindex", totalindex);
-Handlebars.registerHelper("addindex", addindex);
-Handlebars.registerHelper("for", forBuildHelper);
-Handlebars.registerHelper("compare", function (value1, value2, options) {
-  if (value1 === value2) {
-    return options.fn(this); // Nếu các giá trị bằng nhau, trả về nội dung bên trong {{#compare ...}}.
-  } else {
-    return options.inverse(this); // Nếu không bằng nhau, trả về nội dung trong {{else}}.
-  }
-});
 // Template Engine
 app.engine(
   "hbs",
-  handlebars.engine({
+  handlebarsNew.engine({
     extname: ".hbs",
+    helpers,
   })
 );
 app.set("view engine", "hbs");
-app.set("views", path.join(__dirname, "resources\\views"));
+app.set("views", path.join(__dirname, "resources", "views"));
 
 // Route INIT
 route(app);
 
-// HTTP routing error
+// HTTP Routing Errors
 app.use((req, res, next) => {
   next(createError.NotFound("This route does not exist."));
 });
 
 app.use((err, req, res, next) => {
-  res.json({
+  res.status(err.status || 500).json({
     status: err.status || 500,
     message: err.message,
   });
 });
 
-// SERVER Port INIT
-app.listen(process.env.SRV_PORT, () => {
-  console.log(
-    `This server is running at http://localhost${process.env.SRV_PORT}`
-  );
-});
-
-sequelize.sync().then(() => {
-  console.log("Database synced");
+// Server Port INIT
+const PORT = process.env.SRV_PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });

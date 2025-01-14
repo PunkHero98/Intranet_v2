@@ -13,22 +13,26 @@ export default new (class SiteController {
   // [GET] /homepage
   async homepage(req, res) {
     try {
-      const { userrole } = req.session;
-      console.log("userrole", userrole);
+      const { userrole, username, fullname } = req.session;
+
       const contents = await getContents();
+      if (!contents || !Array.isArray(contents)) {
+        throw new Error("Invalid content data");
+      }
 
       res.render("home", {
         numOfPages: Math.ceil(contents.length / 8),
-        role: userrole,
+        role: userrole || "guest",
         isHomePage: true,
-        role: req.session.userrole,
-        username: req.session.username,
-        fullname: req.session.fullname,
+        username: username || "Guest",
+        fullname: fullname || "Anonymous",
       });
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Error fetching contents", error: err.message });
+      console.error("Error fetching homepage:", err);
+      res.status(500).json({
+        message: "Error fetching contents",
+        error: err.message,
+      });
     }
   }
 
