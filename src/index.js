@@ -10,9 +10,6 @@ import session from "express-session";
 import sequelize from "./config/db/sequelize.js";
 import sessionStore from "./config/db/sessionstore.js";
 import helpers from "./app/helpers/adIndex.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -25,7 +22,7 @@ sequelize.sync().then(() => {
 // Middleware
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: "low-row-rate",
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
@@ -67,7 +64,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server Port INIT
-const PORT = process.env.SRV_PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

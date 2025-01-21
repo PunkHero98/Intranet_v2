@@ -5,16 +5,20 @@ const getContents = async () => {
   const result = await pool.request().query("SELECT * from contents");
   return result.recordset;
 };
-const getContentsByPage = async (offset) => {
+const getContentsByPage = async (offset, limit) => {
   const pool = await connectToDB();
-  const result = await pool.request().input("Offset", sql.Int, offset).query(`
+  const result = await pool
+    .request()
+    .input("Offset", sql.Int, offset)
+    .input("Limit", sql.Int, limit).query(`
         SELECT * 
         FROM contents
-        ORDER BY id_content desc
-        OFFSET @offset ROWS FETCH NEXT 8 ROWS ONLY;
+        ORDER BY id_content DESC
+        OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY;
       `);
-  return (await result).recordset;
+  return result.recordset;
 };
+
 const getContentByID = async (id) => {
   const pool = await connectToDB();
   const result = (await pool)

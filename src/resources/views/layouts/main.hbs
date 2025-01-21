@@ -33,7 +33,6 @@
 
 <body>
   <div class="app">
-  {{#if username}}
     
     {{#compare role 'Member'}}
       {{> headerForMem}}
@@ -46,6 +45,7 @@
     {{#compare role 'Admin'}}
       {{> header}}
     {{/compare}}
+  
 
     <main>
       {{{body}}}
@@ -66,13 +66,7 @@
     </main>
 
     {{> footer}}
-
-  {{else}}
-    <main>
-      {{{body}}}
-    </main>
-  {{/if}}
-</div>
+  </div>
 
 
   <!-- Loader -->

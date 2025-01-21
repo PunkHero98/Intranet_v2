@@ -19,13 +19,12 @@ export default new (class SiteController {
       if (!contents || !Array.isArray(contents)) {
         throw new Error("Invalid content data");
       }
-
       res.render("home", {
         numOfPages: Math.ceil(contents.length / 8),
-        role: userrole || "guest",
+        role: userrole,
         isHomePage: true,
-        username: username || "Guest",
-        fullname: fullname || "Anonymous",
+        username: username,
+        fullname: fullname,
       });
     } catch (err) {
       console.error("Error fetching homepage:", err);
@@ -39,8 +38,13 @@ export default new (class SiteController {
   // [GET] /homepage/:page
   async navigatePages(req, res) {
     try {
-      const { page } = req.params;
-      const result = await getContentsByPage(page * 8);
+      const { page } = req.params; // Số trang hiện tại
+      const limit = 8; // Số bản ghi trên mỗi trang
+      const offset = page * limit;
+
+      const result = await getContentsByPage(offset, limit);
+      const totalCount = await getContents();
+      const totalPages = Math.ceil(totalCount.length / limit);
       result.forEach((file) => {
         file.title = Buffer.from(file.title, "base64").toString();
         file.content = JSON.parse(file.content);
@@ -59,7 +63,12 @@ export default new (class SiteController {
           }
         }
       });
-      res.json({ result });
+      // Trả về dữ liệu
+      res.json({
+        result,
+        currentPage: parseInt(page) + 1,
+        totalPages,
+      });
     } catch (err) {
       res
         .status(500)

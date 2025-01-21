@@ -1,7 +1,5 @@
-import { rejects } from "assert";
-import { dir } from "console";
 import fs from "fs";
-import path, { resolve } from "path";
+import path from "path";
 
 const createDir = (name) => {
   const dirPath = path.join("D:\\IMG_Storage\\Contents", `${name}`);

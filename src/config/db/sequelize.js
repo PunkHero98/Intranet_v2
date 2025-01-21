@@ -1,8 +1,6 @@
 import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
-dotenv.config();
 const sequelize = new Sequelize(
-  `mssql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`,
+  `mssql://huylam:1234@localhost:1433/Intranet_v2`,
   {
     dialect: "mssql",
     dialectOptions: {
