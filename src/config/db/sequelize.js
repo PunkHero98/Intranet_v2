@@ -1,14 +1,16 @@
 import { Sequelize } from "sequelize";
-const sequelize = new Sequelize(
-  `mssql://huylam:1234@localhost:1433/Intranet_v2`,
-  {
-    dialect: "mssql",
-    dialectOptions: {
-      options: {
-        encrypt: true, // Nếu sử dụng kết nối SSL
-      },
+
+const sequelize = new Sequelize("Intranet_v2", "huylam", "hoangduongg123", {
+  host: "QSLAU-SL-SRV-22",
+  dialect: "mssql",
+  port: 1433,
+  dialectOptions: {
+    options: {
+      encrypt: true,
+      trustServerCertificate: true,
     },
-  }
-);
+  },
+});
+
 
 export default sequelize;

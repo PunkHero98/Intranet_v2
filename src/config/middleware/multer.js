@@ -1,9 +1,10 @@
 import multer from "multer";
-import path from "path";
+import path , {dirname} from "path";
 import { createDir } from "./filsystem.js";
 import { simPliFizeString } from "./assets.js";
 import sharp from "sharp";
 import fs from "fs";
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const { title, textcontent, imgFolderName } = req.body;
@@ -11,7 +12,7 @@ const storage = multer.diskStorage({
     cb(
       null,
       imgFolderName
-        ? path.join("D:\\IMG_Storage\\Contents", imgFolderName)
+        ? path.join("./IMG_Storage", imgFolderName)
         : createDir(
             req.session.site + "_" + req.session.username + "_" + newTitle
           )

@@ -1,16 +1,16 @@
 import sql from "mssql";
 
 const config = {
-  server: "localhost",
+  server: "QSLAU-SL-SRV-22",
   database: "Intranet_v2",
   user: "huylam",
-  password: "1234",
+  password: "hoangduongg123",
   options: {
     trustServerCertificate: true,
-    trustedConnection: true,
   },
   port: 1433,
 };
+
 
 const connectToDB = async () => {
   try {

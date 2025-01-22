@@ -175,6 +175,27 @@ $(".manage-posts").on("click", ".btn-danger", function () {
   getRowElements(this).contentStage.html("deleted");
 });
 
+function handleChoosePicture(event) {
+  $($(".create-content-intranet .fourth-row input").next()).css(
+    "display",
+    "flex"
+  );
+  Imgsarray = [];
+
+  const files = event.target.files;
+  const filesArray = Array.prototype.slice.call(files);
+  filesArray.forEach((f) => {
+    if (!f.type.match("image.*")) {
+      alert("Image only");
+      return;
+    }
+    Imgsarray.push(f);
+  });
+  if (Imgsarray.length > 6) {
+    Imgsarray = Imgsarray.slice(0, 6);
+  }
+}
+
 async function pushNewPicToServer(obj) {
   const { imageContainer } = getRowElements(obj);
   const afterEditImgArray = [];
@@ -191,8 +212,12 @@ async function pushNewPicToServer(obj) {
       .children("img.basic_image")
       .attr("src")
       .split("\\")[1];
+    const basic_image2 = childOfImageContainer
+      .children("img.basic_image")
+      .attr("src")
+      .split("\\")[2];
     const formData = new FormData();
-    formData.append("imgFolderName", basic_image);
+    formData.append("imgFolderName", basic_image + "\\" + basic_image2);
 
     try {
       const fetchPromises = afterEditImgArray.map((blobUrl, index) => {
