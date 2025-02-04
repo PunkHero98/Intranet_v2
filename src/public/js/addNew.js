@@ -157,10 +157,9 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     Imgsarray.forEach((image, index) => {
       formData.append("Imgfiles", image);
     });
-
+	console.log(title , textcontent.value);
     try {
       const response = await fetch("http://localhost:3000/content/add", {
-        // const response = await fetch("https://5843-118-69-122-202.ngrok-free.app/content/add", {
         method: "POST",
         body: formData,
       });

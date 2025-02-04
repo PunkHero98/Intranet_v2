@@ -1,5 +1,6 @@
 import fs from "fs";
-import path from "path";
+import path , {dirname} from "path";
+
 
 const createDir = (name) => {
   const dirPath = path.join("./IMG_Storage\\Contents", `${name}`);
