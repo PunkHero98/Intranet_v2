@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     cb(
       null,
       imgFolderName
-        ? path.join("D:\\IMG_Storage\\Contents", imgFolderName)
+        ? path.join("./IMG_Storage", imgFolderName)
         : createDir(
             req.session.site + "_" + req.session.username + "_" + newTitle
           )

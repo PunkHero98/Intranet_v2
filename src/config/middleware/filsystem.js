@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 const createDir = (name) => {
-  const dirPath = path.join("D:\\IMG_Storage\\Contents", `${name}`);
+  const dirPath = path.join("./IMG_Storage\\Contents", `${name}`);
 
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
@@ -16,7 +16,7 @@ const createDir = (name) => {
 
 const getfileinDir = (name) => {
   return new Promise((resolve, reject) => {
-    const dirPath = path.join("D:\\IMG_Storage", `${name}`);
+    const dirPath = path.join("./IMG_Storage", `${name}`);
     console.log(dirPath);
     fs.readdir(dirPath, (err, files) => {
       if (err) {
@@ -50,7 +50,7 @@ const getfileinDir = (name) => {
 const updateImageinFolder = async (array) => {
   try {
     for (const item of array) {
-      const dirPath = path.join("D:\\IMG_Storage", item.images_link);
+      const dirPath = path.join("./IMG_Storage", item.images_link);
       const files = await fs.promises.readdir(dirPath);
 
       const newImageContent = JSON.parse(item.content_images);

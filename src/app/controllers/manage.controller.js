@@ -77,6 +77,7 @@ export default new (class ManageController {
   async uploadNewPic(req, res) {
     try {
       const { imgFolderName } = req.body;
+      console.log("------------------------", imgFolderName);
       const imageArray = await getfileinDir(imgFolderName);
       const Jsonarray = JSON.stringify(imageArray);
       const result = await updateContentByImageLink(imgFolderName, Jsonarray);

@@ -32,7 +32,7 @@ app.use(
   })
 );
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("D:\\IMG_Storage")); // Static folder for Img update
+app.use(express.static(path.resolve(__dirname, "../IMG_Storage"))); // Static folder for Img update
 app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
