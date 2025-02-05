@@ -10,8 +10,6 @@ const config = {
   },
   port: 1433,
 };
-
-
 const connectToDB = async () => {
   try {
     const pool = await sql.connect(config);

@@ -12,5 +12,4 @@ const sequelize = new Sequelize("Intranet_v2", "huylam", "hoangduongg123", {
   },
 });
 
-
 export default sequelize;
