@@ -1,6 +1,7 @@
 var Imgsarray = [];
 var ImageAfterDelete = [];
 var latestArray = [];
+const HTTP_Request_address = "http://localhost:3000";
 $(".create-content-intranet .fourth-row input").on("change", function (e) {
   handleChoosePicture(e);
   displayImage(this);
@@ -159,7 +160,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     });
 	console.log(title , textcontent.value);
     try {
-      const response = await fetch("http://localhost:3000/content/add", {
+      const response = await fetch(`${HTTP_Request_address}/content/add`, {
         method: "POST",
         body: formData,
       });

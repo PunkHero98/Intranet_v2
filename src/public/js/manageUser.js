@@ -1,4 +1,5 @@
 let prevValue = {};
+const HTTP_Request_address = "http://localhost:3000";
 function getRowElementsForManageUser(obj) {
   const row = $(obj).closest("tr");
   return {
@@ -157,7 +158,7 @@ function areObjectsEqual(obj1, obj2) {
 async function updateToServer(obj) {
   try {
     if (obj == null) return;
-    const respone = await fetch("http://localhost:3000/manage/user_updated", {
+    const respone = await fetch(`${HTTP_Request_address}/manage/user_updated`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: obj,

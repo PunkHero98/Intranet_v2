@@ -1,6 +1,7 @@
 // manage posts
 var deletePicArray = [];
 var editContentJson = [];
+const HTTP_Request_address = "http://localhost:3000"; 
 
 function getRowElements(obj) {
   const row = $(obj).closest("tr");
@@ -133,7 +134,7 @@ $(".manage-posts").on("click", ".update_manage", async function () {
       "user-select": "none",
     });
 
-    const result = await fetch("http://localhost:3000/manage/update", {
+    const result = await fetch(`${HTTP_Request_address}/manage/update`, {
       // const result = await fetch("https://5843-118-69-122-202.ngrok-free.app/manage/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -234,7 +235,7 @@ async function pushNewPicToServer(obj) {
       await Promise.all(fetchPromises);
 
       const response = await fetch(
-        "http://localhost:3000/manage/add_news_pics",
+        `${HTTP_Request_address}/manage/add_news_pics`,
         {
           method: "POST",
           body: formData,
