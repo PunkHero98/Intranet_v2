@@ -64,7 +64,7 @@ app.use((err, req, res, next) => {
 });
 
 // Server Port INIT
-const PORT = 3030;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
