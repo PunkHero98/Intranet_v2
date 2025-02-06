@@ -1,5 +1,5 @@
 import multer from "multer";
-import path , {dirname} from "path";
+import path, { dirname } from "path";
 import { createDir } from "./filsystem.js";
 import { simPliFizeString } from "./assets.js";
 import sharp from "sharp";

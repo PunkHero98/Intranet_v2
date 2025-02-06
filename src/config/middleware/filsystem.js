@@ -1,9 +1,8 @@
 import fs from "fs";
-import path , {dirname} from "path";
-
+import path, { dirname } from "path";
 
 const createDir = (name) => {
-  const dirPath = path.join("./IMG_Storage\\Contents", `${name}`);
+  const dirPath = path.join("./IMG_Storage/Contents", `${name}`);
 
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });

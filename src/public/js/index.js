@@ -312,26 +312,26 @@
 //   imgContainer.append(imgElements.join(""));
 // }
 
-// function handleChoosePicture(event) {
-//   $($(".create-content-intranet .fourth-row input").next()).css(
-//     "display",
-//     "flex"
-//   );
-//   Imgsarray = [];
+function handleChoosePicture(event) {
+  $($(".create-content-intranet .fourth-row input").next()).css(
+    "display",
+    "flex"
+  );
+  Imgsarray = [];
 
-//   const files = event.target.files;
-//   const filesArray = Array.prototype.slice.call(files);
-//   filesArray.forEach((f) => {
-//     if (!f.type.match("image.*")) {
-//       alert("Image only");
-//       return;
-//     }
-//     Imgsarray.push(f);
-//   });
-//   if (Imgsarray.length > 6) {
-//     Imgsarray = Imgsarray.slice(0, 6);
-//   }
-// }
+  const files = event.target.files;
+  const filesArray = Array.prototype.slice.call(files);
+  filesArray.forEach((f) => {
+    if (!f.type.match("image.*")) {
+      alert("Image only");
+      return;
+    }
+    Imgsarray.push(f);
+  });
+  if (Imgsarray.length > 6) {
+    Imgsarray = Imgsarray.slice(0, 6);
+  }
+}
 // $(".create-content-intranet .fourth-row label").on("click", function () {
 //   Imgsarray = [];
 //   $(".create-content-intranet .fourth-row .img-container")

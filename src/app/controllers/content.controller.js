@@ -10,7 +10,7 @@ export default new (class ContentController {
       result.title = Buffer.from(result.title, "base64").toString();
       result.content = JSON.parse(result.content);
       result.content_images = JSON.parse(result.content_images).map((file) => {
-        return `\\${result.images_link}\\${file}`;
+        return `/${result.images_link}/${file}`;
       });
       res.render("contentViews", {
         result,
@@ -40,7 +40,8 @@ export default new (class ContentController {
       const newTitle = simPliFizeString(title, true);
       // const simpleTitle = title.replace(/[<>:"/\\|?*]/g, "");
       const simpleTitle = Buffer.from(title).toString("base64");
-      const folderName = `Contents\\${site}_${username}_${newTitle}`;
+      const folderName = `Contents/${site}_${username}_${newTitle}`;
+
       const imgArray = await getfileinDir(folderName);
       const imgJsonArray = JSON.stringify(imgArray);
       await addContent(

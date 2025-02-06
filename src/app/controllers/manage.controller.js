@@ -59,6 +59,7 @@ export default new (class ManageController {
         };
       });
 
+      console.log(extractData);
       const [updateResult, deleteResult] = await Promise.all([
         updateContents(data),
         updateImageinFolder(extractData),
@@ -77,7 +78,6 @@ export default new (class ManageController {
   async uploadNewPic(req, res) {
     try {
       const { imgFolderName } = req.body;
-      console.log("------------------------", imgFolderName);
       const imageArray = await getfileinDir(imgFolderName);
       const Jsonarray = JSON.stringify(imageArray);
       const result = await updateContentByImageLink(imgFolderName, Jsonarray);
