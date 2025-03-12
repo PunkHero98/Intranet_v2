@@ -38,19 +38,17 @@ const upload = multer({
       cb(new Error("Only image files are allowed!"), false);
     }
   },
-}).array("Imgfiles", 6);
+}).array("Imgfiles", 20);
 
 // --------------------------------------------------------------------------
-const storageForUserImg = multer.memoryStorage();
-const uploadforUserImg = multer({
-  storage: storageForUserImg,
-  limits: { fileSize: 10 * 1024 * 1024 }, // Giới hạn kích thước file là 10MB
+const storageForNewUpload = multer.memoryStorage();
+const newUpload = multer({
+  storage: storageForNewUpload,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn kích thước file là 5MB
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|gif|webp|heif|svg/;
     const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
 
     if (mimeType && extName) {
       return cb(null, true);
@@ -58,43 +56,45 @@ const uploadforUserImg = multer({
       cb(new Error("Only image files are allowed!"), false);
     }
   },
-}).array("Imgfiles", 6);
+}).array("Imgfiles", 20);
 
-const handleImageUpload = async (req, res, next) => {
+const processImages = async (req, res, next) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: "No files uploaded" });
+  }
+
   try {
-    if (req.files && req.files.length > 0) {
-      const { title, textcontent, imgFolderName } = req.body;
-      const newTitle = title && simPliFizeString(title, true);
-      const imageFiles = req.files;
-      for (const file of imageFiles) {
-        const resizedImageBuffer = await sharp(file.buffer)
-          .resize(300, 300) // Thay đổi kích thước hình ảnh (300x300 px)
-          .toFormat("jpeg") // Chuyển đổi định dạng thành JPEG
-          .jpeg({ quality: 80 }) // Đặt chất lượng hình ảnh
-          .toBuffer();
+    const { title, imgFolderName } = req.body;
+    const newTitle = title && simPliFizeString(title, true);
+    const uploadPath = imgFolderName
+      ? path.join("./IMG_Storage", imgFolderName)
+      : createDir(req.session.site + "_" + req.session.username + "_" + newTitle);
 
-        const uploadPath = imgFolderName
-          ? path.join("D:\\IMG_Storage\\Contents", imgFolderName)
-          : createDir(
-              req.session.site + "_" + req.session.username + "_" + newTitle
-            );
-
-        if (!fs.existsSync(uploadPath)) {
-          fs.mkdirSync(uploadPath, { recursive: true });
-        }
-        const fileName = `${Date.now() + path.extname(file.originalname)}`;
-        const filePath = path.join(uploadPath, fileName);
-        fs.writeFileSync(filePath, resizedImageBuffer);
-      }
-
-      next();
-    } else {
-      return res.status(400).json({ message: "No files uploaded" });
+    // Tạo thư mục nếu chưa tồn tại
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
     }
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Error processing images" });
+
+    // Duyệt qua từng file và xử lý
+    const processedFiles = await Promise.all(
+      req.files.map(async (file) => {
+        const newFileName = `${Date.now()}.jpeg`; // Chuyển sang JPEG
+        const outputPath = path.join(uploadPath, newFileName);
+
+        await sharp(file.buffer)
+          .jpeg({ quality: 80 , progressive: true}) // Chuyển sang JPEG với chất lượng 80%
+          .toFile(outputPath);
+
+        return { originalName: file.originalname, savedAs: newFileName };
+      })
+    );
+
+    req.processedFiles = processedFiles; // Lưu thông tin file đã xử lý vào request
+    next(); // Tiếp tục middleware tiếp theo
+  } catch (err) {
+    console.error("Image processing error:", err);
+    return res.status(500).json({ error: "Error processing images" });
   }
 };
 
-export { upload, uploadforUserImg, handleImageUpload };
+export { upload, newUpload, processImages };

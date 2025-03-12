@@ -59,7 +59,10 @@ export default new (class ManageController {
         };
       });
 
-      console.log(extractData);
+      console.log(
+        "------------------------------------------------------------",
+        extractData
+      );
       const [updateResult, deleteResult] = await Promise.all([
         updateContents(data),
         updateImageinFolder(extractData),

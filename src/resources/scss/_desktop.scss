@@ -1,3 +1,6 @@
+html {
+  scrollbar-width: none;
+}
 body,
 .create-content-intranet .create-content-box #quill-editor-content {
   /* Text */
@@ -5,6 +8,10 @@ body,
 
   /* Display & Box Model */
   margin: 0;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
 
 body,
@@ -340,7 +347,6 @@ body,
 .whats-new-intranet .content-news {
   /* Display & Box Model */
   margin: 0.2rem 0;
-
   /* Color */
   background-color: $news-background-color;
 }
@@ -379,6 +385,26 @@ body,
   // margin-right: 0.5rem;
 }
 
+.filter-section {
+  display: none;
+  transition: all 0.5s ease;
+}
+
+.filter-section.show {
+  display: block;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* activities ------------------------------------------------------------------------------ */
 .activities-header .header-img {
   /* Display & Box Model */
@@ -689,9 +715,10 @@ body,
   position: relative;
 
   /* Display & Box Model */
-  width: calc((100% - 20px) / 6);
+  width: calc((100% - 25px) / 5);
   height: 10rem;
   margin-right: 4px;
+  margin-bottom: 4px;
 }
 
 .create-content-intranet
@@ -752,6 +779,22 @@ body,
   background-color: $blue-color;
 }
 
+.create-content-intranet .file-info-container {
+  width:  33%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  gap: 1rem;
+  cursor: default;
+}
+.create-content-intranet .file-info-container p{
+  width: 40%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 /* manage posts ---------------------------------------------------------------------------- */
 .manage-posts {
   /* Positioning */
@@ -943,7 +986,7 @@ body,
   right: 0;
 
   display: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease-out;
 }
 
 /* register --------------------------------------------------------------------------------- */
@@ -983,4 +1026,83 @@ body,
 .omg {
   width: 100%;
   bottom: 30px;
+}
+
+.backButton {
+  font-size: 1.5rem;
+  color: white;
+  padding: 0.2rem 1rem;
+  border: 1px solid white;
+  width: fit-content;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  top: 1rem;
+}
+.backButton:hover {
+  // background-color: white;
+  // opacity: 0.5;
+  color: rgba(255, 255, 255, 0.758);
+  box-shadow: 1px 1px 1px 1px black inset;
+}
+.filterBtn {
+  bottom: 3.5rem;
+  right: 1.5rem;
+}
+// .filter_container {
+//   display: flex;
+//   flex-direction: column;
+//   bottom:3.5rem;
+//   right: -2rem;
+// }
+
+.filter_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    bottom:3.5rem;
+  right: -2rem;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.filter_container .btn {
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.filter_container.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.filter_container.show .btn {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Tạo hiệu ứng delay từng nút */
+.filter_container.show #btnTimeAsc { transition-delay: 0.1s; }
+.filter_container.show #btnTimeDesc { transition-delay: 0.2s; }
+.filter_container.show #btnAdvanced { transition-delay: 0.3s; }
+
+.advancedFilter_container {
+  max-width: 300px;
+  position: fixed;
+  bottom: 1.15rem;
+  right: -5.1rem;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item.active {
+  background-color: #007bff !important; /* Nền xanh */
+  color: white !important; /* Chữ trắng */
 }

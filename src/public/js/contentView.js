@@ -1,3 +1,7 @@
+$("div.backButton").on("click", function () {
+  window.history.back();
+});
+
 let slideIndex1 = 1;
 showSlides1(slideIndex1);
 

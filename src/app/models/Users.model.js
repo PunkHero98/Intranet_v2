@@ -1,4 +1,6 @@
 import { connectToDB, sql } from "../../config/db/index.js";
+import { DataTypes } from "sequelize";
+import sequelize from "../../config/db/sequelize.js";
 
 const getUsers = async () => {
   const pool = await connectToDB();
@@ -6,14 +8,13 @@ const getUsers = async () => {
   return result.recordset;
 };
 
-const getUserByEmail = async (email, password) => {
+const getUserByEmail = async (email) => {
   const pool = await connectToDB();
   const result = await pool
     .request()
     .input("email", sql.NVarChar, email)
-    .input("password", sql.NVarChar, password)
     .query(
-      "SELECT * from users where email = @email and user_password = @password"
+      "SELECT id_user, username, user_password, user_role FROM users WHERE email = @email"
     );
   return result.recordset.length > 0 ? result.recordset[0] : null;
 };
@@ -109,6 +110,39 @@ const deleteUser = async (id) => {
   return result.rowsAffected;
 };
 
+const User = sequelize.define(
+  "user",
+  {
+    id_user: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    username: { type: DataTypes.STRING, unique: true, allowNull: false },
+    user_password: { type: DataTypes.STRING, allowNull: false },
+    user_role: { type: DataTypes.STRING, allowNull: false },
+    user_working_site: { type: DataTypes.STRING, allowNull: true },
+    fullname: { type: DataTypes.STRING, allowNull: true },
+    isActived: { type: DataTypes.BOOLEAN, defaultValue: true },
+    session_id: { type: DataTypes.STRING, allowNull: true },
+  },
+  {
+    sequelize,
+    modelName: "User",
+    tableName: "users",
+    timestamps: false,
+    freezeTableName: true,
+  }
+);
+
+const getUserRole = async (role) => {
+  return await User.findAll({ where: { user_role: role } });
+};
+
+const updateUserSession = async (userId, sessionId) => {
+  await User.update({ session_id: sessionId }, { where: { id_user: userId } });
+};
+
+const checkUserByEmailSequelize = async (email) => {
+  return await User.findOne({ where: { email: email } });
+};
+
 export {
   getUsers,
   getUserByEmail,
@@ -118,4 +152,9 @@ export {
   checkUserByEmail,
   updateUser,
   updateUserWithPass,
+  updateUserSession,
+  checkUserByEmailSequelize,
+  getUserRole,
 };
+
+export default User;

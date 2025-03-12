@@ -6,7 +6,7 @@ const isValidEmail = (email) => {
 };
 const validatePassword = (password) => {
   const regex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>~\-_=+\[\]\\;`'\/])[A-Za-z\d!@#$%^&*(),.?":{}|<>~\-_=+\[\]\\;`'\/]{8,}$/;
   return regex.test(password);
 };
 
@@ -157,7 +157,6 @@ $(".register-intranet #submitbtn ").on("click", async function () {
       user_address: address.val(),
       office_phone_number: phone.val(),
     });
-    console.log(data);
     const respone = await fetch(`${HTTP_Request_address}/register/tfa`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

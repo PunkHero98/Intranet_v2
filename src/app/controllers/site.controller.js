@@ -1,4 +1,4 @@
-import { getUsers, getUserById } from "../models/Users.model.js";
+import { getUsers, getUserById, getUserRole } from "../models/Users.model.js";
 import {
   getContents,
   getContentsBySite,
@@ -19,8 +19,8 @@ export default new (class SiteController {
       if (!contents || !Array.isArray(contents)) {
         throw new Error("Invalid content data");
       }
+      console.log(contents);
       res.render("home", {
-        numOfPages: Math.ceil(contents.length / 8),
         role: userrole,
         isHomePage: true,
         username: username,
@@ -35,6 +35,41 @@ export default new (class SiteController {
     }
   }
 
+  //[GET] /homepage/getall
+  async getallPage(req, res) {
+    try {
+      const contents = await getContents();
+      contents.forEach((file) => {
+        file.title = Buffer.from(file.title, "base64").toString();
+        file.content = JSON.parse(file.content);
+        if (file.content_images) {
+          try {
+            file.content_images = JSON.parse(file.content_images);
+            if (file.content_images.length > 0) {
+              file.content_images = path.join(
+                file.images_link,
+                file.content_images[0]
+              );
+            }
+          } catch (parseError) {
+            console.error("Error parsing content_images:", parseError);
+            file.content_images = [];
+          }
+        }
+      });
+      const userRole = await getUserRole("HR");
+      res.json({
+        result: contents,
+        userRole,
+      });
+    } catch (err) {
+      console.error("Error fetching homepage:", err);
+      res.status(500).json({
+        message: "Error fetching contents",
+        error: err.message,
+      });
+    }
+  }
   // [GET] /homepage/:page
   async navigatePages(req, res) {
     try {
@@ -138,6 +173,7 @@ export default new (class SiteController {
         url,
         city,
         site,
+        isActiviyPage: true,
         role: req.session.userrole,
         username: req.session.username,
         fullname: req.session.fullname,

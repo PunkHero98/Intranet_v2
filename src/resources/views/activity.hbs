@@ -9,6 +9,9 @@
 </div>
 
 <div class="activities-body">
+<div class="backButton ms-4">
+  <i class="fa-solid fa-left-long"></i>
+</div>
   <div class="title text-center fw-bold text-white">WHAT'S NEWS</div>
   <div class="whats-new-intranet container-fluid">
     <div class="row d-flex">
@@ -16,7 +19,7 @@
       {{#each contents}}
 
         <div class="col-xl-6 col-md-6 col-sm-12">
-          <div class="row content-news">
+          <div class="row content-news" style="cursor: pointer" onClick="window.location.href='content/{{this.id_content}}'" >
             <!-- image content -->
             <div class="col-3 news-img p-0">
               <a href="content/{{this.id_content}}">

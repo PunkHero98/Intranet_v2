@@ -15,6 +15,10 @@ function getRowElements(obj) {
   };
 }
 
+$("div.backButton").on("click", function () {
+  window.history.back();
+});
+
 $(".manage-posts").on(
   "click",
   ".table-group-divider .editBtn",
@@ -61,6 +65,7 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   const addPicBtn = $(this);
   const input = addPicBtn.siblings("input.fileListForManage");
   const lengthofImage = addPicBtn.parent().children(".img-box").length;
+  console.log(lengthofImage);
   if (lengthofImage >= 6) {
     $(".alert-intranet").css("display", "block");
     $(".alert-intranet strong").html("Warning ! ");
@@ -119,6 +124,7 @@ $(".manage-posts").on("click", ".update_manage", async function () {
     if (!editContentJson.length) return;
 
     const dataJson = JSON.stringify(editContentJson);
+    console.log(dataJson);
 
     $(".loader").css({
       display: "block",
@@ -204,34 +210,30 @@ async function pushNewPicToServer(obj) {
 
   if (numOfPic > numOfBasic) {
     obj.html('<i class="fa fa-spinner fa-spin"></i>Saving');
-
-    // Lấy danh sách ảnh mới (chưa lưu)
     childOfImageContainer.children('img[src^="blob:"]').each(function () {
       afterEditImgArray.push($(this).attr("src"));
     });
-
-    // Lấy tên thư mục chứa ảnh
     const basic_image = childOfImageContainer
       .children("img.basic_image")
       .attr("src")
-      .split("\\")[1];
-
+      .split("\\");
     const formData = new FormData();
-    formData.append("imgFolderName", basic_image);
-
+    formData.append("imgFolderName", basic_image[1]);
+    console.log(basic_image);
     try {
-      // Chuyển đổi ảnh blob thành file và thêm vào formData
-      const fetchPromises = afterEditImgArray.map(async (blobUrl, index) => {
-        const response = await fetch(blobUrl);
-        const blob = await response.blob();
-        const file = new File([blob], `image_${index + 1}.jpg`, {
-          type: blob.type,
-        });
-        formData.append("Imgfiles", file);
+      const fetchPromises = afterEditImgArray.map((blobUrl, index) => {
+        return fetch(blobUrl)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const file = new File([blob], `image_${index + 1}.jpg`, {
+              type: blob.type,
+            });
+            formData.append("Imgfiles", file);
+          });
       });
 
       await Promise.all(fetchPromises);
-      // Gửi request lên server
+
       const response = await fetch(
         `${HTTP_Request_address}/manage/add_news_pics`,
         {
@@ -240,25 +242,15 @@ async function pushNewPicToServer(obj) {
         }
       );
 
-      // Kiểm tra nếu fetch gặp lỗi HTTP
-      if (!response.ok) {
-        throw new Error(`Lỗi HTTP: ${response.status}`);
-      }
-
-      const result = await response.text();
-      console.log("Upload thành công:", result);
-
-      // Cập nhật giao diện sau khi upload thành công
+      const result = await response.json();
+      renderNewPic(obj, result, numOfBasic);
+      console.log(result);
       setTimeout(() => {
         obj.html("Edit");
-        window.location.reload();
       }, 1000);
-
-      return result; // Trả về kết quả để caller có thể `await` đúng
     } catch (err) {
-      console.error("Lỗi khi upload ảnh:", err);
+      console.error("Error:", err);
       alert("There was an error submitting the form. Please try again.");
-      throw err; // Ném lỗi để caller có thể xử lý tiếp
     }
   }
 }

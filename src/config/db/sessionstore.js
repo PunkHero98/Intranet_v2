@@ -9,3 +9,4 @@ const store = new (SequelizeStore(session.Store))({
 });
 
 export default store;
+  

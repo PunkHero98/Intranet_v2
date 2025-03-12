@@ -1,6 +1,10 @@
 <!-- manage-posts-intranet -->
 <div class="manage-posts container-fluid">
+  <div class="backButton mb-5 text-black border border-dark">
+    <i class="fa-solid fa-left-long"></i>
+  </div>
   <div style="display: flex; justify-content:space-between" class="mb-2">
+    
     <h5>Manage Posts</h5>
     <div>
       <button class="refesh_manage btn btn-warning">Refresh</button>
@@ -27,10 +31,10 @@
 
       {{#each result}}
         <tr>
-          <td class="newId">{{addindex @index}}</td>
-          <td class="title">{{this.title}}</td>
-          <td class="content">{{{this.content}}}</td>
-          <td class="image_container">
+          <td class="newId" >{{addindex @index}}</td>
+          <td class="title" >{{this.title}}</td>
+          <td class="content" >{{{this.content}}}</td>
+          <td class="image_container" >
 
             {{#if this.content_images}}
               {{#each this.content_images}}

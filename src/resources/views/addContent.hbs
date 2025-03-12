@@ -1,7 +1,11 @@
 <!-- create-content-intranet -->
 <div class="create-content-intranet">
   <div class="content-container m-0 p-0">
+
     <div class="create-content-box">
+      <div class="backButton ms-4">
+        <i class="fa-solid fa-left-long"></i>
+      </div>
       <form id="uploadform">
         <div class="first-row">
           <label class="fw-bold" for="title-input">Title</label>
@@ -27,15 +31,19 @@
         </div>
 
         <div class="fourth-row">
-          <label class="fw-bold">Upload Pictures</label>
+          <label class="fw-bold">Upload</label>
           <label class="fw-bold bg-dark-subtle" for="Upload"><i
-              class="fa-regular fa-folder-open"
+              class="fa-solid fa-image"
             ></i>
-            Choose</label>
-          <label class="fw-bold bg-dark-subtle"><i
+            Choose Pictures</label>
+          <label class="fw-bold bg-dark-subtle" for="uploadFile"><i
+              class="fa-solid fa-file"
+            ></i>
+            Attach Files</label>
+          <label class="clearBtn fw-bold bg-dark-subtle"><i
               class="fa-solid fa-delete-left"
             ></i>
-            Clear All Pictures</label>
+            Clear All</label>
           <input
             type="file"
             accept="image/jpeg , image/png , image/jpg , image/webp , image/heif , image/svg"
@@ -44,10 +52,15 @@
             hidden
             multiple
           />
-          <div class="img-container"></div>
+          <input type="file" id="uploadFile" accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt" name="files" hidden multiple/>
+          <div class="file-container d-flex flex-wrap gap-2 mt-1">
+          </div>
+          <div class="img-container d-flex flex-wrap mt-1">
+          </div>
         </div>
 
         <div class="last-row text-center">
+          <input type="button" class="fw-bold cancelButton" value="Cancel" />
           <input class="fw-bold" type="button" value="Review" />
           <input
             class="fw-bold text-white"

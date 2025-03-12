@@ -1,12 +1,16 @@
-var Imgsarray = [];
-var ImageAfterDelete = [];
-var latestArray = [];
+let Imgsarray = [];
+let FileArray = [];
+let ImageAfterDelete = [];
+let latestArray = [];
 const HTTP_Request_address = "http://localhost:3000";
-$(".create-content-intranet .fourth-row input").on("change", function (e) {
+$(".create-content-intranet .fourth-row #Upload").on("change", function (e) {
   handleChoosePicture(e);
-  displayImage(this);
+  displayImage();
 });
-function displayImage(obj) {
+
+$(".add-Btn").css("display", "none");
+
+function displayImage() {
   const imgElements = Imgsarray.map((f, index) => {
     if (f && f instanceof File) {
       const imgElement = `
@@ -24,13 +28,47 @@ function displayImage(obj) {
     }
     return "";
   });
-  const imgContainer = $($(obj).next());
+  const imgContainer = $(".create-content-intranet .fourth-row .img-container");
   imgContainer.empty();
   imgContainer.append(imgElements.join(""));
 }
 
+function displayFileInfo() {
+  const fileElements = FileArray.map((f, index) => {
+    if (f && f instanceof File) {
+      // 📝 Lấy thông tin file
+      const fileName = f.name;
+      const fileSize = (f.size / 1024).toFixed(2) + " KB"; // Chuyển byte -> KB
+      const fileType = f.type || "Unknown"; // Một số file không có type
+      
+      // 🏷 Tạo div chứa thông tin file
+      const fileElement = `
+        <div class="file-info-container shadow bg-light rounded " data-index="${index}">
+        <i class="fa-solid fa-file"></i>
+          <p class="m-0 " title=${fileName}><strong>Name:</strong> ${fileName}</p>
+          <p class="m-0" title="${fileSize}"><strong>Size:</strong> ${fileSize}</p>
+          <p class="m-0" title=${fileType}><strong>Type:</strong> ${fileType}</p>
+          <button class="btn btn-danger fs-6 deleteFileBtn"><i class="fa-solid fa-xmark"></i></i></button>
+        </div>`;
+      
+      return fileElement;
+    }
+    return "";
+  });
+
+  const fileContainer = $(".create-content-intranet .fourth-row .file-container");
+  fileContainer.empty();
+  fileContainer.append(fileElements.join(""));
+}
+
+$('.create-content-intranet .fourth-row .file-container').on("click", "button", function () {
+  const index = $(this).parent().attr("data-index");
+  FileArray.splice(index, 1);
+  displayFileInfo();
+});
+
 function handleChoosePicture(event) {
-  $($(".create-content-intranet .fourth-row input").next()).css(
+  $($(".create-content-intranet .fourth-row #Upload").next()).css(
     "display",
     "flex"
   );
@@ -45,17 +83,25 @@ function handleChoosePicture(event) {
     }
     Imgsarray.push(f);
   });
-  if (Imgsarray.length > 6) {
-    Imgsarray = Imgsarray.slice(0, 6);
+  if (Imgsarray.length > 10) {
+    Imgsarray = Imgsarray.slice(0, 10);
   }
+  console.log(Imgsarray);
 }
-$(".create-content-intranet .fourth-row label").on("click", function () {
+$(".create-content-intranet .fourth-row .clearBtn").on("click", function () {
   Imgsarray = [];
+  FileArray = [];
   $(".create-content-intranet .fourth-row .img-container")
     .empty()
     .css("display", "none");
-  const fileInput = document.getElementById("Upload");
+  
+  $(".create-content-intranet .fourth-row .file-container")
+    .empty()
+    .css("display", "none");
+  const fileInput = document.getElementById("uploadFile");
   fileInput.value = "";
+  const photoInput = document.getElementById("Upload");
+  photoInput.value = "";
 });
 
 $(".create-content-intranet").on(
@@ -68,6 +114,35 @@ $(".create-content-intranet").on(
     restructureTabindex();
   }
 );
+
+$('.create-content-intranet .fourth-row #uploadFile').on("change", function (e) {
+  const files = e.target.files;
+  const allowedExtensions = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt"];
+  const maxSize = 5 * 1024 * 1024;
+  if(FileArray.length > 3 || files.length > 3) {
+    console.log(FileArray.length);
+    showNotification("Error ", "You can only upload 3 files at a time", "alert-success", "alert-danger");
+    e.target.value = "";
+    return;
+  }
+  for (let i = 0; i < files.length; i++) {
+    const fileExtension = files[i].name.slice(files[i].name.lastIndexOf(".")).toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+      // alert(`File ${files[i].name} is an unauthorized type!`);
+      showNotification("Error ", `File is ${files[i].name} an unauthorized type!`, "alert-success", "alert-danger");
+      e.target.value = ""; // Xóa file đã chọn
+      return;
+  }
+    if (files[i].size > maxSize) {
+      // alert(`File ${files[i].name} size exceeds 5MB`);
+      showNotification("Error ", `File ${files[i].name} size exceeds 5MB`, "alert-success", "alert-danger");
+      e.target.value = "";
+      return;
+    }
+    FileArray.push(files[i]);
+  };
+  displayFileInfo();
+});
 
 function restructureTabindex(index) {
   const array = [];
@@ -106,7 +181,6 @@ $('.create-content-intranet .last-row input[value="Review"]').on(
     const reviewModal = $(".review-content-intranet .slideshow-container");
     const review = $(".review-content-intranet .col-12");
     review.children("h5").text(title);
-    console.log(content);
     review.children(".content_area_for_review").html(content);
     reviewModal.children().not("a").remove();
     review.children(".text-center").empty();
@@ -158,7 +232,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     Imgsarray.forEach((image, index) => {
       formData.append("Imgfiles", image);
     });
-	console.log(title , textcontent.value);
+    console.log(title, textcontent.value);
     try {
       const response = await fetch(`${HTTP_Request_address}/content/add`, {
         method: "POST",
@@ -177,6 +251,31 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     }
   }
 );
+
+// BackBtn function
+$("div.backButton").on("click", function () {
+  window.history.back();
+});
+
+$("input.cancelButton").on("click", function () {
+  window.location.href = "/homepage";
+});
+
+function showNotification(noti, html, removeClass, addClass) {
+  $(".alert-intranet").css("display", "block").css("opacity", "1");
+  $(".alert-intranet strong").html(noti);
+  $(".alert-intranet span").html(html);
+  $(".alert-intranet").removeClass(removeClass).addClass(addClass);
+
+  // Tự động ẩn thông báo sau 3 giây
+  setTimeout(() => {
+    $(".alert-intranet").css("opacity", "0");
+    setTimeout(() => {
+      $(".alert-intranet").css("display", "none");
+    }, 500); // Đợi transition hoàn tất
+  }, 3000);
+}
+
 
 let slideIndex1 = 1;
 showSlides1(slideIndex1);
