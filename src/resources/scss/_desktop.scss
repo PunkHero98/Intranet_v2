@@ -784,7 +784,7 @@ body,
   background-color: $coral-color;
 }
 
-.create-content-intranet .create-content-box .last-row input:last-child {
+.create-content-intranet .create-content-box .last-row input:nth-child(3) {
   /* Color */
   background-color: $blue-color;
 }
