@@ -44,23 +44,31 @@ const upload = multer({
 const storageForNewUpload = multer.memoryStorage();
 const newUpload = multer({
   storage: storageForNewUpload,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn kích thước file là 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn file 10MB
   fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png|gif|webp|heif|svg/;
-    const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const imageTypes = /jpeg|jpg|png|gif|webp|heif|svg/;
+    const docTypes = /pdf|doc|docx|xls|xlsx|ppt|pptx|txt/;
+    
+    const mimeType = imageTypes.test(file.mimetype) || docTypes.test(file.mimetype);
+    const extName = imageTypes.test(path.extname(file.originalname).toLowerCase()) ||
+                    docTypes.test(path.extname(file.originalname).toLowerCase());
 
     if (mimeType && extName) {
       return cb(null, true);
     } else {
-      cb(new Error("Only image files are allowed!"), false);
+      cb(new Error("Only images and documents are allowed!"), false);
     }
   },
-}).array("Imgfiles", 20);
+}).fields([
+  { name: "Imgfiles", maxCount: 10 }, // Tối đa 20 ảnh
+  { name: "Docfiles", maxCount: 3 }, // Tối đa 10 file tài liệu
+]);
 
-const processImages = async (req, res, next) => {
-  if (!req.files || req.files.length === 0) {
-    return res.status(400).json({ error: "No files uploaded" });
+const processFiles = async (req, res, next) => {
+  if ((!req.files.Imgfiles || req.files.Imgfiles.length === 0) && 
+      (!req.files.Docfiles || req.files.Docfiles.length === 0)) {
+        console.log("No files uploaded, skipping file processing.");
+        return next();
   }
 
   try {
@@ -75,26 +83,48 @@ const processImages = async (req, res, next) => {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
 
-    // Duyệt qua từng file và xử lý
-    const processedFiles = await Promise.all(
-      req.files.map(async (file) => {
-        const newFileName = `${Date.now()}.jpeg`; // Chuyển sang JPEG
-        const outputPath = path.join(uploadPath, newFileName);
+    let processedFiles = [];
 
-        await sharp(file.buffer)
-          .jpeg({ quality: 80 , progressive: true}) // Chuyển sang JPEG với chất lượng 80%
-          .toFile(outputPath);
+    // Xử lý ảnh
+    if (req.files.Imgfiles) {
+      for (const file of req.files.Imgfiles) {
+        try {
+          const newFileName = `${Date.now()}.jpeg`;
+          const outputPath = path.join(uploadPath, newFileName);
 
-        return { originalName: file.originalname, savedAs: newFileName };
-      })
-    );
+          await sharp(file.buffer)
+            .jpeg({ quality: 80, progressive: true })
+            .toFile(outputPath);
 
-    req.processedFiles = processedFiles; // Lưu thông tin file đã xử lý vào request
-    next(); // Tiếp tục middleware tiếp theo
+          processedFiles.push({ type: "image", originalName: file.originalname, savedAs: newFileName });
+        } catch (error) {
+          console.error(`Error processing image ${file.originalname}:`, error);
+        }
+      }
+    }
+
+    // Lưu file tài liệu trực tiếp
+    if (req.files.Docfiles) {
+      for (const file of req.files.Docfiles) {
+        try {
+          const newFileName = `${Date.now()}_${file.originalname}`;
+          const outputPath = path.join(uploadPath, newFileName);
+          fs.writeFileSync(outputPath, file.buffer);
+
+          processedFiles.push({ type: "document", originalName: file.originalname, savedAs: newFileName });
+        } catch (error) {
+          console.error(`Error saving document ${file.originalname}:`, error);
+        }
+      }
+    }
+
+    req.processedFiles = processedFiles;
+    next();
   } catch (err) {
-    console.error("Image processing error:", err);
-    return res.status(500).json({ error: "Error processing images" });
+    console.error("File processing error:", err);
+    return res.status(500).json({ error: "Error processing files" });
   }
 };
 
-export { upload, newUpload, processImages };
+
+export { upload, newUpload, processFiles };
