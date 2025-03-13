@@ -222,29 +222,39 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     );
     textcontent.value = JSON.stringify(quill.root.innerHTML);
 
-    if (Imgsarray.length === 0) {
-      alert("Please choose at least 1 picture");
-      return;
-    }
+    // if (Imgsarray.length === 0) {
+    //   alert("Please choose at least 1 picture");
+    //   return;
+    // }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("textcontent", textcontent.value);
     Imgsarray.forEach((image, index) => {
       formData.append("Imgfiles", image);
     });
-    console.log(title, textcontent.value);
+    FileArray.forEach((file, index) => {
+      formData.append("Docfiles", file);
+    });
     try {
+      $('.loader').css('display', 'block');
+      $('.create-content-intranet').css({opacity: 0.05 , pointerEvents: 'none' , userSelect: 'none' , backgroundColor: 'rgba(0, 0, 0, 0.65)'});
       const response = await fetch(`${HTTP_Request_address}/content/add`, {
         method: "POST",
         body: formData,
       });
       if (!response.ok) {
+        $('.loader').css('display', 'none');
+        $('.create-content-intranet').css({opacity: 1 , pointerEvents: 'auto' , userSelect: 'auto' , backgroundColor: 'rgba(0, 0, 0, 0)'});
+        showNotification("Error ", "There was an error submitting the form. Please try again.", "alert-success", "alert-danger");
         throw new Error("Error submitting form");
       }
-      const responseText = await response.text();
-      console.log(responseText);
-      window.location.href = "/homepage";
-      Imgsarray = [];
+      $('.loader').css('display', 'none');
+      $('.create-content-intranet').css({opacity: 1 , pointerEvents: 'auto' , userSelect: 'auto' , backgroundColor: 'rgba(0, 0, 0, 0)'});
+      showNotification("Success ", "Your content has been submitted successfully", "alert-danger", "alert-success");
+      clearInput();
+      setTimeout(() => {
+        window.location.href = "/homepage";
+      }, 2000);
     } catch (error) {
       console.error("Error:", error);
       alert("There was an error submitting the form. Please try again.");
@@ -260,6 +270,23 @@ $("div.backButton").on("click", function () {
 $("input.cancelButton").on("click", function () {
   window.location.href = "/homepage";
 });
+
+function clearInput () {
+  Imgsarray = [];
+  FileArray = [];
+  $(".create-content-intranet .fourth-row .img-container")
+    .empty()
+    .css("display", "none");
+  $(".create-content-intranet .fourth-row .file-container")
+    .empty()
+    .css("display", "none");
+  const fileInput = $("#uploadFile");
+  fileInput.value = "";
+  const photoInput = $("#Upload");
+  photoInput.value = "";
+  quill.root.innerHTML = "";
+  $(".create-content-intranet .first-row input").val("");
+};
 
 function showNotification(noti, html, removeClass, addClass) {
   $(".alert-intranet").css("display", "block").css("opacity", "1");
