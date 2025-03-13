@@ -4,7 +4,16 @@
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header span,
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
   .create-content-intranet .create-content-box #quill-editor-content,
-  .colorful-border-button {
+  .colorful-border-button,
+  .manage-users input,
+  .homepage-intranet ul.pagination .page-link,
+  .filterBtn,
+  .filter_container .btn,
+  .advancedFilter_container,
+  .advancedFilter_container input,
+  .advancedFilter_container select,
+  .advancedFilter_container button,
+  .backButton {
     /* Text */
     font-size: 0.85rem;
   }
@@ -221,7 +230,7 @@
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
-    padding: 1.5rem;
+    padding: 0 1.5rem;
   }
 
   .create-content-intranet
@@ -260,5 +269,35 @@
     /* Positioning */
     bottom: 0.7rem;
     right: -1.5rem;
+  }
+
+  /* pagination ---------------------------------------------------------------------------- */
+  .homepage-intranet ul.pagination li {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .homepage-intranet ul li a,
+  .homepage-intranet ul li span {
+    line-height: 2rem;
+  }
+
+  /* filter ---------------------------------------------------------------------------- */
+  .filterBtn {
+    height: 2.4rem;
+    width: 2.4rem;
+    bottom: 3rem;
+    right: 0.5rem;
+  }
+
+  .filter_container {
+    bottom: 3.7rem;
+    right: -2.1rem;
+  }
+  
+  .advancedFilter_container {
+    bottom: 0.6rem;
+    right: -5.4rem;
+    padding: 0.8rem !important;
   }
 }

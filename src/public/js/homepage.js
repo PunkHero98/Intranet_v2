@@ -97,7 +97,7 @@ function renderPagination(currentPage, totalPages) {
   pagination.append(`
     <li class="navigation-left ${currentPage === 1 ? "disabled" : ""}">
       <a class="page-link" href="#">
-        <i class="fa-solid fa-chevron-left"></i>
+        <i class="fa-solid fa-angle-left"></i>
       </a>
     </li>
   `);
@@ -149,7 +149,7 @@ function renderPagination(currentPage, totalPages) {
       currentPage === totalPages ? "disabled" : ""
     }">
       <a class="page-link" href="#">
-        <i class="fa-solid fa-chevron-right"></i>
+        <i class="fa-solid fa-angle-right"></i>
       </a>
     </li>
   `);

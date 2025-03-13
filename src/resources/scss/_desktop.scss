@@ -19,7 +19,15 @@ body,
 .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
 .create-content-intranet .create-content-box #quill-editor-content,
 .colorful-border-button,
-.manage-users input {
+.manage-users input,
+.homepage-intranet ul.pagination .page-link,
+.filterBtn,
+.filter_container .btn,
+.advancedFilter_container,
+.advancedFilter_container input,
+.advancedFilter_container select,
+.advancedFilter_container button,
+.backButton {
   /* Text */
   font-size: 0.9rem;
 }
@@ -237,10 +245,12 @@ body,
   background-color: transparent;
 
   /* Text */
-  line-height: 100%;
+  // line-height: 100%;
+  height: 100%;
 }
 
-.header-intranet ul.countries li.nav-item button:hover {
+.header-intranet ul.countries li.nav-item button:hover,
+.header-intranet ul.countries li.nav-item button.active {
   /* Display & Box Model */
   border: 0.125rem solid $primary-color;
 }
@@ -672,7 +682,7 @@ body,
 
 .create-content-intranet .create-content-box form {
   /* Display & Box Model */
-  padding: 1.5rem;
+  padding: 0 1.5rem;
 }
 
 .create-content-intranet .create-content-box .input-box {
@@ -911,47 +921,60 @@ body,
 }
 
 /* add news button ------------------------------------------------------------------------- */
+// .colorful-border-button {
+//   /* Positioning */
+//   bottom: 1.1rem;
+//   right: -1rem;
+
+//   /* Other */
+//   animation: colorful-border 3s linear infinite;
+// }
+
+// @keyframes colorful-border {
+//   0%   { background-color: red; }
+//   14%  { background-color: orange; }
+//   28%  { background-color: yellow; }
+//   42%  { background-color: green; }
+//   57%  { background-color: blue;  }
+//   71%  { background-color: indigo; }
+//   85%  { background-color: violet;  }
+//   100% { background-color: red; }
+// }
+
 .colorful-border-button {
   /* Positioning */
   bottom: 1.1rem;
   right: -1rem;
 
-  /* Other */
-  animation: colorful-border 3s linear infinite;
+  /* Custom Properties */
+  --btn-bg-1: hsla(194 100% 69% / 1);
+  --btn-bg-2: hsla(217 100% 56% / 1);
+  --radii: 0.5em;
+
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+    45deg,
+    var(--btn-bg-2) 0%,
+    var(--btn-bg-1) 50%,
+    var(--btn-bg-2) 100%
+  );
+
+  /* Animation nền */
+  animation: gradientMove 6s ease-in-out infinite alternate;
+
+  /* Đổ bóng mềm mại */
+  box-shadow:
+    0px 0px 20px rgba(71, 184, 255, 0.5),
+    0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+    inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+    inset -4px -4px 8px rgba(19, 95, 216, 0.35);
 }
 
-@keyframes colorful-border {
-  0% {
-    background-color: red;
-  }
-
-  14% {
-    background-color: orange;
-  }
-
-  28% {
-    background-color: yellow;
-  }
-
-  42% {
-    background-color: green;
-  }
-
-  57% {
-    background-color: blue;
-  }
-
-  71% {
-    background-color: indigo;
-  }
-
-  85% {
-    background-color: violet;
-  }
-
-  100% {
-    background-color: red;
-  }
+/* Hiệu ứng gradient chạy lên - xuống */
+@keyframes gradientMove {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
 /* loader ----------------------------------------------------------------------------------- */
@@ -1011,98 +1034,163 @@ body,
 //   background-repeat: no-repeat;
 //   background-position: top right;
 // }
-/* notification ---------------------------------------------------------------------------- */
-.header_notification span {
-  font-size: 1rem;
-}
-.header_notification {
-  color: black;
-}
-.header_notification:hover {
-  border-radius: 11px;
-  background-color: rgb(242, 108, 108);
-  color: white;
-}
-.omg {
-  width: 100%;
-  bottom: 30px;
-}
 
-.backButton {
-  font-size: 1.5rem;
-  color: white;
-  padding: 0.2rem 1rem;
-  border: 1px solid white;
-  width: fit-content;
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-  top: 1rem;
-}
-.backButton:hover {
-  // background-color: white;
-  // opacity: 0.5;
-  color: rgba(255, 255, 255, 0.758);
-  box-shadow: 1px 1px 1px 1px black inset;
-}
-.filterBtn {
-  bottom: 3.5rem;
-  right: 1.5rem;
-}
-// .filter_container {
-//   display: flex;
-//   flex-direction: column;
-//   bottom:3.5rem;
-//   right: -2rem;
+/* notification ---------------------------------------------------------------------------- */
+// .header_notification span {
+//   font-size: 1rem;
+// }
+// .header_notification {
+//   color: black;
+// }
+// .header_notification:hover {
+//   border-radius: 11px;
+//   background-color: rgb(242, 108, 108);
+//   color: white;
+// }
+// .omg {
+//   width: 100%;
+//   bottom: 30px;
 // }
 
+/* go back ---------------------------------------------------------------------------- */
+// .backButton {
+//   font-size: 1.5rem;
+//   color: white;
+//   padding: 0.2rem 1rem;
+//   border: 1px solid white;
+//   width: fit-content;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   position: relative;
+//   top: 1rem;
+// }
+// .backButton:hover {
+//   color: rgba(255, 255, 255, 0.758);
+//   box-shadow: 1px 1px 1px 1px black inset;
+// }
+
+.backButton {
+  padding: 1.2rem 0;
+  margin: 0 1rem;
+  display: flex;
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+ }
+ 
+ .backButton > svg {
+  margin-right: 5px;
+  margin-left: 5px;
+  transition: all 0.4s ease-in;
+ }
+ 
+ .backButton:hover > svg {
+  transform: translateX(-5px);
+ }
+ 
+ .backButton:hover {
+  transform: translateY(-2px);
+ }
+
+/* filter ---------------------------------------------------------------------------- */
+.filterBtn {
+  height: 2.5rem;
+  width: 2.5rem;
+  bottom: 3.6rem;
+  right: 1.1rem;
+  border: 2px solid rgb(193, 163, 98);
+  border-radius: 50%;
+  background-color: transparent !important;
+}
+
 .filter_container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    visibility: hidden;
-    bottom:3.5rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  bottom: 4.2rem;
   right: -2rem;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .filter_container .btn {
-    transform: translateY(-20px);
-    opacity: 0;
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .filter_container.show {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 .filter_container.show .btn {
-    transform: translateY(0);
-    opacity: 1;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Tạo hiệu ứng delay từng nút */
-.filter_container.show #btnTimeAsc { transition-delay: 0.1s; }
+.filter_container.show #btnTimeAsc  { transition-delay: 0.1s; }
 .filter_container.show #btnTimeDesc { transition-delay: 0.2s; }
 .filter_container.show #btnAdvanced { transition-delay: 0.3s; }
 
 .advancedFilter_container {
-  max-width: 300px;
+  max-width: 17rem;
   position: fixed;
-  bottom: 1.15rem;
+  bottom: 1rem;
   right: -5.1rem;
   transform: translate(-50%, -50%);
   background: #fff;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 1rem;
+  border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+// .advancedFilter_container input,
+// .advancedFilter_container select {
+//   font-size: 0.9rem;
+// }
 
 .list-group-item.active {
   background-color: #007bff !important; /* Nền xanh */
   color: white !important; /* Chữ trắng */
 }
+
+/* pagination ---------------------------------------------------------------------------- */
+.homepage-intranet ul.pagination li {
+  height: 2rem;
+  width: 2rem;
+  margin: 0 0.2rem;
+}
+
+.homepage-intranet ul.pagination li.active a {
+  background: linear-gradient(180deg, #050c9c 0%, #3681f1 100%, #3abef9 100%) !important;
+  border: 0;
+}
+
+.homepage-intranet ul.pagination li.disabled a,
+.homepage-intranet ul.pagination li.disabled span {
+  background: transparent !important;
+  color: #aaa;
+}
+
+.homepage-intranet ul li a,
+.homepage-intranet ul li span {
+  height: 100%;
+  line-height: 2rem;
+  width: 100%;
+  border-radius: 100%;
+  text-align: center;
+  margin: 0 !important;
+  padding: 0;
+  background: transparent;
+  color: white;
+}
+
+

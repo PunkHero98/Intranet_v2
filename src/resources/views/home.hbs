@@ -7,15 +7,8 @@
         <h2 class="text-black m-0">Welcome, {{fullname}}!</h2>
 
         <!-- buttons link -->
-        <button
-          class="btn m-2 text-light fw-bold border-0"
-          type="button"
-        >Teams</button>
-        <button
-          id="TicketSystem"
-          class="btn m-2 text-light fw-bold border-0"
-          type="button"
-        >Ticket System</button>
+        <button class="btn m-2 text-light fw-bold border-0" type="button">Teams</button>
+        <button id="TicketSystem" class="btn m-2 text-light fw-bold border-0" type="button">Ticket System</button>
         <button class="btn m-2 text-light fw-bold border-0" type="button">Time
           Sheets</button>
         <button class="btn m-2 text-light fw-bold border-0" type="button">Time
@@ -43,12 +36,7 @@
 
             <!-- Filter by Poster -->
             <div class="col-md-4">
-              <input
-                type="text"
-                class="form-control"
-                id="nameFilter"
-                placeholder="Filter by poster..."
-              />
+              <input type="text" class="form-control" id="nameFilter" placeholder="Filter by poster..." />
             </div>
 
             <!-- Filter by Site -->
@@ -78,68 +66,61 @@
 
     </div>
   </div>
-  <nav
-    aria-label="Page navigation "
-    class="omg d-flex mt-5 justify-content-center"
-  >
-    <ul class="pagination">
-      <li class="navigation-left"><a class="page-link" href="#"><i
-            class="fa-solid fa-chevron-left"
-          ></i></a></li>
+
+  {{!-- Hiển thị phân trang --}}
+  <nav aria-label="Page navigation" class="d-flex mt-5 justify-content-center">
+    <ul class="pagination m-0">
+      <li class="navigation-left"><a class="page-link" href="#"><i class="fa-solid fa-angle-left"></i></a></li>
       {{#for 1 numOfPages}}
-        <li class="page-item"><a
-            class="page-link"
-            href="#"
-            data-page={{this}}
-          >{{this}}</a></li>
+      <li class="page-item"><a class="page-link" href="#" data-page={{this}}>{{this}}</a></li>
       {{/for}}
-      <li class="navigation-right"><a class="page-link" href="#"><i
-            class="fa-solid fa-chevron-right"
-          ></i></a></li>
+      <li class="navigation-right"><a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a></li>
     </ul>
   </nav>
-  <button type="button" class="filterBtn btn filter-Btn text-white position-fixed translate-middle bg-primary border-0">
+
+  {{!-- Lọc --}}
+  <button type="button" class="filterBtn btn filter-Btn text-white position-fixed translate-middle bg-primary">
     <i class="fa-solid fa-filter"></i>
   </button>
-  <div  class="gap-2 position-fixed translate-middle filter_container"  >
-     <button class="btn btn-primary" id="btnTimeAsc">Time Increasing</button>
-      <button class="btn btn-primary" id="btnTimeDesc">Time Decreasing</button>
-      <button class="btn btn-secondary" id="btnAdvanced">Advanced Filter</button>
+
+  <div class="gap-1 position-fixed translate-middle filter_container">
+    <button class="btn btn-primary" id="btnTimeAsc">Time Increasing</button>
+    <button class="btn btn-primary" id="btnTimeDesc">Time Decreasing</button>
+    <button class="btn btn-secondary" id="btnAdvanced">Advanced Filter</button>
   </div>
   <form id="advancedFilter" class="advancedFilter_container p-3 border rounded bg-light d-none">
-
     <!-- Lọc theo Poster -->
     <div class="mb-2 position-relative">
       <label for="posterInput" class="form-label">By Poster:</label>
       <input type="text" id="posterInput" class="form-control" placeholder="Enter Poster name...">
-      
+
       <ul id="posterList" class="list-group position-absolute w-100" style="display: none; z-index: 10;">
-          <li class="list-group-item active" data-value="all">All</li>
+        <li class="list-group-item active" data-value="all">All</li>
       </ul>
-    </div>  
+    </div>
     <!-- Lọc theo Time -->
     <div class="mb-2">
-        <label for="filterTime" class="form-label">By Time:</label>
-        <input type="date" id="filterTime" class="form-control">
+      <label for="filterTime" class="form-label">By Time:</label>
+      <input type="date" id="filterTime" class="form-control">
     </div>
 
     <!-- Lọc theo Site -->
     <div class="mb-2">
-        <label for="filterSite" class="form-label">By Site:</label>
-        <select id="filterSite" class="form-select">
-            <option value="all">All</option>
-            <option value="australia">Australia</option>
-            <option value="newzealand">New Zealand</option>
-            <option value="thailand">Thailand</option>
-            <option value="vietnam">Viet Nam</option>
-            <option value="philippines">Philippines</option>
-        </select>
+      <label for="filterSite" class="form-label">By Site:</label>
+      <select id="filterSite" class="form-select">
+        <option value="all">All</option>
+        <option value="australia">Australia</option>
+        <option value="newzealand">New Zealand</option>
+        <option value="thailand">Thailand</option>
+        <option value="vietnam">Viet Nam</option>
+        <option value="philippines">Philippines</option>
+      </select>
     </div>
 
     <!-- Nút Áp dụng -->
     <div class="d-flex justify-content-between">
-      <button class="btn btn-sm btn-primary mt-2" type="submit" id="applyFilter">Apply Filter</button>
-      <button class="btn btn-sm btn-danger mt-2" type="reset" id="clearFilter">Clear Filter</button>
+      <button class="btn btn-primary mt-2 mx-1" type="submit" id="applyFilter">Apply Filter</button>
+      <button class="btn btn-danger mt-2 mx-1" type="reset" id="clearFilter">Clear Filter</button>
     </div>
   </form>
 

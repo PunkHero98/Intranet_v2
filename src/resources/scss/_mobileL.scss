@@ -5,7 +5,15 @@
   .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
   .create-content-intranet .create-content-box #quill-editor-content,
   .colorful-border-button,
-  .manage-users input {
+  .manage-users input,
+  .homepage-intranet ul.pagination .page-link,
+  .filterBtn,
+  .filter_container .btn,
+  .advancedFilter_container,
+  .advancedFilter_container input,
+  .advancedFilter_container select,
+  .advancedFilter_container button,
+  .backButton {
     /* Text */
     font-size: 0.75rem;
   }
@@ -233,7 +241,7 @@
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
-    padding: 1rem;
+    padding: 0 1rem;
   }
 
   .create-content-intranet
@@ -272,5 +280,35 @@
     /* Positioning */
     bottom: 0.7rem;
     right: -1.5rem;
+  }
+
+  /* pagination ---------------------------------------------------------------------------- */
+  .homepage-intranet ul.pagination li {
+    height: 1.7rem;
+    width: 1.7rem;
+  }
+
+  .homepage-intranet ul li a,
+  .homepage-intranet ul li span {
+    line-height: 1.7rem;
+  }
+
+  /* filter ---------------------------------------------------------------------------- */
+  .filterBtn {
+    height: 2.3rem;
+    width: 2.3rem;
+    bottom: 2.7rem;
+    right: 0.3rem;
+  }
+
+  .filter_container {
+    bottom: 3.2rem;
+    right: -2.1rem;
+  }
+  
+  .advancedFilter_container {
+    bottom: 0.3rem;
+    right: -5.4rem;
+    padding: 0.7rem !important;
   }
 }
