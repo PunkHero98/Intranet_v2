@@ -63,6 +63,12 @@ function sortAndRenderNews(data = newsData) {
 function renderPage(array) {
   $(".whats-new-intranet .mainArea").empty();
   array.forEach((f) => {
+    let contentFileLength = 0;
+    if(JSON.parse(f.content_file)) {
+       contentFileLength = JSON.parse(f.content_file).length;
+    } else {
+       contentFileLength = 0;
+    }  
     $(".whats-new-intranet .mainArea").append(`
       <div class="col-xl-6 col-md-6 col-sm-12" >
         <div class="row content-news"  style="cursor: pointer;" onClick="window.location.href='content/${f.id_content}'">
@@ -78,15 +84,24 @@ function renderPage(array) {
             <div class="m-0 content_area">${f.content}</div>
             <i class="text-light-emphasis position-absolute">Posted:
               ${f.poster} |
-              ${f.date_time} |
-              ${f.poster_site}</i>
+              ${formatDate(f.date_time)} |
+              ${f.poster_site} ${contentFileLength ? `| 
+              ${contentFileLength} ${contentFileLength > 1 ? 'files' : 'file'} attached` : ''}</i>
           </div>
         </div>
       </div>
     `);
   });
 }
+function formatDate (date) {
+  const dateObj = new Date(date);
 
+ return new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "2-digit",
+}).format(dateObj);
+};
 // Hàm hiển thị phân trang
 function renderPagination(currentPage, totalPages) {
   const maxVisiblePages = 3;

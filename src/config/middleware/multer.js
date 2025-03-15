@@ -1,8 +1,9 @@
 import multer from "multer";
-import path, { dirname } from "path";
+import path from "path";
 import { createDir } from "./filsystem.js";
 import { simPliFizeString } from "./assets.js";
 import sharp from "sharp";
+import { v4 as uuidv4 } from 'uuid';
 import fs from "fs";
 
 const storage = multer.diskStorage({
@@ -89,7 +90,7 @@ const processFiles = async (req, res, next) => {
     if (req.files.Imgfiles) {
       for (const file of req.files.Imgfiles) {
         try {
-          const newFileName = `${Date.now()}.jpeg`;
+          const newFileName = `${uuidv4()}.jpeg`;
           const outputPath = path.join(uploadPath, newFileName);
 
           await sharp(file.buffer)

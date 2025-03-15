@@ -42,13 +42,15 @@ export default new (class ContentController {
       const simpleTitle = Buffer.from(title).toString("base64");
       const folderName = `Contents/${site}_${username}_${newTitle}`;
 
-      const imgArray = await getfileinDir(folderName);
-      const imgJsonArray = JSON.stringify(imgArray);
+      const result = await getfileinDir(folderName);
+      const imgJsonArray = JSON.stringify(result.images);
+      const docJsonArray = JSON.stringify(result.documents);
       await addContent(
         simpleTitle,
         textcontent,
         folderName,
         imgJsonArray,
+        docJsonArray,
         username,
         getDate(),
         site

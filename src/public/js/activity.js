@@ -1,3 +1,3 @@
-$("div.backButton").on("click", function () {
+$("button.backButton").on("click", function () {
     window.history.back();
   });

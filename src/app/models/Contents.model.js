@@ -63,6 +63,7 @@ const addContent = async (
   content,
   images_link,
   content_images,
+  content_file,
   user,
   date_created,
   site
@@ -74,13 +75,14 @@ const addContent = async (
     .input("content", sql.NVarChar, content)
     .input("images_link", sql.NVarChar, images_link)
     .input("content_images", sql.NVarChar, content_images)
+    .input('content_file' , sql.NVarChar , content_file)
     .input("poster", sql.NVarChar, user)
     .input("dateandtime", sql.DateTime, date_created)
     .input("last_update", sql.DateTime, null)
     .input("deleted", sql.Bit, 0)
     .input("poster_site", sql.NVarChar, site)
     .query(
-      "INSERT INTO contents (title , content, images_link , content_images , poster , date_time , last_updated , deleted , poster_site) VALUES (@title , @content ,@images_link, @content_images , @poster , @dateandtime , @last_update , @deleted ,@poster_site)"
+      "INSERT INTO contents (title , content, images_link , content_images, content_file , poster , date_time , last_updated , deleted , poster_site) VALUES (@title , @content ,@images_link, @content_images, @content_file , @poster , @dateandtime , @last_update , @deleted ,@poster_site)"
     );
   return (await result).rowsAffected;
 };

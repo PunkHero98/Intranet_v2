@@ -263,7 +263,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
 );
 
 // BackBtn function
-$("div.backButton").on("click", function () {
+$("button.backButton").on("click", function () {
   window.history.back();
 });
 

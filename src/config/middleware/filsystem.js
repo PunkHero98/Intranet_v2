@@ -17,35 +17,36 @@ const createDir = (name) => {
 const getfileinDir = (name) => {
   return new Promise((resolve, reject) => {
     const dirPath = path.join("./IMG_Storage", `${name}`);
-    console.log(dirPath);
+    console.log(`Đọc thư mục: ${dirPath}`);
+
     fs.readdir(dirPath, (err, files) => {
       if (err) {
         reject("Lỗi khi đọc thư mục: " + err);
         return;
       }
-      const imageExtensions = [
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".gif",
-        ".webp",
-        ".heif",
-        ".svg",
-      ];
-      const imageFiles = files.filter((file) => {
-        const extname = path.extname(file).toLowerCase();
-        return imageExtensions.includes(extname);
-      });
-      if (imageFiles.length > 0) {
-        console.log("Các hình ảnh trong thư mục:", imageFiles);
-        resolve(imageFiles);
-      } else {
-        console.log("Không tìm thấy hình ảnh nào trong thư mục.");
-        resolve([]);
-      }
+
+      // Danh sách phần mở rộng cần lọc
+      const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".heif", ".svg"];
+      const documentExtensions = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt"];
+
+      // Lọc file ảnh
+      const imageFiles = files.filter((file) => imageExtensions.includes(path.extname(file).toLowerCase()));
+
+      // Lọc file tài liệu
+      const documentFiles = files.filter((file) => documentExtensions.includes(path.extname(file).toLowerCase()));
+
+      // Kết quả trả về
+      const result = {
+        images: imageFiles,
+        documents: documentFiles,
+      };
+
+      console.log("Danh sách file:", result);
+      resolve(result);
     });
   });
 };
+
 
 const updateImageinFolder = async (array) => {
   try {
