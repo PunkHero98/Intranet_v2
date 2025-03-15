@@ -1,6 +1,7 @@
 html {
   scrollbar-width: none;
 }
+
 body,
 .create-content-intranet .create-content-box #quill-editor-content {
   /* Text */
@@ -809,9 +810,9 @@ body,
 .manage-posts {
   /* Positioning */
   position: relative;
-
+ 
   /* Display & Box Model */
-  padding-top: 1.5rem;
+  // padding-top: 1.5rem;
 }
 
 .manage-posts th {
@@ -920,6 +921,21 @@ body,
   font-size: 0.8rem;
 }
 
+.manage-posts .fullname,
+.manage-posts .email,
+.manage-posts .role,
+.manage-posts .department,
+.manage-posts .position,
+.manage-posts .site,
+.manage-posts .address,
+.manage-posts .officeNumber,
+.manage-posts .isResetPassword,
+.manage-posts .isActived,
+.manage-posts .select {
+  width: calc(100% / 11);
+}
+
+
 /* add news button ------------------------------------------------------------------------- */
 // .colorful-border-button {
 //   /* Positioning */
@@ -947,8 +963,8 @@ body,
   right: -1rem;
 
   /* Custom Properties */
-  --btn-bg-1: hsla(194 100% 69% / 1);
-  --btn-bg-2: hsla(217 100% 56% / 1);
+  --btn-bg-1: hsla(42, 87%, 55%, 1);
+  --btn-bg-2: hsla(38, 89%, 45%, 1);
   --radii: 0.5em;
 
   background-size: 300% 300%;
