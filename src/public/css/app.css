@@ -541,6 +541,35 @@ img {
   /* Text */
   font-size: 1.1rem; }
 
+.view-content-intranet .file-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; }
+
+.view-content-intranet .file-item {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 250px; }
+
+.view-content-intranet .file-icon {
+  font-size: 20px;
+  margin-right: 10px; }
+
+.view-content-intranet .file-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; }
+
+.view-content-intranet .file-name {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 /* review content -------------------------------------------------------------------------- */
 .review-content-intranet {
   /* Positioning */

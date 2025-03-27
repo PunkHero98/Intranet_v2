@@ -9,9 +9,16 @@ export default new (class ContentController {
       const result = await getContentByID(req.params.slug);
       result.title = Buffer.from(result.title, "base64").toString();
       result.content = JSON.parse(result.content);
+      if(result.content_file){
+        //  result.content_file = JSON.parse(result.content_file).map((file)=>{
+        //   return `/${result.images_link}/${file}`;
+        // });
+        result.content_file = JSON.parse(result.content_file);
+      }
       result.content_images = JSON.parse(result.content_images).map((file) => {
         return `/${result.images_link}/${file}`;
       });
+
       res.render("contentViews", {
         result,
         isContentView: true,
@@ -71,6 +78,19 @@ export default new (class ContentController {
       role: req.session.userrole,
       username: req.session.username,
       fullname: req.session.fullname,
+    });
+  }
+
+  //[POST]//content/download
+  download(req ,res) {
+    console.log(req.query.file , '---------------------------------------------')
+    const filePath = path.join(__dirname, 'IMG_Storage', req.query.file);
+    console.log(filePath , '-----------------------------------------------------------')
+    res.download(filePath, (err) => {
+        if (err) {
+            console.error('Lỗi khi tải file:', err);
+            res.status(500).send('Không thể tải file');
+        }
     });
   }
 })();

@@ -142,6 +142,7 @@ $('.create-content-intranet .fourth-row #uploadFile').on("change", function (e) 
     FileArray.push(files[i]);
   };
   displayFileInfo();
+  console.log(FileArray);
 });
 
 function restructureTabindex(index) {

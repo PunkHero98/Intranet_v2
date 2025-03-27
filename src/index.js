@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Template Engine
-app.engine(                                                                             
+app.engine(
   "hbs",
   handlebarsNew.engine({
     extname: ".hbs",

@@ -27,6 +27,25 @@
                 {{/each}}
             </div>
 
+            {{#if result.content_file}}
+                <div class="file-container">
+                    {{#each result.content_file}}
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fa-solid {{getFileType this}}"></i>
+                        </div>
+                        <div class="file-info">
+                            <p class="file-name" title="{{this}}">{{truncateFilename this}}</p>
+                            <a href="/download?file={{this}}" download class="btn btn-sm btn-outline-primary">Download</a>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            {{else}}
+
+            {{/if}}
+
+
             <h5>{{result.title}}</h5>
             <div class="content_view">
                 {{{result.content}}}

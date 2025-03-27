@@ -42,76 +42,41 @@
 
       <div class="offcanvas-body">
         <ul class="navbar-nav countries">
-          <!-- australia -->
-          <li class="nav-item mx-1">
-            <form class="d-flex h-100" action="/activities" method="post">
-              {{! <form action="https://5843-118-69-122-202.ngrok-free.app/activities" method="post"> }}
-              <button
-                class="fw-bold"
-                name="site"
-                value="Australia"
-              >Australia</button>
-            </form>
-          </li>
+            <li class="nav-item mx-1">
+                <form class="d-flex h-100" action="/activities" method="post">
+                    <button class="fw-bold {{#if (eq site 'Home')}}active{{/if}}" name="site" value="Home">Home</button>
+                </form>
+            </li>
 
-          <!-- new zealand -->
-          <li class="nav-item mx-1">
-            <form class="d-flex h-100" action="/activities" method="post">
-              <button class="fw-bold" name="site" value="NewZealand">New Zealand</button>
-            </form>
-          </li>
+            <li class="nav-item mx-1 ">
+                <form class="d-flex h-100" action="/activities" method="post">
+                    <button class="fw-bold {{#if (eq site 'Australia')}}active{{/if}}" name="site" value="Australia">Australia</button>
+                </form>
+            </li>
 
-          <!-- thailand -->
-          <li class="nav-item mx-1">
-            <form class="d-flex h-100" action="/activities" method="post">
-              <button
-                class="fw-bold"
-                name="site"
-                value="Thailand"
-              >Thailand</button>
-            </form>
-          </li>
+            <li class="nav-item mx-1 ">
+                <form class="d-flex h-100" action="/activities" method="post">
+                    <button class="fw-bold {{#if (eq site 'NewZealand')}}active{{/if}}" name="site" value="NewZealand">New Zealand</button>
+                </form>
+            </li>
 
-          <!-- vietnam -->
-          <li class="nav-item mx-1">
-            <form class="d-flex h-100" action="/activities" method="post">
-              {{! <form action="https://5843-118-69-122-202.ngrok-free.app/activities" method="post"> }}
-              <button
-                class="fw-bold"
-                name="site"
-                value="Vietnam"
-              >Vietnam</button>
-            </form>
-          </li>
+            <li class="nav-item mx-1 ">
+                <form class="d-flex h-100" action="/activities" method="post">
+                    <button class="fw-bold {{#if (eq site 'Thailand')}}active{{/if}}" name="site" value="Thailand">Thailand</button>
+                </form>
+            </li>
 
-          <!-- philippines -->
-          <li class="nav-item mx-1">
-            <form class="d-flex h-100" action="/activities" method="post">
-              <button
-                class="fw-bold"
-                name="site"
-                value="Philippines"
-              >Philippines</button>
-            </form>
-          </li>
-          <li class="nav-item mx-1 header_notification">
-            {{! <form class="d-flex h-100" action="" method="post">
-              <button class="fw-bold" name="site" value="Philippines"><i
-                  class="fa-solid fa-bell fa-shake fa-xl"
-                ></i></button>
-              <span class="header_notification bg-danger text-light">1</span>
-            </form> }}
-            <button
-              class="btn"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="fa-solid fa-bell fa-xl"></i>
-              <span>0</span></button>
-            <ul class="dropdown-menu">
-            </ul>
-          </li>
+            <li class="nav-item mx-1 ">
+                <form class="d-flex h-100" action="/activities" method="post">
+                    <button class="fw-bold {{#if (eq site 'Vietnam')}}active{{/if}}" name="site" value="Vietnam">Vietnam</button>
+                </form>
+            </li>
+
+            <li class="nav-item mx-1 ">
+                <form class="d-flex h-100" action="/activities" method="post">
+                    <button class="fw-bold {{#if (eq site 'Philippines')}}active{{/if}}" name="site" value="Philippines">Philippines</button>
+                </form>
+            </li>
         </ul>
 
         <ul class="navbar-nav user">

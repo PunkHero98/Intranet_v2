@@ -104,71 +104,100 @@ function formatDate (date) {
 };
 // Hàm hiển thị phân trang
 function renderPagination(currentPage, totalPages) {
-  const maxVisiblePages = 3;
   const pagination = $(".pagination");
   pagination.empty();
+
+  // Nút về trang đầu tiên
+  pagination.append(`
+    <li class="navigation-first ${currentPage === 1 ? "disabled" : ""}">
+      <a class="page-link" data-page="1" href="#" ${currentPage === 1 ? "tabindex='-1' aria-disabled='true'" : ""}>
+        <i class="fa-solid fa-angles-left"></i>
+      </a>
+    </li>
+  `);
 
   // Nút Previous
   pagination.append(`
     <li class="navigation-left ${currentPage === 1 ? "disabled" : ""}">
-      <a class="page-link" href="#">
+      <a class="page-link" data-page="${currentPage - 1}" href="#" ${currentPage === 1 ? "tabindex='-1' aria-disabled='true'" : ""}>
         <i class="fa-solid fa-angle-left"></i>
       </a>
     </li>
   `);
 
-  // Trang đầu tiên
+  // Trang đầu tiên luôn hiển thị
   pagination.append(`
     <li class="page-item ${currentPage === 1 ? "active" : ""}">
       <a class="page-link" data-page="1" href="#">1</a>
     </li>
   `);
 
-  if (currentPage > maxVisiblePages + 1) {
+  if (currentPage === 1 || currentPage === 2) {
+    // Hiển thị [1] [2] [3] ... [total]
+    for (let i = 2; i <= Math.min(3, totalPages - 1); i++) {
+      pagination.append(`
+        <li class="page-item ${currentPage === i ? "active" : ""}">
+          <a class="page-link" data-page="${i}" href="#">${i}</a>
+        </li>
+      `);
+    }
+    if (totalPages > 3) {
+      pagination.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+      pagination.append(`
+        <li class="page-item">
+          <a class="page-link" data-page="${totalPages}" href="#">${totalPages}</a>
+        </li>
+      `);
+    }
+  } else if (currentPage >= 3 && currentPage <= totalPages - 3) {
+    // Hiển thị [1] ... [X-1] [X] [X+1] ... [total]
+    pagination.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+    for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+      pagination.append(`
+        <li class="page-item ${currentPage === i ? "active" : ""}">
+          <a class="page-link" data-page="${i}" href="#">${i}</a>
+        </li>
+      `);
+    }
+    pagination.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
     pagination.append(`
-      <li class="page-item disabled">
-        <span class="page-link">...</span>
-      </li>
-    `);
-  }
-
-  const start = Math.max(2, currentPage - maxVisiblePages);
-  const end = Math.min(totalPages - 1, currentPage + maxVisiblePages);
-
-  for (let i = start; i <= end; i++) {
-    pagination.append(`
-      <li class="page-item ${currentPage === i ? "active" : ""}">
-        <a class="page-link" data-page="${i}" href="#">${i}</a>
-      </li>
-    `);
-  }
-
-  if (currentPage + maxVisiblePages < totalPages - 1) {
-    pagination.append(`
-      <li class="page-item disabled">
-        <span class="page-link">...</span>
-      </li>
-    `);
-  }
-
-  if (totalPages > 1) {
-    pagination.append(`
-      <li class="page-item ${currentPage === totalPages ? "active" : ""}">
+      <li class="page-item">
         <a class="page-link" data-page="${totalPages}" href="#">${totalPages}</a>
       </li>
     `);
+  } else if (currentPage >= totalPages - 2) {
+    // Hiển thị [1] ... [total - 2] [total - 1] [total]
+    pagination.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+    for (let i = totalPages - 2; i <= totalPages; i++) {
+      pagination.append(`
+        <li class="page-item ${currentPage === i ? "active" : ""}">
+          <a class="page-link" data-page="${i}" href="#">${i}</a>
+        </li>
+      `);
+    }
   }
 
+  // Nút Next
   pagination.append(`
-    <li class="navigation-right ${
-      currentPage === totalPages ? "disabled" : ""
-    }">
-      <a class="page-link" href="#">
+    <li class="navigation-right ${currentPage === totalPages ? "disabled" : ""}">
+      <a class="page-link" data-page="${currentPage + 1}" href="#" ${currentPage === totalPages ? "tabindex='-1' aria-disabled='true'" : ""}>
         <i class="fa-solid fa-angle-right"></i>
       </a>
     </li>
   `);
+
+  // Nút đến trang cuối
+  pagination.append(`
+    <li class="navigation-last ${currentPage === totalPages ? "disabled" : ""}">
+      <a class="page-link" data-page="${totalPages}" href="#" ${currentPage === totalPages ? "tabindex='-1' aria-disabled='true'" : ""}>
+        <i class="fa-solid fa-angles-right"></i>
+      </a>
+    </li>
+  `);
 }
+
+
+
 
 $('.homepage-intranet .filterBtn').on('click', function () { 
   $(".filter_container").toggleClass("show");
@@ -219,6 +248,21 @@ $(".pagination").on("click", ".navigation-right a", function (e) {
   renderPagination(currentPage + 1, totalPages);
 });
 
+$('.pagination').on('click', '.navigation-first a', function (e) {
+  e.preventDefault();
+  if(currentPage === 0) return;
+  currentPage = 0;
+  renderPage(newsData.slice(currentPage * 8, (currentPage + 1) * 8));
+  renderPagination(currentPage + 1, totalPages);
+});
+
+$('.pagination').on('click', '.navigation-last a', function (e) {
+  e.preventDefault();
+  if(currentPage + 1 >= totalPages) return;
+  currentPage = totalPages - 1;
+  renderPage(newsData.slice(currentPage * 8, (currentPage + 1) * 8));
+  renderPagination(currentPage + 1, totalPages);
+});
 // Xử lý filter thay đổi
 
 $('#btnTimeDesc').on('click', function () {

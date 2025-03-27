@@ -5,19 +5,60 @@ const getContents = async () => {
   const result = await pool.request().query("SELECT * from contents");
   return result.recordset;
 };
-const getContentsByPage = async (offset, limit) => {
+const getContentsByPage = async (offset, limit, title, site, time) => {
   const pool = await connectToDB();
-  const result = await pool
-    .request()
+  
+  // Điều kiện lọc dữ liệu
+  let query = `
+    SELECT * 
+    FROM contents 
+    WHERE 1=1 
+  `;
+
+  if (title) query += `AND title LIKE '%' + @Title + '%' `;
+  if (site) query += `AND site = @Site `;
+  if (time) query += `AND date_time >= @Time `;
+
+  query += `
+    ORDER BY id_content DESC
+    OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY;
+  `;
+
+  const request = pool.request()
     .input("Offset", sql.Int, offset)
-    .input("Limit", sql.Int, limit).query(`
-        SELECT * 
-        FROM contents
-        ORDER BY id_content DESC
-        OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY;
-      `);
+    .input("Limit", sql.Int, limit);
+
+  if (title) request.input("Title", sql.NVarChar, title);
+  if (site) request.input("Site", sql.NVarChar, site);
+  if (time) request.input("Time", sql.DateTime, new Date(time));
+
+  const result = await request.query(query);
   return result.recordset;
 };
+
+const getTotalCountOfContent = async (title, site, time) => {
+  const pool = await connectToDB();
+  
+  let query = `
+    SELECT COUNT(*) AS total
+    FROM contents
+    WHERE 1=1 
+  `;
+
+  if (title) query += `AND title LIKE '%' + @Title + '%' `;
+  if (site) query += `AND site = @Site `;
+  if (time) query += `AND date_time >= @Time `;
+
+  const request = pool.request();
+
+  if (title) request.input("Title", sql.NVarChar, title);
+  if (site) request.input("Site", sql.NVarChar, site);
+  if (time) request.input("Time", sql.DateTime, new Date(time));
+
+  const result = await request.query(query);
+  return result.recordset[0].total;
+};
+
 
 const getContentByID = async (id) => {
   const pool = await connectToDB();
@@ -130,4 +171,5 @@ export {
   addContent,
   updateContents,
   updateContentByImageLink,
+  getTotalCountOfContent
 };
