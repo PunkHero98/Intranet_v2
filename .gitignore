@@ -2,4 +2,4 @@
 .env
 /public/css
 node_modules/
-.IMG_Storage/
+.IMG_Storage/Contents
