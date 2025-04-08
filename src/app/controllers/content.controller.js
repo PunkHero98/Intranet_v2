@@ -18,7 +18,6 @@ export default new (class ContentController {
       result.content_images = JSON.parse(result.content_images).map((file) => {
         return `/${result.images_link}/${file}`;
       });
-
       res.render("contentViews", {
         result,
         isContentView: true,

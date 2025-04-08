@@ -6,6 +6,7 @@ router.post("/add_news_pics", upload, manageController.uploadNewPic);
 router.post("/update", manageController.update);
 router.post("/user_updated", manageController.updateUser);
 router.get("/user", manageController.manageUsers);
+router.get('/getall' , manageController.getAll);
 router.get("/", manageController.manage);
 
 export default router;

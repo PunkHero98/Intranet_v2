@@ -1,7 +1,205 @@
 // manage posts
-var deletePicArray = [];
-var editContentJson = [];
+let deletePicArray = [];
+let editContentJson = [];
+let dataArray = [];
 const HTTP_Request_address = "http://localhost:3000";
+
+$('document').ready(async function () {
+  await fetchData();
+}
+);
+
+async function fetchData() {
+  try{
+    const result = await fetch(`${HTTP_Request_address}/manage/getall`);
+    if (!result.ok) {
+      throw new Error("Network response was not ok");
+    };
+    dataArray = await result.json();
+    console.log(dataArray);
+    renderData();
+  }catch(err){
+    showNotification(
+      "Error !",
+      "Error fetching data, please try again.",
+      "alert-success",
+      "alert-danger"
+    );
+  }
+};
+
+function renderData() {
+  if(!dataArray.length) {
+    showNotification(
+      "Warning ! No data found",
+      "Please try again.",
+      "alert-success",
+      "alert-warning"
+    );
+    return;
+  }
+  const tableBody = $(".manage-posts table tbody");
+  tableBody.empty();
+  dataArray.forEach((item, index) => {
+    const row = `
+       <tr>
+            <td class="newId">${index + 1}</td>
+            <td class="title">${item.title}</td>
+            <td class="content">${item.content}</td>
+            <td class="image_container">
+              ${item.content_images && item.content_images.length > 0 ? 
+                item.content_images.map((imgSrc, imgIndex) => `
+                  <div class="img-box container-${imgIndex + 1}">
+                    <img class="basic_image" src="${imgSrc}" alt="image" onerror="this.onerror=null; this.src='';" />
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                      style="opacity: 0"
+                      disabled
+                    >
+                      <i class="fa-solid fa-x text-white"></i>
+                    </button>
+                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
+                  </div>
+                `).join("") 
+                : `
+                  <div class="container-0">
+                    <input id="stateCheck-0" type="checkbox" style="display: none" />
+                    <img src="" alt="no image" />
+                  </div>
+                `
+              }
+              <button type="button" class="btn btn-outline-success addPic">
+                <i class="fa-solid fa-plus"></i> Add more pictures
+              </button>
+              <input
+                accept="image/jpeg, image/png, image/jpg, image/webp, image/heif, image/svg"
+                style="display: none;"
+                type="file"
+                class="fileListForManage input-${index + 1}"
+                multiple
+              />
+            </td>
+            <td class="date_time">${formatDate(item.date_time) || 'N/A'}
+              <div style="display:none">
+                ${item.id_content || ''}
+              </div>
+            </td>
+            <td class="content_stage fs-6">${!item.deleted ? '<span class="badge rounded-pill text-bg-primary">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
+            <td class="btn_container_table">
+              <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm d-none">Deactivate</button>
+            </td>
+          </tr>`;
+
+    tableBody.prepend(row);
+});
+}
+
+$('.manage-posts .refesh_manage').on('click' , function(){
+  window.location.reload();
+})
+
+$('.manage-posts .search_input').on('keyup', function() {
+  const searchValue = $(this).val().toLowerCase();
+  const filteredData = dataArray.filter(item => {
+    return item.title.toLowerCase().includes(searchValue) || 
+           item.content.toLowerCase().includes(searchValue);
+  });
+  renderFilteredData(filteredData);
+}
+);
+
+function renderFilteredData(filteredData) {
+  const tableBody = $(".manage-posts table tbody");
+  tableBody.empty();
+  filteredData.forEach((item, index) => {
+    const row = `
+       <tr>
+            <td class="newId">${index + 1}</td>
+            <td class="title">${item.title}</td>
+            <td class="content">${item.content}</td>
+            <td class="image_container">
+              ${item.content_images && item.content_images.length > 0 ? 
+                item.content_images.map((imgSrc, imgIndex) => `
+                  <div class="img-box container-${imgIndex + 1}">
+                    <img class="basic_image" src="${imgSrc}" alt="image" onerror="this.onerror=null; this.src='';" />
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                      style="opacity: 0"
+                      disabled
+                    >
+                      <i class="fa-solid fa-x text-white"></i>
+                    </button>
+                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
+                  </div>
+                `).join("") 
+                : `
+                  <div class="container-0">
+                    <input id="stateCheck-0" type="checkbox" style="display: none" />
+                    <img src="" alt="no image" />
+                  </div>
+                `
+              }
+              <button type="button" class="btn btn-outline-success addPic">
+                <i class="fa-solid fa-plus"></i> Add more pictures
+              </button>
+              <input
+                accept="image/jpeg, image/png, image/jpg, image/webp, image/heif, image/svg"
+                style="display: none;"
+                type="file"
+                class="fileListForManage input-${index + 1}"
+                multiple
+              />
+            </td>
+            <td class="date_time">${formatDate(item.date_time) || 'N/A'}
+              <div style="display:none">
+                ${item.id_content || ''}
+              </div>
+            </td>
+            <td class="content_stage fs-6">${!item.deleted ? '<span class="badge rounded-pill  text-bg-primary">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
+            <td class="btn_container_table">
+              <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button> 
+              <button type="button" class="btn btn-danger btn-sm d-none">Deactivate</button>
+            </td>
+          </tr>`;
+
+    tableBody.prepend(row);
+});
+}
+
+function formatDate (date) {
+  const dateObj = new Date(date);
+
+ return new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "2-digit",
+}).format(dateObj);
+};
+
+$('.manage-posts .search_btn').on('click', function() {
+  $('.manage-posts .search_input').val('');
+  $('.manage-posts .start_date').val('');
+  renderData();
+}
+);
+function showNotification(noti, html, removeClass, addClass) {
+  $(".alert-intranet").css("display", "block").css("opacity", "1");
+  $(".alert-intranet strong").html(noti);
+  $(".alert-intranet span").html(html);
+  $(".alert-intranet").removeClass(removeClass).addClass(addClass);
+
+  // Tự động ẩn thông báo sau 3 giây
+  setTimeout(() => {
+    $(".alert-intranet").css("opacity", "0");
+    setTimeout(() => {
+      $(".alert-intranet").css("display", "none");
+    }, 500); // Đợi transition hoàn tất
+  }, 3000);
+}
+
 
 function getRowElements(obj) {
   const row = $(obj).closest("tr");
@@ -12,6 +210,7 @@ function getRowElements(obj) {
     imageContainer: row.find("td.image_container"),
     dateTime: row.find("td.date_time"),
     contentStage: row.find("td.content_stage"),
+    status: row.find("td.content_stage span"),
   };
 }
 
@@ -65,7 +264,6 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   const addPicBtn = $(this);
   const input = addPicBtn.siblings("input.fileListForManage");
   const lengthofImage = addPicBtn.parent().children(".img-box").length;
-  console.log(lengthofImage);
   if (lengthofImage >= 6) {
     $(".alert-intranet").css("display", "block");
     $(".alert-intranet strong").html("Warning ! ");
@@ -146,20 +344,17 @@ $(".manage-posts").on("click", ".update_manage", async function () {
     });
 
     const data = await result.text();
-    setInterval(() => {
+    setTimeout(() => {
       $(".alert-intranet").css("display", "block");
-
-      setInterval(() => {
+    
+      setTimeout(() => {
         location.reload();
-      }, 3000);
-      $(".loader").css({
-        display: "none",
-      });
-
-      $(".manage-posts").css({
-        filter: "",
-      });
-    }, 1000);
+      }, 2000); // Reload sau 3 giây
+    
+      $(".loader").css({ display: "none" });
+      $(".manage-posts").css({ filter: "" });
+    }, 1000); // Thực hiện sau 1 giây
+    
   } catch (err) {
     $(".loader").css({
       display: "none",
@@ -177,7 +372,10 @@ $(".manage-posts").on("click", ".update_manage", async function () {
 
 // btn for deleted (not fully functional)
 $(".manage-posts").on("click", ".btn-danger", function () {
-  getRowElements(this).contentStage.html("deleted");
+  // getRowElements(this).contentStage.text("Deactivate");
+  getRowElements(this).contentStage.html(
+    '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'
+  );
 });
 
 function handleChoosePicture(event) {
@@ -196,8 +394,8 @@ function handleChoosePicture(event) {
     }
     Imgsarray.push(f);
   });
-  if (Imgsarray.length > 6) {
-    Imgsarray = Imgsarray.slice(0, 6);
+  if (Imgsarray.length > 10) {
+    Imgsarray = Imgsarray.slice(0, 10);
   }
 }
 
@@ -374,6 +572,8 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
     .prop("disabled", !imageContainer.find(".closeBtn").prop("disabled"));
   imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
 
+  $(this).next('button').classList.toggle('d-none');
+
   button.removeClass(prevClass).addClass(newClass).html(innerText);
 }
 
@@ -424,7 +624,7 @@ function saveContentTitle(button) {
 }
 
 function generateJsonForEdit(button) {
-  const { title, content, dateTime, imageContainer } = getRowElements(button);
+  const { title, content, dateTime, imageContainer , status } = getRowElements(button);
   const contentId = dateTime.find("div").text().trim();
 
   const contentNew = JSON.stringify(content.html());
@@ -460,7 +660,7 @@ function generateJsonForEdit(button) {
     poster: "",
     date_time: anotherdatetime,
     last_updated: timenow,
-    deleted: 0,
+    deleted: status.hasClass("text-bg-danger") ? 1 : 0,
     poster_site: "string",
   };
 }

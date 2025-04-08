@@ -11,20 +11,33 @@
                 <i class="fa-solid fa-left-long"></i>
             </div> --}}
             <div class="slideshow-container position-relative">
-                {{#each result.content_images}}
-                <div class="mySlides">
-                    <div class="numbertext text-body-tertiary"> {{addindex @index}} / {{@root.total}}</div>
-                    <div class="d-flex justify-content-center"><img src={{this}}></div>
-                </div>
-                {{/each}}
+                
+
+                {{#if result.content_images.length}}
+                    {{#each result.content_images}}
+                    <div class="mySlides">
+                        <div class="numbertext text-body-tertiary"> {{addindex @index}} / {{@root.total}}</div>
+                        <div class="d-flex justify-content-center"><img src={{this}}></div>
+                    </div>
+                    {{/each}}
+                {{else}}
+                    <div class="mySlides">
+                        <div class="numbertext text-body-tertiary"> 1 / 1</div>
+                        <div class="d-flex justify-content-center"><img src='/imgs/qsl-sample-pic.png'</div>
+                    </div>
+                {{/if}}
                 <a class="prev text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
                 <a class="next text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(1)">&#10095;</a>
             </div>
 
             <div class="text-center">
-                {{#each result.content_images}}
-                <span class="dot" onclick="currentSlide({{addindex @index}})"></span>
-                {{/each}}
+                {{#if result.content_images.length}}
+                    {{#each result.content_images}}
+                    <span class="dot" onclick="currentSlide1({{addindex @index}})"></span>
+                    {{/each}}
+                {{else}}
+                    <span class="dot" onclick="currentSlide1(1)"></span>
+                {{/if}}
             </div>
 
             {{#if result.content_file}}
@@ -52,18 +65,22 @@
             </div>
 
             <ul class="p-0 list-unstyled m-0">
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa fa-user"></i>Mong
-                        Thuong</a></li>
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                            class="fa-solid fa-clock"></i>2024-11-09</a></li>
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-eye"></i>100
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa fa-user"></i>{{result.poster}}</a></li>
+                {{#if result.last_updated}}
+                    <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa-solid fa-clock"></i>{{result.last_updated}} - last update</a></li>
+                {{else}}
+                    <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa-solid fa-clock"></i>{{result.date_time}}</a></li>
+                {{/if}}
+                {{!-- <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-eye"></i>100
                         Views</a></li>
                 <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
                             class="fa-solid fa-heart"></i></i>Lily and 50 others</a></li>
                 <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
                             class="fa-solid fa-comment"></i>03 Comments</a></li>
                 <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-share"></i>02
-                        Shares</a></li>
+                        Shares</a></li> --}}
             </ul>
         </div>
         {{!-- <hr>

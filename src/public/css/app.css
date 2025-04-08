@@ -708,9 +708,19 @@ img:last-child {
   position: relative;
   /* Display & Box Model */ }
 
+.manage-posts thead {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  /* Đặt màu nền để không bị trong suốt */
+  z-index: 100;
+  /* Đảm bảo nó luôn nằm trên tbody */
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); }
+
 .manage-posts th {
   /* Text */
-  vertical-align: middle; }
+  vertical-align: middle;
+  border-bottom: 2px solid black; }
 
 .manage-posts .id {
   /* Display & Box Model */

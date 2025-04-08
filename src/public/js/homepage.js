@@ -74,7 +74,8 @@ function renderPage(array) {
         <div class="row content-news"  style="cursor: pointer;" onClick="window.location.href='content/${f.id_content}'">
           <div class="col-3 news-img p-0">
             <a href="content/${f.id_content}">
-              <img class="object-fit-cover" src=${f.content_images} loading='lazy' />
+              <img class="object-fit-cover" src="${f.content_images.length ? f.content_images : '/imgs/qsl-sample-pic.png'}" loading='lazy' 
+              onerror="this.onerror=null; this.src='/imgs/qsl-sample-pic.png';" />
             </a>
           </div>
           <div class="col-9 news-content position-relative text-justify">

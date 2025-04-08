@@ -17,6 +17,33 @@ export default new (class ManageController {
   // [GET] /manage
   async manage(req, res) {
     try {
+      // const username = req.session.username;
+      // const result = await getContentsByUser(username);
+      // result.forEach((f) => {
+      //   f.title = Buffer.from(f.title, "base64").toString();
+      //   f.content = JSON.parse(f.content);
+      //   f.content_images = JSON.parse(f.content_images).map((item) => {
+      //     return "\\" + f.images_link + "\\" + item;
+      //   });
+      // });
+      res.render("managePosts", {
+        // result,
+        isManageContent: true,
+        role: req.session.userrole,
+        username: req.session.username,
+        fullname: req.session.fullname,
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: "Error fetching profile",
+        error: err.message,
+      });
+    }
+  }
+
+  //[GET] /manage/getall
+  async getAll(req, res) {
+    try {
       const username = req.session.username;
       const result = await getContentsByUser(username);
       result.forEach((f) => {
@@ -26,13 +53,7 @@ export default new (class ManageController {
           return "\\" + f.images_link + "\\" + item;
         });
       });
-      res.render("managePosts", {
-        result,
-        isManageContent: true,
-        role: req.session.userrole,
-        username: req.session.username,
-        fullname: req.session.fullname,
-      });
+      res.send(result);
     } catch (err) {
       res.status(500).json({
         message: "Error fetching profile",
@@ -59,10 +80,6 @@ export default new (class ManageController {
         };
       });
 
-      console.log(
-        "------------------------------------------------------------",
-        extractData
-      );
       const [updateResult, deleteResult] = await Promise.all([
         updateContents(data),
         updateImageinFolder(extractData),
