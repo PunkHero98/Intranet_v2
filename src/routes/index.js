@@ -4,6 +4,7 @@ import registerRouter from "./register.route.js";
 import contentRouter from "./content.route.js";
 import manageRouter from "./manage.route.js";
 import profileRouter from "./profile.route.js";
+import feedBackRouter from "./feedBack.route.js";
 import { getUserById , updateUserSession } from "../app/models/Users.model.js";
 async function checkAuth(req, res, next) {
   if (!req.session.idUser) {
@@ -24,6 +25,7 @@ async function checkAuth(req, res, next) {
 
 function route(app) {
   app.use("/login", loginRouter);
+  app.use("/feedback" ,checkAuth, feedBackRouter);
   app.use("/register", registerRouter);
   app.use("/content", checkAuth, contentRouter);
   app.use("/manage", checkAuth, manageRouter);

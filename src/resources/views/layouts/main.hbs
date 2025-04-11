@@ -29,6 +29,8 @@
 
   <!-- jQuery UI CSS (if needed) -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  {{!-- light gallery CSS --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css" />
 </head>
 
 <body>
@@ -64,11 +66,64 @@
           <i class="fa-solid fa-circle-plus icon-plus"></i> Add News
         </button>
       {{/compare}}
+
+        <button type="button" class="btn feedBackBtn text-white position-fixed  translate-middle border-0" 
+        data-bs-toggle="modal" data-bs-target="#feedBackModal" data-bs-whatever="@fat">
+          <i class="fa-solid fa-comments"></i> Feedback
+        </button>
     </main>
 
     {{> footer}}
   </div>
+  <div class="modal fade" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="feedBackModalLabel">FeedBack Form</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="feedback-category" class="col-form-label">Feedback Category</label>
+              <select class="form-select" id="feedback-category">
+                <option value="ui">UI</option>
+                <option value="ux">Interaction</option>
+                <option value="performance">Performance</option>
+                <option value="bug">Bug Report</option>
+                <option value="improvement">Improvement Suggestion</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
 
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message</label>
+              <textarea class="form-control" id="message-text" rows="4" placeholder="Write your feedback here..."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <button type="button" class="btn btn-outline-success fbAddPic" id="fbAddPic">
+                <i class="fa-solid fa-plus"></i> Add more pictures
+              </button>
+              <input
+                accept="image/jpeg, image/png, image/jpg, image/webp, image/heif, image/svg"
+                style="display: none;"
+                type="file"
+                id="fbAddPicInput"
+                name="feedback_images"
+                multiple
+              />
+            </div>
+            <div class="mb-3 image_container d-flex flex-wrap gap-2"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Loader -->
   <div class="loader">
@@ -100,6 +155,16 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
+  
+  <!-- SheetJS for Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
   <!-- Custom JS -->
   {{!-- <script src="/js/index.js"></script> --}}
@@ -168,6 +233,9 @@
     <script src="/js/profile.js"></script>
   {{/if}}
 
+  {{#if isManageFeedback}}
+    <script src="/js/feedback.js"></script>
+  {{/if}}
   <!-- Initialize Quill -->
   
 </body>

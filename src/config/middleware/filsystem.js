@@ -14,6 +14,19 @@ const createDir = (name) => {
   }
 };
 
+const createFeedbackDir = (name) =>{
+  const dirPath = path.join("./IMG_Storage\\Feedbacks", `${name}`);
+
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+    console.log(`Thư mục ${dirPath} đã được tạo!`);
+    return dirPath;
+  } else {
+    console.log(`Thư mục ${dirPath} đã tồn tại.`);
+    return dirPath;
+  }
+}
+
 const getfileinDir = (name) => {
   return new Promise((resolve, reject) => {
     const dirPath = path.join("./IMG_Storage", `${name}`);
@@ -75,4 +88,4 @@ const updateImageinFolder = async (array) => {
     console.error("Lỗi khi xử lý:", error);
   }
 };
-export { createDir, getfileinDir, updateImageinFolder };
+export { createDir, getfileinDir, updateImageinFolder , createFeedbackDir };

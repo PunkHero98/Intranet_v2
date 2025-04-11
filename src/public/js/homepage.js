@@ -34,7 +34,8 @@ async function fetchAndStoreNews() {
     });
     const data = await response.json();
 
-    newsData = data.result;
+    unFilteredData = data.result;
+    newsData = unFilteredData.filter((item) =>  !item.is_deleted);
     userRole = data.userRole;
     totalPages = Math.ceil(newsData.length / 8);
     sortAndRenderNews();
@@ -65,9 +66,9 @@ function renderPage(array) {
   array.forEach((f) => {
     let contentFileLength = 0;
     if(JSON.parse(f.content_file)) {
-       contentFileLength = JSON.parse(f.content_file).length;
+      contentFileLength = JSON.parse(f.content_file).length;
     } else {
-       contentFileLength = 0;
+      contentFileLength = 0;
     }  
     $(".whats-new-intranet .mainArea").append(`
       <div class="col-xl-6 col-md-6 col-sm-12" >
@@ -91,7 +92,7 @@ function renderPage(array) {
           </div>
         </div>
       </div>
-    `);
+    `);           
   });
 }
 function formatDate (date) {

@@ -99,7 +99,7 @@ export default new (class ManageController {
     try {
       const { imgFolderName } = req.body;
       const imageArray = await getfileinDir(imgFolderName);
-      const Jsonarray = JSON.stringify(imageArray);
+      const Jsonarray = JSON.stringify(imageArray.images);
       const result = await updateContentByImageLink(imgFolderName, Jsonarray);
       res.send(JSON.stringify(result));
     } catch (err) {
@@ -181,6 +181,22 @@ export default new (class ManageController {
       res
         .status(500)
         .json({ message: "error fetching user", error: err.message });
+    }
+  }
+
+  //[GET] manage/feedback
+  async getFeedback(req, res) {
+    try {
+      res.render("feedback", {
+        isManageFeedback: true,
+        role: req.session.userrole,
+        username: req.session.username,
+        fullname: req.session.fullname,
+      });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "error fetching feedback", error: err.message });
     }
   }
 })();

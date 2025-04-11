@@ -1,0 +1,45 @@
+<div class="feedback-intranet container-fluid">
+    <button class="backButton">
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+        <span>Back</span>
+    </button>
+    <div style="display: flex; justify-content:space-between" class="mb-2">
+        <div class="col-4 d-flex justify-content-between align-items-center">
+            <h5>FeedBacks</h5>
+            <input type="text" class="search_input" style="border-radius: 7px;padding: 10px;" placeholder="Search..." />
+            {{!-- <input type="date" class="start_date" style="border-radius: 7px;padding: 10px;" placeholder="Choose Date" /> --}}
+            <button class="search_btn btn btn-danger">Clear filter</button>
+
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+            <button class="refesh_manage btn btn-warning">Refresh</button>
+            <button
+                class="update_manage btn btn-success mx-3"
+                disabled
+            >Update</button>
+        </div>
+  </div>
+  <div class="table-wrapper" style="max-height: 650px; overflow-y: auto; border: 1px solid black;">
+    <table class="table datatable" style="border: 1px solid black; width: 100%;">
+      <thead>
+        <tr>
+          <th class="id">ID <i class="fa-solid fa-sort"></i></th>
+          <th class="category">Category</th>
+          <th class="message">Message</th>
+          <th class="image_container">Image</th>
+          <th class="username">Username</th>
+          <th class="user_site">Site</th>
+          <th class="date-time">Date/Time <i class="fa-solid fa-sort"></i></th>
+          <th class="is_clear">Is Clear</th>
+          <th class="select">Select</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="lightgallery" style="display: none;"></div>

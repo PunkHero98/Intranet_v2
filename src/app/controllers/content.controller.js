@@ -10,10 +10,10 @@ export default new (class ContentController {
       result.title = Buffer.from(result.title, "base64").toString();
       result.content = JSON.parse(result.content);
       if(result.content_file){
-        //  result.content_file = JSON.parse(result.content_file).map((file)=>{
-        //   return `/${result.images_link}/${file}`;
-        // });
-        result.content_file = JSON.parse(result.content_file);
+         result.content_file = JSON.parse(result.content_file).map((file)=>{
+          return `/${result.images_link}/${file}`;
+        });
+        // result.content_file = JSON.parse(result.content_file);
       }
       result.content_images = JSON.parse(result.content_images).map((file) => {
         return `/${result.images_link}/${file}`;
@@ -39,8 +39,24 @@ export default new (class ContentController {
       const { title, textcontent } = req.body;
       const { username, site } = req.session;
 
-      if (!req.files) {
-        return res.status(400).json({ message: "No files were uploaded." });
+      if (!req.files || Object.keys(req.files).length === 0) {
+        const simpleTitle = Buffer.from(title).toString("base64");
+        const imgJsonArray = JSON.stringify([]);
+        const docJsonArray = JSON.stringify([]);
+        const folderName = null;
+        await addContent(
+          simpleTitle,
+          textcontent,
+          folderName,
+          imgJsonArray,
+          docJsonArray,
+          username,
+          getDate(),
+          site
+        );
+  
+        res.status(200).json({ message: "Files uploaded successfully!" });
+        return;
       }
 
       const newTitle = simPliFizeString(title, true);

@@ -18,6 +18,7 @@ body,
 .header-intranet ul.user ul.dropdown-menu li a.dropdown-item,
 .create-content-intranet .create-content-box #quill-editor-content,
 .colorful-border-button,
+.feedBackBtn,
 .manage-users input,
 .homepage-intranet ul.pagination .page-link,
 .filterBtn,
@@ -64,7 +65,8 @@ body,
 .create-content-intranet,
 .profile,
 .view-content-intranet,
-.manage-posts {
+.manage-posts,
+.feedback-intranet {
   /* Display & Box Model */
   margin-top: 3.5rem;
   min-height: calc(100vh - 5.5rem); }
@@ -555,6 +557,12 @@ img {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 250px; }
 
+.view-content-intranet .file-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #d0d1d2;
+  transform: scale(1.02);
+  transition: all 0.3s ease; }
+
 .view-content-intranet .file-icon {
   font-size: 20px;
   margin-right: 10px; }
@@ -565,10 +573,54 @@ img {
   flex-grow: 1; }
 
 .view-content-intranet .file-name {
-  max-width: 150px;
+  max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
+
+/* Modal bao quanh */
+#filePreviewModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  z-index: 1000;
+  padding-bottom: 80px;
+  /* để tránh nút Close che nội dung cuối */ }
+
+/* Nội dung preview */
+#previewContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  text-align: center; }
+
+/* Canvas của PDF */
+.pdf-canvas {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  height: auto; }
+
+/* Nút Close cố định ở cuối màn hình */
+#closePreview {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1100; }
 
 /* review content -------------------------------------------------------------------------- */
 .review-content-intranet {
@@ -734,6 +786,20 @@ img:last-child {
   /* Display & Box Model */
   width: 42%; }
 
+.clamp-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-height: 15em;
+  /* khoảng 10 dòng, tùy font-size */ }
+
+.expanded {
+  -webkit-line-clamp: unset;
+  max-height: none; }
+
 .manage-posts .image_container {
   /* Display & Box Model */
   width: 15%; }
@@ -839,6 +905,15 @@ img:last-child {
     background-position: 100% 100%; }
   100% {
     background-position: 0% 0%; } }
+
+.feedBackBtn {
+  bottom: 1.1rem;
+  left: 4.5rem;
+  --btn-bg-1: hsla(42, 87%, 55%, 1);
+  --btn-bg-2: hsla(38, 89%, 45%, 1);
+  --radii: 0.5em;
+  background-size: 300% 300%;
+  background-image: linear-gradient(45deg, var(--btn-bg-2) 0%, var(--btn-bg-1) 50%, var(--btn-bg-2) 100%); }
 
 /* loader ----------------------------------------------------------------------------------- */
 .loader {

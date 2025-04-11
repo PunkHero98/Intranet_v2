@@ -9,6 +9,26 @@ $('document').ready(async function () {
 }
 );
 
+$(document).on('click', '.toggle-images-btn', function () {
+  const $btn = $(this);
+  const $gallery = $btn.siblings('.image-gallery');
+
+  $gallery.slideToggle(200, function () {
+    // Chạy sau khi toggle hoàn tất
+    const isVisible = $(this).is(':visible');
+    $btn.text(isVisible ? 'Hide Pictures' : 'Show Pictures');
+  });
+});
+
+$(document).on('click', '.read-more-btn', function () {
+  const $btn = $(this);
+  const $content = $btn.siblings('.content-text');
+
+  $content.toggleClass('expanded');
+  $btn.text($content.hasClass('expanded') ? 'Show less' : 'Read more');
+});
+
+
 async function fetchData() {
   try{
     const result = await fetch(`${HTTP_Request_address}/manage/getall`);
@@ -45,30 +65,29 @@ function renderData() {
        <tr>
             <td class="newId">${index + 1}</td>
             <td class="title">${item.title}</td>
-            <td class="content">${item.content}</td>
+            <td class="content">
+              <div class="content-wrapper">
+                <div class="content-text clamp-text">${item.content}</div>
+                <button class="btn btn-link read-more-btn p-0">Read more</button>
+              </div>
+            </td>
             <td class="image_container">
-              ${item.content_images && item.content_images.length > 0 ? 
-                item.content_images.map((imgSrc, imgIndex) => `
-                  <div class="img-box container-${imgIndex + 1}">
-                    <img class="basic_image" src="${imgSrc}" alt="image" onerror="this.onerror=null; this.src='';" />
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger closeBtn rounded-0 m-0"
-                      style="opacity: 0"
-                      disabled
-                    >
-                      <i class="fa-solid fa-x text-white"></i>
-                    </button>
-                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
-                  </div>
-                `).join("") 
-                : `
-                  <div class="container-0">
-                    <input id="stateCheck-0" type="checkbox" style="display: none" />
-                    <img src="" alt="no image" />
-                  </div>
-                `
-              }
+             ${item.content_images && item.content_images.length > 0 ?
+                `<button type="button" class="btn btn-sm btn-primary toggle-images-btn mb-2">Show Pictures</button>` :
+                `<button type="button" class="btn btn-sm btn-secondary toggle-images-btn mb-2" disabled>No Pictures</button>`}
+
+              <div class="image-gallery" style="display: none;">
+                ${item.content_images && item.content_images.length > 0 ? 
+                  item.content_images.map((imgSrc, imgIndex) => `
+                    <div class="img-box container-${imgIndex + 1}">
+                      <img class="basic_image" src="${imgSrc}" alt="image" 
+                          onerror="this.onerror=null; this.src='';" 
+                          style="max-width: 120px; margin: 4px;" />
+                    </div>
+                  `).join("") 
+                  : `<p>No images available.</p>`
+                }
+              </div>
               <button type="button" class="btn btn-outline-success addPic">
                 <i class="fa-solid fa-plus"></i> Add more pictures
               </button>
@@ -88,7 +107,9 @@ function renderData() {
             <td class="content_stage fs-6">${!item.deleted ? '<span class="badge rounded-pill text-bg-primary">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
             <td class="btn_container_table">
               <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button>
-              <button type="button" class="btn btn-danger btn-sm d-none">Deactivate</button>
+              <button type="button" class="btn btn-danger deactivateBtn btn-sm" style="display: none">Deactivate</button>
+              <button type="button" class="btn btn-success activateBtn btn-sm" style="display: none">Activate</button>
+
             </td>
           </tr>`;
 
@@ -118,30 +139,29 @@ function renderFilteredData(filteredData) {
        <tr>
             <td class="newId">${index + 1}</td>
             <td class="title">${item.title}</td>
-            <td class="content">${item.content}</td>
+            <td class="content">
+              <div class="content-wrapper">
+                <div class="content-text clamp-text">${item.content}</div>
+                <button class="btn btn-link read-more-btn p-0">Read more</button>
+              </div>
+            </td>
             <td class="image_container">
-              ${item.content_images && item.content_images.length > 0 ? 
-                item.content_images.map((imgSrc, imgIndex) => `
-                  <div class="img-box container-${imgIndex + 1}">
-                    <img class="basic_image" src="${imgSrc}" alt="image" onerror="this.onerror=null; this.src='';" />
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger closeBtn rounded-0 m-0"
-                      style="opacity: 0"
-                      disabled
-                    >
-                      <i class="fa-solid fa-x text-white"></i>
-                    </button>
-                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
-                  </div>
-                `).join("") 
-                : `
-                  <div class="container-0">
-                    <input id="stateCheck-0" type="checkbox" style="display: none" />
-                    <img src="" alt="no image" />
-                  </div>
-                `
-              }
+               ${item.content_images && item.content_images.length > 0 ?
+                `<button type="button" class="btn btn-sm btn-primary toggle-images-btn mb-2">Show Pictures</button>` :
+                `<button type="button" class="btn btn-sm btn-secondary toggle-images-btn mb-2" disabled>No Pictures</button>`}
+
+              <div class="image-gallery" style="display: none;">
+                ${item.content_images && item.content_images.length > 0 ? 
+                  item.content_images.map((imgSrc, imgIndex) => `
+                    <div class="img-box container-${imgIndex + 1}">
+                      <img class="basic_image" src="${imgSrc}" alt="image" 
+                          onerror="this.onerror=null; this.src='';" 
+                          style="max-width: 120px; margin: 4px;" />
+                    </div>
+                  `).join("") 
+                  : `<p>No images available.</p>`
+                }
+              </div>
               <button type="button" class="btn btn-outline-success addPic">
                 <i class="fa-solid fa-plus"></i> Add more pictures
               </button>
@@ -161,7 +181,8 @@ function renderFilteredData(filteredData) {
             <td class="content_stage fs-6">${!item.deleted ? '<span class="badge rounded-pill  text-bg-primary">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
             <td class="btn_container_table">
               <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button> 
-              <button type="button" class="btn btn-danger btn-sm d-none">Deactivate</button>
+              <button type="button" class="btn btn-danger deactivateBtn btn-sm" style="display: none">Deactivate</button>
+              <button type="button" class="btn btn-success activateBtn btn-sm" style="display: none">Activate</button>
             </td>
           </tr>`;
 
@@ -276,8 +297,8 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   input.off("change").change((e) => {
     handleChoosePicture(e);
     const limitNum = Imgsarray.length + lengthofImage;
-    if (limitNum > 6) {
-      Imgsarray = Imgsarray.slice(0, 6 - lengthofImage);
+    if (limitNum > 10) {
+      Imgsarray = Imgsarray.slice(0, 10 - lengthofImage);
     }
     const imgElements = Imgsarray.map((f, index) => {
       const imgElement = `
@@ -371,13 +392,17 @@ $(".manage-posts").on("click", ".update_manage", async function () {
 });
 
 // btn for deleted (not fully functional)
-$(".manage-posts").on("click", ".btn-danger", function () {
+$(".manage-posts").on("click", ".deactivateBtn", function () {
   // getRowElements(this).contentStage.text("Deactivate");
   getRowElements(this).contentStage.html(
     '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'
   );
 });
-
+$(".manage-posts").on("click", ".activateBtn", function () {
+  getRowElements(this).contentStage.html(
+    '<span class="badge rounded-pill text-bg-primary">Active</span>'
+  );
+});
 function handleChoosePicture(event) {
   $($(".create-content-intranet .fourth-row input").next()).css(
     "display",
@@ -559,7 +584,7 @@ function enableModal(obj) {
 }
 
 function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
-  const { imageContainer, id } = getRowElements(button);
+  const { imageContainer, status } = getRowElements(button);
   $(button)
     .parents("tr")
     .css({
@@ -571,9 +596,14 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
     .find(".closeBtn")
     .prop("disabled", !imageContainer.find(".closeBtn").prop("disabled"));
   imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
-
-  $(this).next('button').classList.toggle('d-none');
-
+  if(status.hasClass("text-bg-danger")) {
+    button.next().next().css("display" , opacity && "block");
+    
+  }else {
+    button.next().css("display", opacity && "block");
+  }
+  button.next().css('display' , !opacity && "none");
+  button.next().next().css('display' , !opacity && "none");
   button.removeClass(prevClass).addClass(newClass).html(innerText);
 }
 

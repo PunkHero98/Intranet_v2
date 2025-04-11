@@ -1,6 +1,6 @@
 import multer from "multer";
 import path from "path";
-import { createDir } from "./filsystem.js";
+import { createDir , createFeedbackDir} from "./filsystem.js";
 import { simPliFizeString } from "./assets.js";
 import sharp from "sharp";
 import { v4 as uuidv4 } from 'uuid';
@@ -8,14 +8,11 @@ import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const { title, textcontent, imgFolderName } = req.body;
-    const newTitle = title && simPliFizeString(title, true);
+    const { fb_category, fb_message } = req.body;
+    // const newTitle = title && simPliFizeString(title, true);
     cb(
-      null,
-      imgFolderName
-        ? path.join("./IMG_Storage", imgFolderName)
-        : createDir(
-            req.session.site + "_" + req.session.username + "_" + newTitle
+      null, createFeedbackDir(
+            req.session.site + "_" + req.session.username + "_" + fb_category
           )
     );
   },
@@ -25,7 +22,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // Giới hạn kích thước file là 10MB
+  limits: { fileSize: 2 * 1024 * 1024 }, // Giới hạn kích thước file là 10MB
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|gif|webp|heif|svg/;
     const mimeType = fileTypes.test(file.mimetype);
@@ -39,8 +36,26 @@ const upload = multer({
       cb(new Error("Only image files are allowed!"), false);
     }
   },
-}).array("Imgfiles", 20);
+}).array("feedback_images", 3);
 
+const conditionalUpload = (req, res, next) => {
+  // kiểm tra theo form-data luôn chứa trường `feedback_images`
+  // ta để multer xử lý trước, rồi kiểm tra sau
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError || err) {
+      return res.status(400).json({ message: err.message });
+    }
+
+    // Nếu không có file nào thì tiếp tục mà không lỗi
+    if (!req.files || req.files.length === 0) {
+      console.log("No files uploaded, skipping file processing.");
+      return next();
+    }
+
+    // Có file hợp lệ => tiếp tục
+    return next();
+  });
+};
 // --------------------------------------------------------------------------
 const storageForNewUpload = multer.memoryStorage();
 const newUpload = multer({
@@ -128,4 +143,4 @@ const processFiles = async (req, res, next) => {
 };
 
 
-export { upload, newUpload, processFiles };
+export { upload, newUpload, processFiles , conditionalUpload };
