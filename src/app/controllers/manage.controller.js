@@ -136,6 +136,7 @@ export default new (class ManageController {
   async updateUser(req, res) {
     try {
       const { userrole } = req.session;
+      
       if (userrole !== "Admin") {
         res.json({
           success: false,
@@ -150,10 +151,11 @@ export default new (class ManageController {
         is_reset_password,
         isActivated,
       } = req.body;
+      const isReset = is_reset_password === "true" || is_reset_password === true;
       const hashBasicPass = await bcrypt.hash("P@55w0rd", 10);
       console.log(hashBasicPass);
       let result = "";
-      if (is_reset_password) {
+      if (isReset) {
         result = await updateUserWithPass(
           email,
           user_role,

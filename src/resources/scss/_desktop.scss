@@ -743,8 +743,40 @@ body,
   cursor: pointer;
   z-index: 1100;
 }
+.comment-box {
+  background-color: #f0f2f5;
+  border-radius: 12px;
+  padding: 10px 15px;
+}
 
+.comment-actions a {
+  font-size: 13px;
+  color: #65676b;
+  margin-right: 15px;
+  text-decoration: none;
+}
 
+.comment-actions a:hover {
+  text-decoration: underline;
+}
+
+.comment-time {
+  font-size: 12px;
+  color: #90949c;
+}
+
+.comment-reply {
+  margin-left: 60px;
+}
+
+.textarea-comment {
+  resize: none;
+  border-radius: 20px;
+  padding-left: 15px;
+}
+.like-btn.liked i {
+  color: red;
+}
 
 /* review content -------------------------------------------------------------------------- */
 .review-content-intranet {

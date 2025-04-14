@@ -82,7 +82,16 @@ function renderData() {
                     <div class="img-box container-${imgIndex + 1}">
                       <img class="basic_image" src="${imgSrc}" alt="image" 
                           onerror="this.onerror=null; this.src='';" 
-                          style="max-width: 120px; margin: 4px;" />
+                           />
+                      <button
+                      type="button"
+                      class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                      style="opacity: 0"
+                      disabled
+                    >
+                      <i class="fa-solid fa-x text-white"></i>
+                    </button>
+                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
                     </div>
                   `).join("") 
                   : `<p>No images available.</p>`
@@ -157,6 +166,15 @@ function renderFilteredData(filteredData) {
                       <img class="basic_image" src="${imgSrc}" alt="image" 
                           onerror="this.onerror=null; this.src='';" 
                           style="max-width: 120px; margin: 4px;" />
+                      <button
+                      type="button"
+                      class="btn btn-outline-danger closeBtn rounded-0 m-0"
+                      style="opacity: 0"
+                      disabled
+                    >
+                      <i class="fa-solid fa-x text-white"></i>
+                    </button>
+                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
                     </div>
                   `).join("") 
                   : `<p>No images available.</p>`
@@ -284,11 +302,11 @@ $(".manage-posts").on("click", ".image_container .closeBtn", function () {
 $(".manage-posts").on("click", ".image_container .addPic", function () {
   const addPicBtn = $(this);
   const input = addPicBtn.siblings("input.fileListForManage");
-  const lengthofImage = addPicBtn.parent().children(".img-box").length;
-  if (lengthofImage >= 6) {
+  const lengthofImage = addPicBtn.parent().children(".image-gallery").children('.img-box').length;
+  if (lengthofImage >= 10) {
     $(".alert-intranet").css("display", "block");
     $(".alert-intranet strong").html("Warning ! ");
-    $(".alert-intranet span").html("Maximum number of pictures are 6.");
+    $(".alert-intranet span").html("Maximum number of pictures are 10.");
     $(".alert-intranet").removeClass("alert-success");
     $(".alert-intranet").addClass("alert-warning");
     return;
@@ -319,7 +337,9 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
       </div>`;
       return imgElement;
     });
-    addPicBtn.before(imgElements.join(""));
+    addPicBtn.parent().children(".image-gallery").append(imgElements.join(""));
+    // addPicBtn.before(imgElements.join());
+    // $('.toggle-images-btn').click();
     input.val("");
   });
 });
@@ -404,10 +424,6 @@ $(".manage-posts").on("click", ".activateBtn", function () {
   );
 });
 function handleChoosePicture(event) {
-  $($(".create-content-intranet .fourth-row input").next()).css(
-    "display",
-    "flex"
-  );
   Imgsarray = [];
 
   const files = event.target.files;
@@ -427,16 +443,18 @@ function handleChoosePicture(event) {
 async function pushNewPicToServer(obj) {
   const { imageContainer } = getRowElements(obj);
   const afterEditImgArray = [];
-  const childOfImageContainer = imageContainer.children("div");
-  const numOfBasic = childOfImageContainer.children("img.basic_image").length;
-  const numOfPic = childOfImageContainer.children("img").length;
+  const childOfImageContainer = imageContainer.children("div.image-gallery");
+  const numOfBasic = childOfImageContainer.children('div.img-box').children("img.basic_image").length;
+  const numOfPic = childOfImageContainer.children('div.img-box').children("img").length;
+  console.log(childOfImageContainer.children('div.img-box').children('img[src^="blob:"]'));
 
   if (numOfPic > numOfBasic) {
     obj.html('<i class="fa fa-spinner fa-spin"></i>Saving');
-    childOfImageContainer.children('img[src^="blob:"]').each(function () {
+    childOfImageContainer.children('div.img-box').children('img[src^="blob:"]').each(function () {
       afterEditImgArray.push($(this).attr("src"));
     });
     const basic_image = childOfImageContainer
+      .children('div.img-box')
       .children("img.basic_image")
       .attr("src")
       .split("\\");
@@ -673,20 +691,34 @@ function generateJsonForEdit(button) {
     .get();
 
   const timenow = getDate();
-  const images_link1 = images[0].split("\\")[1];
-  // const images_link2 = images[0].split("\\")[2];
-  const images_link = images_link1;
-  const content_images = images.map((item) => {
-    const parts = item.split("\\");
-    return parts[parts.length - 1];
-  });
+  if(images.length){
+    const images_link1 = images[0].split("\\")[1];
+    // const images_link2 = images[0].split("\\")[2];
+    const images_link = images_link1;
+    const content_images = images.map((item) => {
+      const parts = item.split("\\");
+      return parts[parts.length - 1];
+    });
 
+    return {
+      id_content: contentId,
+      title: title.text(),
+      content: contentNew,
+      images_link: images_link,
+      content_images: content_images,
+      poster: "",
+      date_time: anotherdatetime,
+      last_updated: timenow,
+      deleted: status.hasClass("text-bg-danger") ? 1 : 0,
+      poster_site: "string",
+    };
+  }
   return {
     id_content: contentId,
     title: title.text(),
     content: contentNew,
-    images_link: images_link,
-    content_images: content_images,
+    images_link: "",
+    content_images: "",
     poster: "",
     date_time: anotherdatetime,
     last_updated: timenow,

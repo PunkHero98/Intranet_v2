@@ -37,6 +37,7 @@ const getFileType = function(filename){
   if (ext === ".pdf") return "fa-file-pdf text-danger";
   if (ext === ".doc" || ext === ".docx") return "fa-file-word text-primary";
   if (ext === ".xls" || ext === ".xlsx") return "fa-file-excel text-success";
+  if (ext === ".ppt" || ext === ".pptx") return "fa-file-powerpoint text-danger";
   return "fa-file";
 };
 // Xuất toàn bộ helpers dưới dạng object

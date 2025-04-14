@@ -71,8 +71,8 @@ function renderPage(array) {
       contentFileLength = 0;
     }  
     $(".whats-new-intranet .mainArea").append(`
-      <div class="col-xl-6 col-md-6 col-sm-12" >
-        <div class="row content-news"  style="cursor: pointer;" onClick="window.location.href='content/${f.id_content}'">
+      <div class="col-xl-6 col-md-6 col-sm-12">
+        <div class="row content-news" style="cursor: pointer;" onClick="window.location.href='content/${f.id_content}'">
           <div class="col-3 news-img p-0">
             <a href="content/${f.id_content}">
               <img class="object-fit-cover" src="${f.content_images.length ? f.content_images : '/imgs/qsl-sample-pic.png'}" loading='lazy' 
@@ -84,15 +84,29 @@ function renderPage(array) {
               <h5 class="m-0">${f.title}</h5>
             </a>
             <div class="m-0 content_area">${f.content}</div>
-            <i class="text-light-emphasis position-absolute">Posted:
-              ${f.poster} |
-              ${formatDate(f.date_time)} |
-              ${f.poster_site} ${contentFileLength ? `| 
-              ${contentFileLength} ${contentFileLength > 1 ? 'files' : 'file'} attached` : ''}</i>
+    
+            <!-- Info bên trái -->
+             
+            <div class="position-absolute text-light-emphasis d-flex justify-content-between align-items-center flex-wrap" style="bottom: 0; left: 10px; font-size: 0.8rem;width: 95%;">
+              <div>
+                Posted: ${f.poster} |
+                ${formatDate(f.date_time)} |
+                ${f.poster_site} 
+                ${contentFileLength ? `| ${contentFileLength} ${contentFileLength > 1 ? 'files' : 'file'} attached` : ''}
+              </div>
+      
+              <!-- Stats bên phải -->
+              <div>
+                ${f.contentStat.total_views} views -
+                ${f.contentStat.total_likes} likes -
+                ${f.contentStat.total_comments} comments
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    `);           
+    `);
+    
   });
 }
 function formatDate (date) {

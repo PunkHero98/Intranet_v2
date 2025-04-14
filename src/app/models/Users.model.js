@@ -1,6 +1,7 @@
 import { connectToDB, sql } from "../../config/db/index.js";
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/db/sequelize.js";
+import {ContentComment} from "./Contents.model.js";
 
 const getUsers = async () => {
   const pool = await connectToDB();
@@ -131,6 +132,8 @@ const User = sequelize.define(
   }
 );
 
+
+
 const getUserRole = async (role) => {
   return await User.findAll({ where: { user_role: role } });
 };
@@ -155,6 +158,7 @@ export {
   updateUserSession,
   checkUserByEmailSequelize,
   getUserRole,
+  User,
 };
 
 export default User;

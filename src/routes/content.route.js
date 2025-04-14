@@ -5,7 +5,8 @@ const router = express.Router();
 router.get("/add-news", contentController.getAddpage);
 router.post("/add", newUpload , processFiles, contentController.add);
 router.post('/download' , contentController.download);
-router.put("/:slug/edit");
+// router.put("/:slug/like" , contentController.likeContent);
+router.post("/like" , contentController.likeContent);
 router.delete("/:slug");
 router.get("/:slug", contentController.show);
 

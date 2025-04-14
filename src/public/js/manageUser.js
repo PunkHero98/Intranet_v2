@@ -1,5 +1,10 @@
 let prevValue = {};
 const HTTP_Request_address = "http://localhost:3000";
+
+$("button.backButton").on("click", function () {
+  window.history.back();
+});
+
 function getRowElementsForManageUser(obj) {
   const row = $(obj).closest("tr");
   return {

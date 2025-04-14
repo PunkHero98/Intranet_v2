@@ -47,7 +47,7 @@
             </div>
 
             {{#if result.content_file}}
-                <div class="file-container">
+                <div class="file-container mb-4">
                     {{#each result.content_file}}
                     <div class="file-item" style="cursor: pointer">
                         <div class="file-icon">
@@ -75,79 +75,82 @@
             <ul class="p-0 list-unstyled m-0">
                 <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa fa-user"></i>{{result.poster}}</a></li>
                 {{#if result.last_updated}}
-                    <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                            class="fa-solid fa-clock"></i>{{result.last_updated}} - last update</a></li>
+                    <li class="d-inline-block text-primary"><i
+                            class="fa-solid fa-clock"></i>{{result.last_updated}} - last update</li>
                 {{else}}
-                    <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                            class="fa-solid fa-clock"></i>{{result.date_time}}</a></li>
+                    <li class="d-inline-block text-primary"><i
+                            class="fa-solid fa-clock"></i>{{result.date_time}}</li>
                 {{/if}}
-                {{!-- <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-eye"></i>100
-                        Views</a></li>
+                <li class="d-inline-block text-primary"><i class="fa-solid fa-eye"></i>{{contentStats.total_views}}</li>
+                <li class="d-inline-block" style="cursor: pointer;">
+                    <a 
+                        class="text-decoration-none like-btn {{#if contentStats.userHasLiked}}liked{{/if}}" 
+                        data-id="{{result.id_content}}">
+                        <i class="fa-solid fa-heart"></i> {{contentStats.total_likes}}
+                    </a>
+                </li>
+
                 <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                            class="fa-solid fa-heart"></i></i>Lily and 50 others</a></li>
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                            class="fa-solid fa-comment"></i>03 Comments</a></li>
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-share"></i>02
+                            class="fa-solid fa-comment"></i>{{contentStats.total_comments}}</a></li>
+                {{!-- <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-share"></i>02
                         Shares</a></li> --}}
             </ul>
         </div>
-        {{!-- <hr>
-        <div class="col-12 comments-view">
-            <h5>05 Comments</h5>
-            <hr>
-            <div class="row mb-3 m-0">
-                <div class="col-1 p-0">
-                    <img src="/imgs/user/user.png" alt="" />
-                </div>
-                <div class="col-11">
-                    <h6>Huy Pham</h6>
-                    <p class="m-0">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                        beatae vitae dicta sunt explicabo.
-                    </p>
-                    <ul class="comments p-0 m-0">
-                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                                    class="fa-solid fa-heart"></i></i>01</a></li>
-                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                                    class="fa-solid fa-reply"></i>Reply</a></li>
-                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                                    class="fa-solid fa-clock"></i>2024-11-09 03:09 PM</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row mb-3 ms-3 m-0">
-                <div class="col-1 p-0">
-                    <img src="/imgs/user/HUỲNH THỊ MỘNG THƯỜNG.png" alt="" />
-                </div>
-                <div class="col-11">
-                    <h6>Mong Thuong</h6>
-                    <p class="m-0">
-                        Haha
-                    </p>
-                    <ul class="comments p-0 m-0">
-                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                                    class="fa-solid fa-heart"></i></i>01</a></li>
-                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                                    class="fa-solid fa-reply"></i>Reply</a></li>
-                        <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
-                                    class="fa-solid fa-clock"></i>2024-11-09 03:19 PM</a></li>
-                    </ul>
+        <hr>
+        <div class="col-12 comments-view mt-4">
+            {{!-- <h6 class="fw-bold mb-4">05 Comments</h6> --}}
+
+            <!-- Comment 1 -->
+            {{!-- <div class="d-flex mb-3">
+                <img src="/imgs/user/user.png" class="rounded-circle me-2" width="40" height="40" />
+                <div class="flex-grow-1">
+                    <div class="comment-box">
+                        <strong>Huy Pham</strong>
+                        <p class="mb-1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem...</p>
+                    </div>
+                    <div class="comment-actions mt-1">
+                        <a href="#"><i class="fa-solid fa-heart"></i> Like</a>
+                        <a href="#"><i class="fa-solid fa-reply me-1"></i> Reply</a>
+                        <a href="#"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                        <span class="comment-time">2024-11-09 03:09 PM</span>
+                    </div>
+                    <div class="comment-action mt-1 " style="display: none;">
+                        <button class="btn btn-sm bg-primary" style="color: white;">Save Changes</button>
+                        <button class="btn btn-sm bg-secondary" style="color: white;">Cancel</button>
+                        <button class="btn btn-sm bg-danger" style="color: white;">Delete</button>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-3 m-0">
-                <div class="col-1 p-0">
-                    <img src="/imgs/user/user.png" alt="" />
-                </div>
-                <div class="col-11">
-                    <h6>Huy Pham</h6>
-                    <textarea name="" id=""></textarea>
-                    <input class="btn btn-primary btn-sm" id="submitbtn" type="submit" value="Send" />
+
+            <!-- Reply to Comment 1 -->
+            <div class="d-flex mb-3 comment-reply">
+                <img src="/imgs/user/user.png" class="rounded-circle me-2" width="36" height="36" />
+                <div class="flex-grow-1">
+                    <div class="comment-box">
+                        <strong>Mong Thuong</strong>
+                        <p class="mb-1">Haha</p>
+                    </div>
+                    <div class="comment-actions mt-1">
+                        <a href="#"><i class="fa-solid fa-heart"></i> Like</a>
+                        <a href="#"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+
+                        <span class="comment-time">2024-11-09 03:19 PM</span>
+                    </div>
                 </div>
             </div>
-        </div> --}}
+
+            <!-- New Comment Box -->
+            <div class="d-flex mt-4">
+                <img src="/imgs/user/user.png" class="rounded-circle me-2" width="40" height="40" />
+                <div class="flex-grow-1">
+                    <textarea class="form-control textarea-comment mb-2" rows="2" id="commentText" placeholder="Write a comment..."></textarea>
+                    <button class="btn btn-sm btn-primary" id="submitComment">Send</button>
+                </div>
+            </div> --}}
+        </div>
     </div>
 </div>
+
 <div id="filePreviewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
   <div style="background:white; padding:20px; max-height:90%; overflow:auto; max-width:90%">
     <div id="previewContent">

@@ -1,4 +1,7 @@
 import { connectToDB, sql } from "../../config/db/index.js";
+import { DataTypes } from "sequelize";
+import sequelize from "../../config/db/sequelize.js";
+import { User } from "./Users.model.js";
 
 const getContents = async () => {
   const pool = await connectToDB();
@@ -162,6 +165,61 @@ const updateContents = async (records) => {
   return results.map((result) => result.rowsAffected);
 };
 
+const ContentLike = sequelize.define("ContentLike", {
+  content_id: DataTypes.INTEGER,
+  user_id: DataTypes.INTEGER,
+  liked_at: DataTypes.DATE,
+});
+
+const ContentView = sequelize.define("ContentView", {
+  content_id: DataTypes.INTEGER,
+  user_id: DataTypes.INTEGER,
+  ip_address: DataTypes.STRING,
+  viewed_at: DataTypes.DATE,
+});
+
+const ContentComment = sequelize.define("ContentComment", {
+  content_id: DataTypes.INTEGER,
+  user_id: DataTypes.INTEGER,
+  comment_text: DataTypes.TEXT,
+  parent_comment_id: DataTypes.INTEGER,
+  created_at: DataTypes.DATE,
+  is_deleted: DataTypes.BOOLEAN,
+});
+
+
+
+const getContentStats = async (contentId) =>{
+  const [likes, views, comments] = await Promise.all([
+    ContentLike.count({ where: { content_id: contentId } }),
+    ContentView.count({ where: { content_id: contentId } }),
+    ContentComment.count({ 
+      where: { content_id: contentId, is_deleted: false } 
+    }),
+  ]);
+
+  return {
+    total_likes: likes,
+    total_views: views,
+    total_comments: comments,
+  };
+}
+
+const addContentView = async (content_id, user_id = null) => {
+  try {
+    await ContentView.create({
+      content_id,
+      user_id,
+      viewed_at: new Date(),
+    });
+    console.log("✅ View recorded");
+  } catch (error) {
+    console.error("❌ Error recording view:", error);
+  }
+};
+
+
+
 export {
   getContents,
   getContentByID,
@@ -171,5 +229,10 @@ export {
   addContent,
   updateContents,
   updateContentByImageLink,
-  getTotalCountOfContent
+  getTotalCountOfContent,
+  getContentStats,
+  addContentView,
+  ContentLike,
+  ContentComment,
+  ContentView,
 };

@@ -10,6 +10,11 @@ const validatePassword = (password) => {
   return regex.test(password);
 };
 
+$(document).ready(function () {
+  $('.feedBackBtn').css("display", "none");
+});
+
+
 $(".register-intranet #regis-fullname").on("blur", function () {
   if ($(this).val().trim() === "") {
     $(this)

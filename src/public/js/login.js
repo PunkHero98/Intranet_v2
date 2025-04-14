@@ -5,6 +5,10 @@ const isValidEmail = (email) => {
   return re.test(String(email).toLowerCase());
 };
 
+$(document).ready(function () {
+  $('.feedBackBtn').css("display", "none");
+});
+
 $("#inputShowPassword").on("click", function () {
   if ($("#inputPassword").attr("type") === "password") {
     $("#inputPassword").attr("type", "text");

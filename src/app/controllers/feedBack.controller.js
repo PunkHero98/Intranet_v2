@@ -1,5 +1,6 @@
 import { getfileinDir } from "../../config/middleware/filsystem.js";
 import { addFeedBack, getAllFeedBack } from "../models/FeedBacks.model.js";
+import { v4 as uuidv4 } from "uuid";
 
 export default new (class FeedBackController {
 
@@ -26,7 +27,8 @@ export default new (class FeedBackController {
                 return;
             }
             const simpleMessage = Buffer.from(fb_message).toString('base64');
-            const folderName = `Feedbacks/${site}_${username}_${fb_category}`;
+            const feedBackId = uuidv4()
+            const folderName = `Feedbacks/${site}_${username}_${fb_category}_${feedBackId}`;
             const result = await getfileinDir(folderName);
             const imgJsonArray = JSON.stringify(result.images);
             const respone = await addFeedBack({

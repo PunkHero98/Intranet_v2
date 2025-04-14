@@ -3,7 +3,8 @@ import {
   getContents,
   getContentsBySite,
   getContentsByPage,
-  getTotalCountOfContent
+  getTotalCountOfContent,
+  getContentStats,
 } from "../models/Contents.model.js";
 import path from "path";
 export default new (class SiteController {
@@ -40,9 +41,19 @@ export default new (class SiteController {
   async getallPage(req, res) {
     try {
       const contents = await getContents();
-      contents.forEach((file) => {
+  
+      const updatedContents = await Promise.all(contents.map(async (file) => {
+        // Decode title
         file.title = Buffer.from(file.title, "base64").toString();
-        file.content = JSON.parse(file.content);
+  
+        // Parse content
+        try {
+          file.content = JSON.parse(file.content);
+        } catch (e) {
+          file.content = {};
+        }
+  
+        // Parse and format images
         if (file.content_images) {
           try {
             file.content_images = JSON.parse(file.content_images);
@@ -57,10 +68,22 @@ export default new (class SiteController {
             file.content_images = [];
           }
         }
-      });
+  
+        // 👇 Thêm phần lấy stats
+        try {
+          const stat = await getContentStats(file.id_content);
+          file.contentStat = stat;
+        } catch (statErr) {
+          console.error("Error getting content stats:", statErr);
+          file.contentStat = { views: 0, likes: 0, comments: 0 };
+        }
+  
+        return file;
+      }));
+  
       const userRole = await getUserRole("HR");
       res.json({
-        result: contents,
+        result: updatedContents,
         userRole,
       });
     } catch (err) {
@@ -71,6 +94,7 @@ export default new (class SiteController {
       });
     }
   }
+  
   // [GET] /homepage/:page
   async navigatePages(req, res) {
     try {

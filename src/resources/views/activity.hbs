@@ -27,7 +27,11 @@
             <!-- image content -->
             <div class="col-3 news-img p-0">
               <a href="content/{{this.id_content}}">
-                <img class="object-fit-cover" src={{this.content_images}} />
+                <img 
+                  class="object-fit-cover" 
+                  src="{{#if this.content_images}}{{this.content_images}}{{else}}/imgs/qsl-sample-pic.png{{/if}}" 
+                  onerror="this.onerror=null; this.src='/imgs/qsl-sample-pic.png';" 
+                />
               </a>
             </div>
             <!-- body content -->

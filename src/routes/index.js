@@ -5,6 +5,7 @@ import contentRouter from "./content.route.js";
 import manageRouter from "./manage.route.js";
 import profileRouter from "./profile.route.js";
 import feedBackRouter from "./feedBack.route.js";
+import commentRouter from "./comment.route.js";
 import { getUserById , updateUserSession } from "../app/models/Users.model.js";
 async function checkAuth(req, res, next) {
   if (!req.session.idUser) {
@@ -25,6 +26,7 @@ async function checkAuth(req, res, next) {
 
 function route(app) {
   app.use("/login", loginRouter);
+  app.use('/comment',checkAuth , commentRouter);
   app.use("/feedback" ,checkAuth, feedBackRouter);
   app.use("/register", registerRouter);
   app.use("/content", checkAuth, contentRouter);
