@@ -35,7 +35,8 @@ async function fetchAndStoreNews() {
     const data = await response.json();
 
     unFilteredData = data.result;
-    newsData = unFilteredData.filter((item) =>  !item.is_deleted);
+    newsData = unFilteredData.filter((item) =>  !item.deleted);
+    console.log(unFilteredData);
     userRole = data.userRole;
     totalPages = Math.ceil(newsData.length / 8);
     sortAndRenderNews();

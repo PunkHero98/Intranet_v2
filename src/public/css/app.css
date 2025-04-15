@@ -45,7 +45,8 @@ body,
 .whats-new-intranet .news-content i,
 .profile .profile-card a,
 .manage-posts button,
-.manage-posts button i {
+.manage-posts button i,
+.manage-posts input {
   /* Text */
   font-size: 0.8rem; }
 
@@ -805,25 +806,26 @@ img:last-child {
 
 .manage-posts .id {
   /* Display & Box Model */
-  width: 8%; }
+  width: 5%; }
 
 .manage-posts .title {
   /* Display & Box Model */
-  width: 20%; }
+  width: 15%; }
 
 .manage-posts .content {
   /* Display & Box Model */
-  width: 42%; }
+  width: 36%; }
+
+.manage-posts .content p {
+  margin: 0; }
 
 .clamp-text {
   display: -webkit-box;
-  -webkit-line-clamp: 10;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal;
-  max-height: 15em;
-  /* khoảng 10 dòng, tùy font-size */ }
+  white-space: normal; }
 
 .expanded {
   -webkit-line-clamp: unset;
@@ -831,7 +833,7 @@ img:last-child {
 
 .manage-posts .image_container {
   /* Display & Box Model */
-  width: 15%; }
+  width: 20%; }
 
 .manage-posts .image_container .img-box {
   /* Positioning */
@@ -855,15 +857,15 @@ img:last-child {
 
 .manage-posts .date-time {
   /* Display & Box Model */
-  width: 20%; }
+  width: 8%; }
 
 .manage-posts .status {
   /* Display & Box Model */
-  width: 5%; }
+  width: 8%; }
 
 .manage-posts .select {
   /* Display & Box Model */
-  width: 5%; }
+  width: 8%; }
 
 .manage-posts button {
   /* Display & Box Model */
@@ -1130,7 +1132,8 @@ img:last-child {
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
   .manage-posts button,
-  .manage-posts button i {
+  .manage-posts button i,
+  .manage-posts input {
     /* Text */
     font-size: 0.7rem; }
   .profile .profile-card h2,
@@ -1339,7 +1342,8 @@ label:nth-child(n + 2) {
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
   .manage-posts button,
-  .manage-posts button i {
+  .manage-posts button i,
+  .manage-posts input {
     /* Text */
     font-size: 0.7rem; }
   .profile .profile-card h2,
@@ -1553,7 +1557,8 @@ label:nth-child(n + 2) {
   .whats-new-intranet .news-content i,
   .profile .profile-card a,
   .manage-posts button,
-  .manage-posts button i {
+  .manage-posts button i,
+  .manage-posts input {
     /* Text */
     font-size: 0.7rem; }
   .profile .profile-card h2,

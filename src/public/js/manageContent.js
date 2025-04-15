@@ -73,7 +73,7 @@ function renderData() {
             </td>
             <td class="image_container">
              ${item.content_images && item.content_images.length > 0 ?
-                `<button type="button" class="btn btn-sm btn-primary toggle-images-btn mb-2">Show Pictures</button>` :
+                `<button type="button" class="btn btn-sm btn-info toggle-images-btn mb-2">Show Pictures</button>` :
                 `<button type="button" class="btn btn-sm btn-secondary toggle-images-btn mb-2" disabled>No Pictures</button>`}
 
               <div class="image-gallery" style="display: none;">
@@ -91,7 +91,7 @@ function renderData() {
                     >
                       <i class="fa-solid fa-x text-white"></i>
                     </button>
-                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none" />
+                    <input id="stateCheck-${imgIndex + 1}" type="checkbox" style="display: none;  margin: 4px;" />
                     </div>
                   `).join("") 
                   : `<p>No images available.</p>`
@@ -113,12 +113,12 @@ function renderData() {
                 ${item.id_content || ''}
               </div>
             </td>
-            <td class="content_stage fs-6">${!item.deleted ? '<span class="badge rounded-pill text-bg-primary">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
+            <td class="content_stage fs-6">
+              ${!item.deleted ? '<span class="badge rounded-pill text-bg-success">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
             <td class="btn_container_table">
               <button type="button" class="btn btn-primary btn-sm editBtn d-flex">Edit</button>
               <button type="button" class="btn btn-danger deactivateBtn btn-sm" style="display: none">Deactivate</button>
               <button type="button" class="btn btn-success activateBtn btn-sm" style="display: none">Activate</button>
-
             </td>
           </tr>`;
 
