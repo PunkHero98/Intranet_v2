@@ -43,12 +43,17 @@ function displayFileInfo() {
       
       // 🏷 Tạo div chứa thông tin file
       const fileElement = `
-        <div class="file-info-container shadow bg-light rounded " data-index="${index}">
-        <i class="fa-solid fa-file"></i>
-          <p class="m-0 " title=${fileName}><strong>Name:</strong> ${fileName}</p>
-          <p class="m-0" title="${fileSize}"><strong>Size:</strong> ${fileSize}</p>
-          <p class="m-0" title=${fileType}><strong>Type:</strong> ${fileType}</p>
-          <button class="btn btn-danger fs-6 deleteFileBtn"><i class="fa-solid fa-xmark"></i></i></button>
+        <div class="file-info-container shadow rounded-0 " data-index="${index}">
+          <div class="col-1"><i class="fa-solid fa-file"></i></div>
+          <div class="col-10">
+            <p class="m-0" title=${fileName}>${fileName}</p>
+            <p class="m-0" title="${fileSize}"><strong>Size:</strong> ${fileSize}</p>
+          </div>
+          <div class="col-1 text-end">
+            <button class="btn btn-sm btn-outline-danger rounded-0 m-0 deleteFileBtn">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
         </div>`;
       
       return fileElement;

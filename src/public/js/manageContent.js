@@ -418,7 +418,7 @@ $(".manage-posts").on("click", ".deactivateBtn", function () {
 });
 $(".manage-posts").on("click", ".activateBtn", function () {
   getRowElements(this).contentStage.html(
-    '<span class="badge rounded-pill text-bg-primary">Active</span>'
+    '<span class="badge rounded-pill text-bg-success">Active</span>'
   );
 });
 function handleChoosePicture(event) {
