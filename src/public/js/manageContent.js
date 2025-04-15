@@ -20,13 +20,13 @@ $(document).on('click', '.toggle-images-btn', function () {
   });
 });
 
-$(document).on('click', '.read-more-btn', function () {
-  const $btn = $(this);
-  const $content = $btn.siblings('.content-text');
+// $(document).on('click', '.read-more-btn', function () {
+//   const $btn = $(this);
+//   const $content = $btn.siblings('.content-text');
 
-  $content.toggleClass('expanded');
-  $btn.text($content.hasClass('expanded') ? 'Show less' : 'Read more');
-});
+//   $content.toggleClass('expanded');
+//   $btn.text($content.hasClass('expanded') ? 'Show less' : 'Read more');
+// });
 
 
 async function fetchData() {
@@ -68,7 +68,6 @@ function renderData() {
             <td class="content">
               <div class="content-wrapper">
                 <div class="content-text clamp-text">${item.content}</div>
-                <button class="btn btn-link read-more-btn p-0">Read more</button>
               </div>
             </td>
             <td class="image_container">
@@ -151,7 +150,6 @@ function renderFilteredData(filteredData) {
             <td class="content">
               <div class="content-wrapper">
                 <div class="content-text clamp-text">${item.content}</div>
-                <button class="btn btn-link read-more-btn p-0">Read more</button>
               </div>
             </td>
             <td class="image_container">
@@ -509,7 +507,8 @@ function renderNewPic(obj, json, piclength) {
   });
 
   imageContainer
-    .children("div")
+    .children("div.image-gallery")
+    .children('div.img-box')
     .children('img[src^="blob:"]')
     .parent()
     .remove();
@@ -544,7 +543,7 @@ function renderNewPic(obj, json, piclength) {
       </div>`;
   });
 
-  addPic.before(imageElements.join(""));
+  imageContainer.children("div.image-gallery").append(imageElements.join(""));
 }
 
 function check_update() {

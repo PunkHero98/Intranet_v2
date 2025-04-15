@@ -815,20 +815,6 @@ img:last-child {
   /* Display & Box Model */
   width: 42%; }
 
-.clamp-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 10;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-  max-height: 15em;
-  /* khoảng 10 dòng, tùy font-size */ }
-
-.expanded {
-  -webkit-line-clamp: unset;
-  max-height: none; }
-
 .manage-posts .image_container {
   /* Display & Box Model */
   width: 15%; }
