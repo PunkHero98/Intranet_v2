@@ -70,7 +70,14 @@ $(document).ready(function () {
         const html = XLSX.utils.sheet_to_html(workbook.Sheets[selectedSheet]);
         $('#previewContent').html(sheetSelector + html);
       });
-    }  else {
+    } else if(['doc', 'docx'].includes(fileExt)){
+      const encodedUrl = encodeURIComponent(location.origin + '/' + filePath);
+      const iframe = `
+        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodedUrl}" 
+                width="100%" height="600px" frameborder="0">
+        </iframe>`;
+      $('#previewContent').html(iframe);
+    }else {
       $('#previewContent').html('<p>Unsupported file type for preview.</p>');
     }
 
