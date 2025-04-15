@@ -3,4 +3,5 @@
 /public/css
 node_modules/
 .IMG_Storage/Contents
-.IMG_Storage/Feedback
+.IMG_Storage/Feedbacks
+.IMG_Storage/
