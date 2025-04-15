@@ -9,10 +9,12 @@ import fs from "fs";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const { fb_category, fb_message } = req.body;
+    const uniqueId = uuidv4(12);
+    req.feedbackId = uniqueId;
     // const newTitle = title && simPliFizeString(title, true);
     cb(
       null, createFeedbackDir(
-            req.session.site + "_" + req.session.username + "_" + fb_category
+            req.session.username + "_" + uniqueId
           )
     );
   },

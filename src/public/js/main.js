@@ -50,7 +50,7 @@ $(document).on("click", ".navbar-nav.countries button", function (event) {
         $('.image_container').append(`
           <div class="position-relative p-1" style="width: calc(33.333% - 10px);" id="img-${imgId}">
             <button type="button" class="btn-close position-absolute top-0 end-0 m-1 btn-sm btn-remove-img"
-              aria-label="Close" data-index="${feedbackImage.length - 1}" data-target="#img-${imgId}">
+              aria-label="Close" data-name="${file.name}" data-target="#img-${imgId}">
             </button>
             <img src="${blobUrl}" class="img-thumbnail w-100" alt="Feedback Image">
           </div>
@@ -64,16 +64,17 @@ $(document).on("click", ".navbar-nav.countries button", function (event) {
   });
  
   $(document).on('click', '.btn-remove-img', function () {
-    const imgSrc = $(this).data('img');
+    const fileName = $(this).data('name');
     const targetId = $(this).data('target');
   
-    const index = feedbackImage.indexOf(imgSrc);
+    const index = feedbackImage.findIndex(file => file.name === fileName);
     if (index !== -1) {
       feedbackImage.splice(index, 1);
     }
   
     $(targetId).remove();
   });
+
 $('#feedBackModal .modal-footer .btn-primary').on('click',async function() {
   const fb_category = $('#feedback-category').val();
   const fb_message = $('#message-text').val();

@@ -45,7 +45,7 @@ function renderFeedBack () {
             <tr>
                 <td>${index + 1}</td>
                 <td>${feedback.category}</td>
-                <td>${feedback.message}</td>
+                <td style="max-width: 300px;word-wrap: break-word;white-space: normal;">${feedback.message}</td>
                 <td>
                     ${feedback.feedback_images.length > 0 
                         ? `<button class="view-images" data-images='${JSON.stringify(feedback.feedback_images)}'>View Images</button>` 
