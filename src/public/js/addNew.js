@@ -232,6 +232,10 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     //   alert("Please choose at least 1 picture");
     //   return;
     // }
+    if (!title.trim() || !textcontent.value.trim()) {
+      showNotification("Error", "Cannot leave title and content field blank", "alert-success", "alert-danger");
+      return;
+    }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("textcontent", textcontent.value);
@@ -239,8 +243,9 @@ $(".create-content-intranet .create-content-box #uploadform").on(
       formData.append("Imgfiles", image);
     });
     FileArray.forEach((file, index) => {
-      formData.append("Docfiles", file);
+      formData.append("Docfiles", file , file.name);
     });
+    console.log(FileArray)
     try {
       $('.loader').css('display', 'block');
       $('.create-content-intranet').css({opacity: 0.05 , pointerEvents: 'none' , userSelect: 'none' , backgroundColor: 'rgba(0, 0, 0, 0.65)'});
