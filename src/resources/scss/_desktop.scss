@@ -29,7 +29,10 @@ body,
 .advancedFilter_container input,
 .advancedFilter_container select,
 .advancedFilter_container button,
-.backButton {
+.backButton,
+.textarea-comment,
+.comment-time,
+.create-content-intranet .file-info-container {
   /* Text */
   font-size: 0.9rem;
 }
@@ -779,10 +782,11 @@ body,
   cursor: pointer;
   z-index: 1100;
 }
+
 .comment-box {
   background-color: #f0f2f5;
-  border-radius: 12px;
-  padding: 10px 15px;
+  border-radius: 0.8rem;
+  padding: 1rem;
 }
 
 .comment-actions a {
@@ -807,9 +811,10 @@ body,
 
 .textarea-comment {
   resize: none;
-  border-radius: 20px;
-  padding-left: 15px;
+  border-radius: 0.8rem;
+  padding: 1rem;
 }
+
 .like-btn.liked i {
   color: red;
 }
@@ -978,9 +983,15 @@ body,
   padding: 0.7rem;
   cursor: default;
 }
+
+.create-content-intranet .file-info-container .col-10 {
+  padding: 0.5rem;
+}
+
 .create-content-intranet .file-info-container:last-child {
   margin-right: 0;
 }
+
 .create-content-intranet .file-info-container i {
   width: 100%;
   text-align: center;

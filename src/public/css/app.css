@@ -27,7 +27,10 @@ body,
 .advancedFilter_container input,
 .advancedFilter_container select,
 .advancedFilter_container button,
-.backButton {
+.backButton,
+.textarea-comment,
+.comment-time,
+.create-content-intranet .file-info-container {
   /* Text */
   font-size: 0.9rem; }
 
@@ -632,8 +635,8 @@ img {
 
 .comment-box {
   background-color: #f0f2f5;
-  border-radius: 12px;
-  padding: 10px 15px; }
+  border-radius: 0.8rem;
+  padding: 1rem; }
 
 .comment-actions a {
   font-size: 13px;
@@ -653,8 +656,8 @@ img {
 
 .textarea-comment {
   resize: none;
-  border-radius: 20px;
-  padding-left: 15px; }
+  border-radius: 0.8rem;
+  padding: 1rem; }
 
 .like-btn.liked i {
   color: red; }
@@ -799,6 +802,9 @@ img:last-child {
   align-items: center;
   padding: 0.7rem;
   cursor: default; }
+
+.create-content-intranet .file-info-container .col-10 {
+  padding: 0.5rem; }
 
 .create-content-intranet .file-info-container:last-child {
   margin-right: 0; }
@@ -1144,7 +1150,10 @@ img:last-child {
   .advancedFilter_container input,
   .advancedFilter_container select,
   .advancedFilter_container button,
-  .backButton {
+  .backButton,
+  .textarea-comment
+.comment-time,
+  .create-content-intranet .file-info-container {
     /* Text */
     font-size: 0.85rem; }
   body,
@@ -1287,6 +1296,10 @@ img:last-child {
   .view-content-intranet .comments-view .col-11 h6 {
     /* Text */
     font-size: 1rem; }
+  .comment-box {
+    padding: 1rem; }
+  .textarea-comment {
+    padding: 1rem; }
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
@@ -1308,6 +1321,10 @@ label:nth-child(n + 2) {
     width: 6rem;
     margin: 0.5rem;
     padding: 0.3rem; }
+  .create-content-intranet .file-info-container {
+    width: 100%;
+    margin-right: 0;
+    padding: 0.5rem; }
   /* manage posts ---------------------------------------------------------------------------- */
   .manage-posts {
     /* Display & Box Model */ }
@@ -1352,7 +1369,10 @@ label:nth-child(n + 2) {
   .advancedFilter_container input,
   .advancedFilter_container select,
   .advancedFilter_container button,
-  .backButton {
+  .backButton,
+  .textarea-comment
+.comment-time,
+  .create-content-intranet .file-info-container {
     /* Text */
     font-size: 0.75rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
@@ -1502,6 +1522,17 @@ label:nth-child(n + 2) {
   .view-content-intranet .comments-view .col-11 h6 {
     /* Text */
     font-size: 0.9rem; }
+  .view-content-intranet .file-item {
+    display: flex;
+    padding: 0.5rem;
+    width: 100%;
+    margin-right: 0; }
+  .view-content-intranet .file-icon {
+    font-size: 1rem; }
+  .comment-box {
+    padding: 0.8rem; }
+  .textarea-comment {
+    padding: 0.8rem; }
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
@@ -1523,6 +1554,10 @@ label:nth-child(n + 2) {
     width: 5rem;
     margin: 0.2rem;
     padding: 0.2rem; }
+  .create-content-intranet .file-info-container {
+    width: 100%;
+    margin-right: 0;
+    padding: 0.5rem; }
   /* manage posts ---------------------------------------------------------------------------- */
   .manage-posts {
     /* Display & Box Model */ }
@@ -1567,7 +1602,10 @@ label:nth-child(n + 2) {
   .advancedFilter_container input,
   .advancedFilter_container select,
   .advancedFilter_container button,
-  .backButton {
+  .backButton,
+  .textarea-comment
+.comment-time,
+  .create-content-intranet .file-info-container {
     /* Text */
     font-size: 0.7rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
@@ -1717,6 +1755,17 @@ label:nth-child(n + 2) {
   .view-content-intranet .comments-view .col-11 h6 {
     /* Text */
     font-size: 0.85rem; }
+  .view-content-intranet .file-item {
+    display: flex;
+    padding: 0.5rem;
+    width: 100%;
+    margin-right: 0; }
+  .view-content-intranet .file-icon {
+    font-size: 1rem; }
+  .comment-box {
+    padding: 0.8rem; }
+  .textarea-comment {
+    padding: 0.8rem; }
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
@@ -1738,6 +1787,10 @@ label:nth-child(n + 2) {
     width: 4rem;
     margin: 0.2rem;
     padding: 0.2rem; }
+  .create-content-intranet .file-info-container {
+    width: 100%;
+    margin-right: 0;
+    padding: 0.5rem; }
   /* manage posts ---------------------------------------------------------------------------- */
   .manage-posts {
     /* Display & Box Model */ }

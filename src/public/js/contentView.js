@@ -267,9 +267,9 @@ function renderComments(comments) {
                     <strong>${comment.user.fullname}</strong>
                     <p class="mb-1">${comment.comment_text}</p>
                 </div>
-                <div class="comment-actions mt-1">
-                    <a href="#" class="likeCommentBtn" data-id="${comment.id}"><i class="fa-solid fa-heart me-1"></i>Like</a>
-                    <a href="#" class="editBtn"><i class="fa-solid fa-pen-to-square me-1"></i>Edit</a>
+                <div class="comment-actions mt-1 ms-3">
+                    <!--<a href="#" class="likeCommentBtn" data-id="${comment.id}"><i class="fa-solid fa-heart me-1"></i>Like</a>
+                    <a href="#" class="editBtn"><i class="fa-solid fa-pen-to-square me-1"></i>Edit</a>-->
                     <span class="comment-time">${formatDate(comment.createdAt)}</span>
                 </div>
                 <div class="comment-action mt-1 " style="display: none;">
@@ -286,8 +286,8 @@ function renderComments(comments) {
 
   // Thêm ô nhập comment mới
   commentsContainer.prepend(`
-    <div class="d-flex mt-4 mb-3">
-        <div class="flex-grow-1">
+    <div class="d-flex mb-3">
+        <div class="flex-grow-1 mb-3">
             <textarea class="form-control textarea-comment mb-2" id="commentText" rows="2" placeholder="Write a comment..."></textarea>
             <button class="btn btn-sm btn-primary" id="submitComment">Send</button>
         </div>

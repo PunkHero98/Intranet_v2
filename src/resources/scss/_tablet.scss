@@ -13,7 +13,10 @@
   .advancedFilter_container input,
   .advancedFilter_container select,
   .advancedFilter_container button,
-  .backButton {
+  .backButton,
+  .textarea-comment 
+  .comment-time,
+  .create-content-intranet .file-info-container {
     /* Text */
     font-size: 0.85rem;
   }
@@ -228,6 +231,15 @@
     font-size: 1rem;
   }
 
+  .comment-box {
+    padding: 1rem;
+  }
+
+  .textarea-comment {
+    padding: 1rem;
+  }
+  
+
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
@@ -257,6 +269,12 @@
     width: 6rem;
     margin: 0.5rem;
     padding: 0.3rem;
+  }
+
+  .create-content-intranet .file-info-container {
+    width: 100% ;
+    margin-right: 0;
+    padding: 0.5rem;
   }
 
   /* manage posts ---------------------------------------------------------------------------- */

@@ -13,7 +13,10 @@
   .advancedFilter_container input,
   .advancedFilter_container select,
   .advancedFilter_container button,
-  .backButton {
+  .backButton,
+  .textarea-comment 
+  .comment-time,
+  .create-content-intranet .file-info-container {
     /* Text */
     font-size: 0.75rem;
   }
@@ -239,6 +242,24 @@
     font-size: 0.9rem;
   }
 
+  .view-content-intranet  .file-item {
+    display: flex;
+    padding: 0.5rem;
+    width: 100%;
+    margin-right: 0;
+  }
+  
+  .view-content-intranet  .file-icon {
+    font-size: 1rem;
+  }
+
+  .comment-box {
+    padding: 0.8rem;
+  }
+
+  .textarea-comment {
+    padding: 0.8rem;
+  }
   /* create content -------------------------------------------------------------------------- */
   .create-content-intranet .create-content-box form {
     /* Display & Box Model */
@@ -270,6 +291,11 @@
     padding: 0.2rem;
   }
 
+  .create-content-intranet .file-info-container {
+    width: 100% ;
+    margin-right: 0;
+    padding: 0.5rem;
+  }
   /* manage posts ---------------------------------------------------------------------------- */
   .manage-posts {
     /* Display & Box Model */
