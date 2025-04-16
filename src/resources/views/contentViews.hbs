@@ -55,10 +55,10 @@
             <div class="file-container mb-4">
                 {{#each result.content_file}}
                 <div class="file-item" style="cursor: pointer">
-                    <div class="col-1 file-icon">
+                    <div class="col-2 file-icon">
                         <i class="fa-solid {{getFileType this}}"></i>
                     </div>
-                    <div class="col-11">
+                    <div class="col-10">
                         <p class="file-name m-0" title="{{this}}">{{truncateFilename this}}</p>
                     </div>
 
@@ -96,7 +96,7 @@
                     </a>
                 </li>
 
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                <li class="d-inline-block"><a class="text-decoration-none"><i
                             class="fa-solid fa-comment"></i>{{contentStats.total_comments}}</a></li>
                 {{!-- <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
                             class="fa-solid fa-share"></i>02
@@ -104,7 +104,7 @@
             </ul>
         </div>
         <hr>
-        <div class="col-12 comments-view mt-4">
+        <div class="col-12 comments-view">
             {{!-- <h6 class="fw-bold mb-4">05 Comments</h6> --}}
 
             <!-- Comment 1 -->
