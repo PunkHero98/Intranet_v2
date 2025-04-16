@@ -12,7 +12,7 @@ import sql from "mssql";
 // };
 
 const config = {
-  server: "QSLVN-LT-DEV002\\SQLEXPRESS",
+  server: "QSLVN-LT-DEV001\\SQLEXPRESS",
   database: "Intranet_v2",
   user: "huylam",
   password: "1234",
