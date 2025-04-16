@@ -30,13 +30,12 @@
                     {{else}}
                         <div class="mySlides">
                             <div class="numbertext text-body-tertiary"> 1 / 1</div>
-                            <div class="d-flex justify-content-center"><img src='/imgs/qsl-sample-pic.png'</div>
+                            <div class="d-flex justify-content-center"><img src='/imgs/qsl-sample-pic.png'/></div>
                         </div>
                     {{/if}}
                     <a class="prev text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
                     <a class="next text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(1)">&#10095;</a>
                 </div>
-            {{/if}}
             <div class="text-center">
                 {{#if result.content_images.length}}
                     {{#each result.content_images}}
@@ -47,6 +46,7 @@
                 {{/if}}
             </div>
 
+            {{/if}}
             {{#if result.content_file}}
                 <div class="file-container mb-4">
                     {{#each result.content_file}}
