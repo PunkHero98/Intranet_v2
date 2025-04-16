@@ -5,6 +5,9 @@ $("button.backButton").on("click", function () {
   window.history.back();
 });
 
+$(".add-Btn").css("display", "none");
+
+
 function getRowElementsForManageUser(obj) {
   const row = $(obj).closest("tr");
   return {

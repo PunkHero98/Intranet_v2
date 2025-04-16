@@ -1011,7 +1011,11 @@ img:last-child {
 .text-transparent {
   color: transparent; }
 
+<<<<<<< HEAD
 .content-news {
+=======
+.content-news-extreme {
+>>>>>>> 61696b5c370b4f69f71d98824669e6239ffdd0cf
   background-image: url(/imgs/new-news.png);
   background-size: 3.5rem;
   background-repeat: no-repeat;

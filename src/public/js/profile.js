@@ -3,6 +3,7 @@ $(".change-picture").on("click", function (e) {
   const fileInput = $("#Upload");
   fileInput.click();
 });
+$(".add-Btn").css("display", "none");
 
 $("#Upload").on("change", function (e) {
   const file = e.target.files[0];
