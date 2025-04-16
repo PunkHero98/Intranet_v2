@@ -43,8 +43,8 @@ async function fetchData() {
     renderData();
   }catch(err){
     showNotification(
-      "Error !",
-      "Error fetching data, please try again.",
+      "Error!",
+      "Error fetching data, please try again!",
       "alert-success",
       "alert-danger"
     );
@@ -54,8 +54,8 @@ async function fetchData() {
 function renderData() {
   if(!dataArray.length) {
     showNotification(
-      "Warning ! No data found",
-      "Please try again.",
+      "Warning! No data found",
+      "Please try again!",
       "alert-success",
       "alert-warning"
     );

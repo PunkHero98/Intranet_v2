@@ -29,7 +29,7 @@ async function getAllFeedBackData() {
         feedbackData = data.result;
         renderFeedBack();
     }catch(err){
-        showNotification("Error", err.message, "alert-success", "alert-danger");
+        showNotification("Error! ", err.message, "alert-success", "alert-danger");
     }
 };
 

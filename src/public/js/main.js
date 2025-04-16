@@ -102,14 +102,14 @@ $('#feedBackModal .modal-footer .btn-primary').on('click',async function() {
     }
     const data = await result.json();
     console.log(data);
-    showNotification('Success', 'Thank you for your feedback!', 'alert-danger', 'alert-success');
+    showNotification('Success! ', 'Thank you for your feedback!', 'alert-danger', 'alert-success');
     $('#feedback-category').val('');
     $('#message-text').val('');
     feedbackImage = [];
     $('.image_container').empty();
     $('#feedBackModal').modal('hide');
   }catch(err){
-    showNotification('Error', err.message, 'alert-success', 'alert-danger');
+    showNotification('Error! ', err.message, 'alert-success', 'alert-danger');
   }
 });
 

@@ -30,7 +30,8 @@ body,
 .backButton,
 .textarea-comment,
 .comment-time,
-.create-content-intranet .file-info-container {
+.create-content-intranet .file-info-container,
+.feedBack-intranet * {
   /* Text */
   font-size: 0.9rem; }
 
@@ -341,7 +342,9 @@ img {
 .whats-new-intranet .news-content .content_area u,
 .whats-new-intranet .news-content .content_area span,
 .whats-new-intranet .news-content .content_area p {
-  all: unset; }
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none; }
 
 .whats-new-intranet .news-content i {
   /* Positioning */
@@ -1153,7 +1156,8 @@ img:last-child {
   .backButton,
   .textarea-comment
 .comment-time,
-  .create-content-intranet .file-info-container {
+  .create-content-intranet .file-info-container,
+  .feedBack-intranet * {
     /* Text */
     font-size: 0.85rem; }
   body,
@@ -1372,7 +1376,8 @@ label:nth-child(n + 2) {
   .backButton,
   .textarea-comment
 .comment-time,
-  .create-content-intranet .file-info-container {
+  .create-content-intranet .file-info-container,
+  .feedBack-intranet * {
     /* Text */
     font-size: 0.75rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
@@ -1605,7 +1610,8 @@ label:nth-child(n + 2) {
   .backButton,
   .textarea-comment
 .comment-time,
-  .create-content-intranet .file-info-container {
+  .create-content-intranet .file-info-container,
+  .feedBack-intranet * {
     /* Text */
     font-size: 0.7rem; }
   .header-intranet ul.user ul.dropdown-menu li.dropdown-header h6,
