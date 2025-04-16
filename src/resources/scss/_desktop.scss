@@ -399,6 +399,10 @@ body,
   // margin-right: 0.5rem;
 }
 
+.whats-new-intranet .news-content img {
+  display: none;
+}
+
 .filter-section {
   display: none;
   transition: all 0.5s ease;
@@ -585,6 +589,11 @@ body,
   margin: 0;
 }
 
+.view-content-intranet .content_view img {
+  /* Display & Box Model */
+  padding: 1rem 0;
+}
+
 .view-content-intranet .content_view ol,
 .view-content-intranet .content_view ul {
   /* Display & Box Model */
@@ -660,29 +669,35 @@ body,
 .view-content-intranet .file-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  // gap: 10px;
 }
 
 .view-content-intranet  .file-item {
   display: flex;
   align-items: center;
-  background: #f8f9fa;
-  padding: 10px;
-  border-radius: 8px;
+  // background: #f8f9fa;
+  padding: 1rem;
+  // border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 250px;
+  width: calc((100% - 10px) / 3);
+  margin-right: 5px;
+}
+
+.view-content-intranet  .file-item:last-child {
+  margin-right: 0;
 }
 
 .view-content-intranet  .file-item:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-color: #d0d1d2;
-  transform: scale(1.02);
+  // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: scale(1.01);
   transition: all 0.3s ease;
 }
 
 .view-content-intranet  .file-icon {
-  font-size: 20px;
-  margin-right: 10px;
+  font-size: 1.5rem;
+  // margin-right: 10px;
+  text-align: center;
 }
 
 .view-content-intranet .file-info {
@@ -692,10 +707,11 @@ body,
 }
 
 .view-content-intranet .file-name {
-  max-width: 300px;
+  // max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
 }
 
 /* Modal bao quanh */
@@ -705,30 +721,38 @@ body,
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.7) !important;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  // align-items: center;
   overflow: auto;
   z-index: 1000;
-  padding-bottom: 80px; /* để tránh nút Close che nội dung cuối */
+  padding: 2rem; /* để tránh nút Close che nội dung cuối */
+  justify-content: center; 
+  align-items: center;
 }
 
 /* Nội dung preview */
 #previewContent {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 2rem;
+  // border-radius: 8px;
+  // text-align: center;
+  max-height: 90%; 
   max-width: 90%;
-  text-align: center;
+  overflow: auto; 
+}
+
+#previewContent img {
+  width: 80%;
 }
 
 /* Canvas của PDF */
 .pdf-canvas {
   display: block;
-  margin: 20px auto;
-  max-width: 100%;
-  height: auto;
+  // margin: 20px auto;
+  // max-width: 100%;
+  // height: auto;
 }
 
 /* Nút Close cố định ở cuối màn hình */
@@ -736,11 +760,11 @@ body,
   position: fixed;
   bottom: 20px;
   right: 30px;
-  padding: 10px 20px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  // padding: 10px 20px;
+  // background-color: #f44336;
+  // color: white;
+  // border: none;
+  // border-radius: 6px;
   cursor: pointer;
   z-index: 1100;
 }
@@ -841,6 +865,7 @@ body,
   padding: 0.2rem 0.5rem;
   border: 1px solid $white-color;
   cursor: pointer;
+  background: transparent !important;
 }
 
 .create-content-intranet
@@ -960,7 +985,7 @@ body,
 }
 .create-content-intranet .file-info-container p:last-child {
   font-size: 0.7rem;
-  font-weight: 200;
+  font-weight: 300;
   font-style: italic;
 }
 
@@ -1224,12 +1249,14 @@ body,
 /* alert ------------------------------------------------------------------------------------ */
 .alert-intranet {
   /* Positioning */
-  position: absolute;
+  position: fixed;
   top: 4.5rem;
-  right: 0;
+  right: 1.5rem;
 
   display: none;
   transition: opacity 0.5s ease-out;
+  box-shadow: 0 10px 20px 10px $box-shadow-color;
+  z-index: 2000;
 }
 
 /* register --------------------------------------------------------------------------------- */

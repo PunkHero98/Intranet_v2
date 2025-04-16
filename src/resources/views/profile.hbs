@@ -7,9 +7,9 @@
           <div
             class="card-body profile-card pt-4 d-flex flex-column align-items-center w-100"
           >
-            <img src="" alt="Profile" class="rounded-circle profile-picture" />
+            <img src="/imgs/user/user.png" alt="Profile" class="rounded-circle profile-picture" />
             <div class="pt-2">
-              <label class="btn btn-primary btn-sm">View</label>
+              {{!-- <label class="btn btn-primary btn-sm">View</label> --}}
               <label
                 for="Upload"
                 class="btn btn-primary btn-sm change-pictureBtn"
@@ -21,7 +21,7 @@
                 name="Imgfiles"
                 hidden
               />
-              <label class="btn btn-primary btn-sm">Change Password</label>
+              {{!-- <label class="btn btn-primary btn-sm">Change Password</label> --}}
             </div>
             <h2 class="text-center">{{result.fullname}}</h2>
             <h3>{{result.position}}</h3>
@@ -122,13 +122,13 @@
                     class="col-lg-9 col-md-8 col-sm-8 col-6"
                   >{{result.email}}</div>
                 </div>
-                <div class="row">
+                {{!-- <div class="row">
                   <div
                     class="col-lg-3 col-md-4 col-sm-4 col-6 fw-bold text-black"
                   >Last Updated</div>
                   <div class="col-lg-9 col-md-8 col-sm-8 col-6">2024-11-26
                     12:09:55</div>
-                </div>
+                </div> --}}
               </div>
 
               <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
