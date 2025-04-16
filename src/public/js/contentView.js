@@ -71,12 +71,26 @@ $(document).ready(function () {
         $('#previewContent').html(sheetSelector + html);
       });
     } else if(['doc', 'docx'].includes(fileExt)){
-      const encodedUrl = encodeURIComponent(location.origin + '/' + filePath);
-      const iframe = `
-        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodedUrl}" 
-                width="100%" height="600px" frameborder="0">
-        </iframe>`;
-      $('#previewContent').html(iframe);
+      console.log(filePath)
+      try {
+        const response = await fetch(filePath);
+        const arrayBuffer = await response.arrayBuffer();
+    
+        $('#previewContent').html('<p>Loading Word preview...</p>');
+    
+        mammoth.convertToHtml({ arrayBuffer })
+          .then(function(result) {
+            $('#previewContent').html(result.value);
+          })
+          .catch(function(err) {
+            console.error("Error parsing .docx:", err);
+            $('#previewContent').html('<p style="color:red;">Failed to load Word document.</p>');
+          });
+    
+      } catch (err) {
+        console.error("Fetch failed:", err);
+        $('#previewContent').html('<p style="color:red;">Cannot fetch the document file.</p>');
+      }
     }else {
       $('#previewContent').html('<p>Unsupported file type for preview.</p>');
     }
