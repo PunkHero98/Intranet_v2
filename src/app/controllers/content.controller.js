@@ -92,6 +92,7 @@ export default new (class ContentController {
       const { title, textcontent } = req.body;
       const { username, site } = req.session;
       const folderId = req.folderId;
+      console.log(textcontent , "-----------------------------")
 
       if (!req.files || Object.keys(req.files).length === 0) {
         const simpleTitle = Buffer.from(title).toString("base64");

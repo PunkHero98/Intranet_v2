@@ -142,8 +142,8 @@ const updateContents = async (records) => {
       .input("id_content", sql.Int, record.id_content)
       .input("title", sql.NVarChar, record.title)
       .input("content", sql.NVarChar, record.content)
-      .input("images_link", sql.NVarChar, record.images_link)
-      .input("content_images", sql.NVarChar, record.content_images)
+      .input("images_link", sql.NVarChar, record.images_link || null)
+      .input("content_images", sql.NVarChar, record.content_images || null)
       .input("poster", sql.NVarChar, record.poster)
       .input("date_time", sql.DateTime, record.date_time)
       .input("last_update", sql.DateTime, record.last_updated || null) // Nếu không có giá trị thì truyền null

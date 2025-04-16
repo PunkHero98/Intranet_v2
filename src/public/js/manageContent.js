@@ -687,6 +687,7 @@ function generateJsonForEdit(button) {
   const contentId = dateTime.find("div").text().trim();
 
   const contentNew = JSON.stringify(content.html());
+  console.log(contentNew)
   const newdatetime = dateTime
     .contents()
     .filter(function () {

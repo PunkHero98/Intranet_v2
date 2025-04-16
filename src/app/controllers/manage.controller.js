@@ -48,10 +48,14 @@ export default new (class ManageController {
       const result = await getContentsByUser(username);
       result.forEach((f) => {
         f.title = Buffer.from(f.title, "base64").toString();
-        f.content = JSON.parse(f.content);
-        f.content_images = JSON.parse(f.content_images).map((item) => {
-          return "\\" + f.images_link + "\\" + item;
-        });
+        if(f.images_link){
+          f.content = JSON.parse(f.content);
+          f.content_images = JSON.parse(f.content_images).map((item) => {
+            return "\\" + f.images_link + "\\" + item;
+          });
+        }else{
+          f.content_images = "";
+        }
       });
       res.send(result);
     } catch (err) {
