@@ -9,6 +9,9 @@ $('document').ready(async function () {
 }
 );
 
+$(".add-Btn").css("display", "none");
+
+
 $(document).on('click', '.toggle-images-btn', function () {
   const $btn = $(this);
   const $gallery = $btn.siblings('.image-gallery');

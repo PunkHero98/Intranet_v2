@@ -13,7 +13,7 @@ import { Sequelize } from "sequelize";
 // });
 
 const sequelize = new Sequelize("Intranet_v2", "huylam", "1234", {
-  host: "QSLVN-LT-DEV002\\SQLEXPRESS",
+  host: "QSLVN-LT-DEV001\\SQLEXPRESS",
   dialect: "mssql",
   port: 1433,
   dialectOptions: {

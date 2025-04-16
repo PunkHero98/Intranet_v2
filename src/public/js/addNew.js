@@ -91,7 +91,6 @@ function handleChoosePicture(event) {
   if (Imgsarray.length > 10) {
     Imgsarray = Imgsarray.slice(0, 10);
   }
-  console.log(Imgsarray);
 }
 $(".create-content-intranet .fourth-row .clearBtn").on("click", function () {
   Imgsarray = [];

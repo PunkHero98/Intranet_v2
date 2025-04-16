@@ -6,6 +6,10 @@ $('document').ready(function () {
     getAllFeedBackData();
     
 });
+
+$(".add-Btn").css("display", "none");
+
+
 $("button.backButton").on("click", function () {
     window.history.back();
   });

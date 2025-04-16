@@ -1002,6 +1002,12 @@ img:last-child {
 .text-transparent {
   color: transparent; }
 
+.content-news-extreme {
+  background-image: url(/imgs/new-news.png);
+  background-size: 3.5rem;
+  background-repeat: no-repeat;
+  background-position: top right; }
+
 /* notification ---------------------------------------------------------------------------- */
 /* go back ---------------------------------------------------------------------------- */
 .backButton {
