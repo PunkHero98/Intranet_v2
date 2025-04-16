@@ -91,7 +91,7 @@ $(document).ready(function () {
         console.error("Fetch failed:", err);
         $('#previewContent').html('<p style="color:red;">Cannot fetch the document file.</p>');
       }
-    }else {
+    } else {
       $('#previewContent').html('<p>Unsupported file type for preview.</p>');
     }
 

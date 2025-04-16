@@ -91,10 +91,12 @@ const processFiles = async (req, res, next) => {
 
   try {
     const { title, imgFolderName } = req.body;
+    const folderId = uuidv4(15);
+    req.folderId = folderId;
     const newTitle = title && simPliFizeString(title, true);
     const uploadPath = imgFolderName
       ? path.join("./IMG_Storage", imgFolderName)
-      : createDir(req.session.site + "_" + req.session.username + "_" + newTitle);
+      : createDir(req.session.site + "_" + req.session.username + "_" + folderId);
 
     // Tạo thư mục nếu chưa tồn tại
     if (!fs.existsSync(uploadPath)) {
@@ -125,7 +127,8 @@ const processFiles = async (req, res, next) => {
     if (req.files.Docfiles) {
       for (const file of req.files.Docfiles) {
         try {
-          const newFileName = `${Date.now()}_${file.originalname}`;
+          const newFileName = `${file.originalname}`;
+          console.log(newFileName , '-------------------------------------')
           const outputPath = path.join(uploadPath, newFileName);
           fs.writeFileSync(outputPath, file.buffer);
 

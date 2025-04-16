@@ -91,6 +91,7 @@ export default new (class ContentController {
     try {
       const { title, textcontent } = req.body;
       const { username, site } = req.session;
+      const folderId = req.folderId;
 
       if (!req.files || Object.keys(req.files).length === 0) {
         const simpleTitle = Buffer.from(title).toString("base64");
@@ -115,7 +116,7 @@ export default new (class ContentController {
       const newTitle = simPliFizeString(title, true);
       // const simpleTitle = title.replace(/[<>:"/\\|?*]/g, "");
       const simpleTitle = Buffer.from(title).toString("base64");
-      const folderName = `Contents/${site}_${username}_${newTitle}`;
+      const folderName = `Contents/${site}_${username}_${folderId}`;
 
       const result = await getfileinDir(folderName);
       const imgJsonArray = JSON.stringify(result.images);

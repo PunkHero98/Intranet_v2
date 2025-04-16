@@ -25,7 +25,9 @@ export const eq = function(a, b) {
 };
 
 const truncateFilename = function(filename){
-  return filename.length > 15 ? filename.substring(15, filename.length) + '...' : filename;
+  const splitFileName = filename.split('/');
+
+  return splitFileName[3];
 }
 
 const endsWith = function(str , suffix) {

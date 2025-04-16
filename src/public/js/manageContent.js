@@ -602,6 +602,7 @@ function enableModal(obj) {
 
 function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
   const { imageContainer, status } = getRowElements(button);
+  const toggleBtn = imageContainer.find('.toggle-images-btn');
   $(button)
     .parents("tr")
     .css({
@@ -612,7 +613,15 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
   imageContainer
     .find(".closeBtn")
     .prop("disabled", !imageContainer.find(".closeBtn").prop("disabled"));
-  imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
+    console.log()
+  if(toggleBtn.html() !== 'No Pictures'){
+    imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
+    if(opacity){
+      if(toggleBtn.html() === 'Show Pictures') toggleBtn.click();
+    }else{
+      if(toggleBtn.html() === 'Hide Pictures') toggleBtn.click();
+    }
+  }
   if(status.hasClass("text-bg-danger")) {
     button.next().next().css("display" , opacity && "block");
     
