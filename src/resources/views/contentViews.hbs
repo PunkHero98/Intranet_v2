@@ -2,69 +2,73 @@
 <div class="view-content-intranet bg-white">
     <div class="row justify-content-center m-0">
         <div class="col-12 content-view">
-            <!-- From Uiverse.io by Jedi-hongbin --> 
+            <!-- From Uiverse.io by Jedi-hongbin -->
             <button class="backButton">
-                <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+                <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+                    <path
+                        d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
+                    </path>
+                </svg>
                 <span>Back</span>
             </button>
             {{!-- <div class="backButton text-black border">
                 <i class="fa-solid fa-left-long"></i>
             </div> --}}
             {{#if result.content_images.length}}
-                <div class="slideshow-container position-relative">
-                    
+            <div class="slideshow-container position-relative">
 
-                    {{#if result.content_images.length}}
-                    <div id="lightgallery">
-                            {{#each result.content_images}}
-                                <div class="mySlides">
-                                <div class="numbertext text-body-tertiary">{{addindex @index}} / {{@root.total}}</div>
-                                <div class="d-flex justify-content-center">
-                                    <a href="{{this}}">
-                                        <img src="{{this}}"  />
-                                    </a>
-                                </div>
-                                </div>
-                            {{/each}}
+
+                {{#if result.content_images.length}}
+                <div id="lightgallery">
+                    {{#each result.content_images}}
+                    <div class="mySlides">
+                        <div class="numbertext text-body-tertiary">{{addindex @index}} / {{@root.total}}</div>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{this}}">
+                                <img src="{{this}}" />
+                            </a>
                         </div>
-                    {{else}}
-                        <div class="mySlides">
-                            <div class="numbertext text-body-tertiary"> 1 / 1</div>
-                            <div class="d-flex justify-content-center"><img src='/imgs/qsl-sample-pic.png'/></div>
-                        </div>
-                    {{/if}}
-                    <a class="prev text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
-                    <a class="next text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(1)">&#10095;</a>
+                    </div>
+                    {{/each}}
                 </div>
+                {{else}}
+                <div class="mySlides">
+                    <div class="numbertext text-body-tertiary"> 1 / 1</div>
+                    <div class="d-flex justify-content-center"><img src='/imgs/qsl-sample-pic.png' /></div>
+                </div>
+                {{/if}}
+                <a class="prev text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
+                <a class="next text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(1)">&#10095;</a>
+            </div>
             <div class="text-center">
                 {{#if result.content_images.length}}
-                    {{#each result.content_images}}
-                    <span class="dot" onclick="currentSlide1({{addindex @index}})"></span>
-                    {{/each}}
+                {{#each result.content_images}}
+                <span class="dot" onclick="currentSlide1({{addindex @index}})"></span>
+                {{/each}}
                 {{else}}
-                    <span class="dot" onclick="currentSlide1(1)"></span>
+                <span class="dot" onclick="currentSlide1(1)"></span>
                 {{/if}}
             </div>
 
             {{/if}}
             {{#if result.content_file}}
-                <div class="file-container mb-4">
-                    {{#each result.content_file}}
-                    <div class="file-item" style="cursor: pointer">
-                        <div class="col-1 file-icon">
-                            <i class="fa-solid {{getFileType this}}"></i>
-                        </div>
-                        <div class="col-11">
-                            <p class="file-name m-0" title="{{this}}">{{truncateFilename this}}</p>
-                        </div>
-
-                        {{!-- <div class="file-info">
-                            <p class="file-name" title="{{this}}">{{truncateFilename this}}</p>
-                            <a href="/download?file={{this}}" download class="btn btn-sm btn-outline-primary">Download</a>
-                        </div> --}}
+            <div class="file-container mb-4">
+                {{#each result.content_file}}
+                <div class="file-item" style="cursor: pointer">
+                    <div class="col-1 file-icon">
+                        <i class="fa-solid {{getFileType this}}"></i>
                     </div>
-                    {{/each}}
+                    <div class="col-11">
+                        <p class="file-name m-0" title="{{this}}">{{truncateFilename this}}</p>
+                    </div>
+
+                    {{!-- <div class="file-info">
+                        <p class="file-name" title="{{this}}">{{truncateFilename this}}</p>
+                        <a href="/download?file={{this}}" download class="btn btn-sm btn-outline-primary">Download</a>
+                    </div> --}}
                 </div>
+                {{/each}}
+            </div>
             {{else}}
 
             {{/if}}
@@ -76,18 +80,17 @@
             </div>
 
             <ul class="p-0 list-unstyled m-0">
-                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa fa-user"></i>{{result.poster}}</a></li>
+                <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa fa-user"></i>{{result.poster}}</a></li>
                 {{#if result.last_updated}}
-                    <li class="d-inline-block text-primary"><i
-                            class="fa-solid fa-clock"></i>{{result.last_updated}} - last update</li>
+                <li class="d-inline-block text-primary"><i class="fa-solid fa-clock"></i>{{result.last_updated}} - last
+                    update</li>
                 {{else}}
-                    <li class="d-inline-block text-primary"><i
-                            class="fa-solid fa-clock"></i>{{result.date_time}}</li>
+                <li class="d-inline-block text-primary"><i class="fa-solid fa-clock"></i>{{result.date_time}}</li>
                 {{/if}}
                 <li class="d-inline-block text-primary"><i class="fa-solid fa-eye"></i>{{contentStats.total_views}}</li>
                 <li class="d-inline-block" style="cursor: pointer;">
-                    <a 
-                        class="text-decoration-none like-btn {{#if contentStats.userHasLiked}}liked{{/if}}" 
+                    <a class="text-decoration-none like-btn {{#if contentStats.userHasLiked}}liked{{/if}}"
                         data-id="{{result.id_content}}">
                         <i class="fa-solid fa-heart"></i> {{contentStats.total_likes}}
                     </a>
@@ -95,7 +98,8 @@
 
                 <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
                             class="fa-solid fa-comment"></i>{{contentStats.total_comments}}</a></li>
-                {{!-- <li class="d-inline-block"><a class="text-decoration-none" href="#"><i class="fa-solid fa-share"></i>02
+                {{!-- <li class="d-inline-block"><a class="text-decoration-none" href="#"><i
+                            class="fa-solid fa-share"></i>02
                         Shares</a></li> --}}
             </ul>
         </div>
@@ -146,7 +150,8 @@
             <div class="d-flex mt-4">
                 <img src="/imgs/user/user.png" class="rounded-circle me-2" width="40" height="40" />
                 <div class="flex-grow-1">
-                    <textarea class="form-control textarea-comment mb-2" rows="2" id="commentText" placeholder="Write a comment..."></textarea>
+                    <textarea class="form-control textarea-comment mb-2" rows="2" id="commentText"
+                        placeholder="Write a comment..."></textarea>
                     <button class="btn btn-sm btn-primary" id="submitComment">Send</button>
                 </div>
             </div> --}}

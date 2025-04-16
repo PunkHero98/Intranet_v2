@@ -83,25 +83,19 @@ function renderPage(array) {
             <a href="content/${f.id_content}" class="text-black text-decoration-none">
               <h5 class="m-0">${f.title}</h5>
             </a>
-            <div class="m-0 content_area">${f.content}</div>
-    
-            <!-- Info bên trái -->
-             
-            <div class="position-absolute text-light-emphasis d-flex justify-content-between align-items-center flex-wrap" style="bottom: 0; left: 10px; font-size: 0.8rem;width: 95%;">
-              <div>
-                Posted: ${f.poster} |
-                ${formatDate(f.date_time)} |
-                ${f.poster_site} 
-                ${contentFileLength ? `| ${contentFileLength} ${contentFileLength > 1 ? 'files' : 'file'} attached` : ''}
-              </div>
-      
-              <!-- Stats bên phải -->
-              <div>
-                ${f.contentStat.total_views} views -
-                ${f.contentStat.total_likes} likes -
-                ${f.contentStat.total_comments} comments
-              </div>
+            <div class="m-0 text-reset content_area">
+              ${f.content}
             </div>
+    
+            <i class="position-absolute text-light-emphasis">
+              ${f.poster} |
+              ${formatDate(f.date_time)} |
+              ${f.poster_site} 
+              <!-- ${contentFileLength ? `| ${contentFileLength} ${contentFileLength > 1 ? 'files' : 'file'} attached` : ''} -->
+              ${f.contentStat.total_views ? `| ${f.contentStat.total_views} ${f.contentStat.total_views > 1 ? 'views' : 'view'}` : ''} 
+              ${f.contentStat.total_likes ? `| ${f.contentStat.total_likes} ${f.contentStat.total_likes > 1 ? 'likes' : 'like'}` : ''} 
+              ${f.contentStat.total_comments ? `| ${f.contentStat.total_comments} ${f.contentStat.total_comments > 1 ? 'comments' : 'comment'}` : ''}
+            </i>  
           </div>
         </div>
       </div>

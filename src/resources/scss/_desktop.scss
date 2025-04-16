@@ -65,7 +65,7 @@ body,
 .whats-new-intranet .content-news,
 .whats-new-intranet .news-img img {
   /* Display & Box Model */
-  height: 8rem;
+  height: 9rem;
 }
 
 .homepage-intranet,
@@ -130,7 +130,6 @@ body,
 }
 
 .welcome-homepage button,
-.whats-new-intranet .news-content,
 .view-content-intranet .numbertext,
 .view-content-intranet .text-center,
 .manage-posts .image_container .addPic {
@@ -355,7 +354,7 @@ body,
 /* whats-new */
 .whats-new-intranet {
   /* Display & Box Model */
-  margin-top: 2.5rem;
+  margin-top: 1rem;
 }
 
 .whats-new-intranet .content-news {
@@ -377,6 +376,10 @@ body,
   margin: 0;
 }
 
+.whats-new-intranet .news-content {
+  padding: 1rem;
+}
+
 .whats-new-intranet .news-content h5 {
   /* Display & Box Model */
   -webkit-line-clamp: 1;
@@ -388,14 +391,22 @@ body,
   padding: 0.2rem 0;
 }
 
+.whats-new-intranet .news-content .content_area strong,
+.whats-new-intranet .news-content .content_area em,
+.whats-new-intranet .news-content .content_area u,
+.whats-new-intranet .news-content .content_area span,
+.whats-new-intranet .news-content .content_area p {
+  all: unset
+}
+
 .whats-new-intranet .news-content i {
   /* Positioning */
-  bottom: 0.5rem;
-  right: 0.5rem;
+  bottom: 1rem;
+  left: 1rem;
 
   /* Display & Box Model */
   -webkit-line-clamp: 1;
-  width: calc(100% - 1rem);
+  width: calc(100% - 2rem);
   // margin-right: 0.5rem;
 }
 
@@ -1035,12 +1046,11 @@ body,
 
 // .clamp-text {
 //   display: -webkit-box;
-//   -webkit-line-clamp: 10;
+//   -webkit-line-clamp: 3;
 //   -webkit-box-orient: vertical;
 //   overflow: hidden;
 //   text-overflow: ellipsis;
 //   white-space: normal;
-//   max-height: 15em; /* khoảng 10 dòng, tùy font-size */
 // }
 
 // .expanded {
@@ -1275,12 +1285,12 @@ body,
   color: transparent;
 }
 
-// .content-news {
-//   background-image: url(/imgs/new-news.png);
-//   background-size: 3.5rem;
-//   background-repeat: no-repeat;
-//   background-position: top right;
-// }
+.content-news {
+  background-image: url(/imgs/new-news.png);
+  background-size: 3.5rem;
+  background-repeat: no-repeat;
+  background-position: top right;
+}
 
 /* notification ---------------------------------------------------------------------------- */
 // .header_notification span {
