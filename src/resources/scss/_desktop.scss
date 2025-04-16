@@ -32,7 +32,8 @@ body,
 .backButton,
 .textarea-comment,
 .comment-time,
-.create-content-intranet .file-info-container {
+.create-content-intranet .file-info-container,
+.feedBack-intranet * {
   /* Text */
   font-size: 0.9rem;
 }
@@ -399,7 +400,9 @@ body,
 .whats-new-intranet .news-content .content_area u,
 .whats-new-intranet .news-content .content_area span,
 .whats-new-intranet .news-content .content_area p {
-  all: unset
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
 }
 
 .whats-new-intranet .news-content i {

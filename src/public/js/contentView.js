@@ -138,7 +138,7 @@ $(".like-btn").click(async function (e) {
     } else {
       // alert(res.message);
       showNotification(
-        "Warning ! ",
+        "Warning! ",
         res.message,
         "alert-success",
         "alert-warning"
@@ -156,8 +156,8 @@ $(document).on('click', '#submitComment', async function (e) {
 
   if (commentText === "") {
     showNotification(
-      "Warning ! ",
-      "Comment cannot be empty",
+      "Warning! ",
+      "Comment cannot be empty!",
       "alert-success",
       "alert-warning"
     );
@@ -183,8 +183,8 @@ $(document).on('click', '#submitComment', async function (e) {
       // Xử lý thêm comment vào giao diện
       $('#commentText').val(''); // Xóa nội dung ô nhập
       showNotification(
-        "Success ! ",
-        "Comment added successfully",
+        "Success! ",
+        "Comment added successfully!",
         "alert-success",
         "alert-success"
       );
@@ -194,7 +194,7 @@ $(document).on('click', '#submitComment', async function (e) {
       , 300);
     } else {
       showNotification(
-        "Warning ! ",
+        "Warning! ",
         res.message,
         "alert-success",
         "alert-warning"
@@ -242,7 +242,7 @@ async function getComment() {
 
   }catch(err){
     showNotification(
-      "Error ! ",
+      "Error! ",
       err.message,
       "alert-success",
       "alert-danger"

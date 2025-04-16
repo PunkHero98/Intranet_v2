@@ -125,7 +125,7 @@ $('.create-content-intranet .fourth-row #uploadFile').on("change", function (e) 
   const maxSize = 5 * 1024 * 1024;
   if(FileArray.length > 3 || files.length > 3) {
     console.log(FileArray.length);
-    showNotification("Error ", "You can only upload 3 files at a time", "alert-success", "alert-danger");
+    showNotification("Error! ", "You can only upload 3 files at a time!", "alert-success", "alert-danger");
     e.target.value = "";
     return;
   }
@@ -133,13 +133,13 @@ $('.create-content-intranet .fourth-row #uploadFile').on("change", function (e) 
     const fileExtension = files[i].name.slice(files[i].name.lastIndexOf(".")).toLowerCase();
     if (!allowedExtensions.includes(fileExtension)) {
       // alert(`File ${files[i].name} is an unauthorized type!`);
-      showNotification("Error ", `File is ${files[i].name} an unauthorized type!`, "alert-success", "alert-danger");
+      showNotification("Error! ", `File is ${files[i].name} an unauthorized type!`, "alert-success", "alert-danger");
       e.target.value = ""; // Xóa file đã chọn
       return;
   }
     if (files[i].size > maxSize) {
       // alert(`File ${files[i].name} size exceeds 5MB`);
-      showNotification("Error ", `File ${files[i].name} size exceeds 5MB`, "alert-success", "alert-danger");
+      showNotification("Error! ", `File ${files[i].name} size exceeds 5MB.`, "alert-success", "alert-danger");
       e.target.value = "";
       return;
     }
@@ -232,7 +232,7 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     //   return;
     // }
     if (!title.trim() || !textcontent.value.trim()) {
-      showNotification("Error", "Cannot leave title and content field blank", "alert-success", "alert-danger");
+      showNotification("Error! ", "Can't leave title and content field blank!", "alert-success", "alert-danger");
       return;
     }
     const formData = new FormData();
@@ -255,12 +255,12 @@ $(".create-content-intranet .create-content-box #uploadform").on(
       if (!response.ok) {
         $('.loader').css('display', 'none');
         $('.create-content-intranet').css({opacity: 1 , pointerEvents: 'auto' , userSelect: 'auto' , backgroundColor: 'rgba(0, 0, 0, 0)'});
-        showNotification("Error ", "There was an error submitting the form. Please try again.", "alert-success", "alert-danger");
+        showNotification("Error! ", "There was an error submitting the form. Please try again!", "alert-success", "alert-danger");
         throw new Error("Error submitting form");
       }
       $('.loader').css('display', 'none');
       $('.create-content-intranet').css({opacity: 1 , pointerEvents: 'auto' , userSelect: 'auto' , backgroundColor: 'rgba(0, 0, 0, 0)'});
-      showNotification("Success ", "Your content has been submitted successfully", "alert-danger", "alert-success");
+      showNotification("Success! ", "Your content has been submitted successfully!", "alert-danger", "alert-success");
       clearInput();
       setTimeout(() => {
         window.location.href = "/homepage";
