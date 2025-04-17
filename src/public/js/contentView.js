@@ -266,7 +266,7 @@ function renderComments(comments) {
                 <div class="comment-actions mt-1 ms-3">
                     <!--<a href="#" class="likeCommentBtn" data-id="${comment.id}"><i class="fa-solid fa-heart me-1"></i>Like</a>
                     <a href="#" class="editBtn"><i class="fa-solid fa-pen-to-square me-1"></i>Edit</a>-->
-                    <span class="comment-time">${formatDate(comment.createdAt)}</span>
+                    <span class="comment-time">${formatDate(comment.createdAt)} | ${comment.user.user_working_site}</span>
                 </div>
                 <div class="comment-action mt-1 " style="display: none;">
                     <button class="btn btn-sm bg-primary saveEditCommentBtn" style="color: white;">Save Changes</button>
@@ -293,21 +293,16 @@ function renderComments(comments) {
 function formatDate(timestamp) {
   const date = new Date(timestamp);
 
-  // Lấy các thành phần ngày, giờ
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // tháng bắt đầu từ 0
+  const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
 
-  let hours = date.getHours();
+  const hours = String(date.getHours()).padStart(2, '0'); // giữ nguyên 24h
   const minutes = String(date.getMinutes()).padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
 
-  hours = hours % 12;
-  hours = hours ? hours : 12; // 0h -> 12 AM
-  const formattedHours = String(hours).padStart(2, '0');
-
-  return `${year}-${month}-${day} ${formattedHours}:${minutes} ${ampm}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
+
 
 function showNotification(noti, html, removeClass, addClass) {
   $(".alert-intranet").css("display", "block").css("opacity", "1");
