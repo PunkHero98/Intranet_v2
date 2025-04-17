@@ -306,7 +306,7 @@ $(".manage-posts").on("click", ".image_container .addPic", function () {
   const lengthofImage = addPicBtn.parent().children(".image-gallery").children('.img-box').length;
   if (lengthofImage >= 10) {
     $(".alert-intranet").css("display", "block");
-    $(".alert-intranet strong").html("Warning ! ");
+    $(".alert-intranet strong").html("Warning! ");
     $(".alert-intranet span").html("Maximum number of pictures are 10.");
     $(".alert-intranet").removeClass("alert-success");
     $(".alert-intranet").addClass("alert-warning");

@@ -54,6 +54,7 @@ export default new (class ManageController {
             return "\\" + f.images_link + "\\" + item;
           });
         }else{
+          f.content = JSON.parse(f.content);
           f.content_images = "";
         }
       });
