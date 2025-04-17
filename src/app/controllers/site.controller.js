@@ -20,7 +20,7 @@ function formatDate(date) {
   const hour = String(dateObj.getHours()).padStart(2, '0');
   const minute = String(dateObj.getMinutes()).padStart(2, '0');
 
-  return `${month}, ${day}, ${year} - ${hour}:${minute}`;
+  return `${month} ${day}, ${year} - ${hour}:${minute}`;
 }
 
 export default new (class SiteController {
