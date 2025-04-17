@@ -48,6 +48,7 @@ async function fetchData() {
       throw new Error("Network response was not ok");
     };
     dataArray = await result.json();
+    console.log(dataArray)
     renderData();
   }catch(err){
     showNotification(
@@ -122,6 +123,7 @@ function renderData() {
               <div style="display:none">
                 ${item.id_content || ''}
               </div>
+              <span style="display:none">${item.date_time}</span>
             </td>
             <td class="content_stage fs-6">
               ${!item.deleted ? '<span class="badge rounded-pill text-bg-success">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
@@ -204,6 +206,7 @@ function renderFilteredData(filteredData) {
               <div style="display:none">
                 ${item.id_content || ''}
               </div>
+              <span style="display:none">${item.date_time}</span>
             </td>
             <td class="content_stage fs-6">${!item.deleted ? '<span class="badge rounded-pill  text-bg-primary">Active</span>' : '<span class="badge rounded-pill text-bg-danger">Deactivate</span>'}</td>
             <td class="btn_container_table">
@@ -294,6 +297,7 @@ $(".manage-posts").on(
       pushOrUpdate(editContentJson, generateJsonForEdit(button));
       check_update();
       isEditVariable = null;
+      console.log(editContentJson)
     }
   }
 );
@@ -696,7 +700,7 @@ function saveContentTitle(button) {
 function generateJsonForEdit(button) {
   const { title, content, dateTime, imageContainer , status } = getRowElements(button);
   const contentId = dateTime.find("div").text().trim();
-
+  const contentDate = dateTime.find('span').text().trim();
   const contentNew = JSON.stringify(content.html());
   const newdatetime = dateTime
     .contents()
@@ -729,7 +733,7 @@ function generateJsonForEdit(button) {
       images_link: images_link,
       content_images: content_images,
       poster: "",
-      date_time: anotherdatetime,
+      date_time: contentDate,
       last_updated: timenow,
       deleted: status.hasClass("text-bg-danger") ? 1 : 0,
       poster_site: "string",
@@ -742,7 +746,7 @@ function generateJsonForEdit(button) {
     images_link: null,
     content_images: content_images,
     poster: "",
-    date_time: anotherdatetime,
+    date_time: contentDate,
     last_updated: timenow,
     deleted: status.hasClass("text-bg-danger") ? 1 : 0,
     poster_site: "string",

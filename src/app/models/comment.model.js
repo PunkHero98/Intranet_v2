@@ -18,7 +18,7 @@ const getCommentsByContentId = async (contentId) => {
       include: [
         {
           model: User,
-          attributes: ["username", "fullname"],
+          attributes: ["username", "fullname" , "user_working_site"],
         },
       ],
     });

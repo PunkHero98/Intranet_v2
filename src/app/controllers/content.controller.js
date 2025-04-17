@@ -9,13 +9,12 @@ function formatDate(dateString) {
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true // nếu muốn dùng định dạng 24h
+    hour12: false // dùng định dạng 24h
   };
   const date = new Date(dateString);
-  let formattedDate = date.toLocaleString('en-GB', options); // dùng toLocaleString thay vì toLocaleDateString
-  formattedDate = formattedDate.replace(/\b(am|pm)\b/, match => match.toUpperCase());
-  return formattedDate;
+  return date.toLocaleString('en-GB', options);
 }
+
 
 export default new (class ContentController {
   // [GET] /content/:slug

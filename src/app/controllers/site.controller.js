@@ -7,6 +7,22 @@ import {
   getContentStats,
 } from "../models/Contents.model.js";
 import path from "path";
+
+function formatDate(date) {
+  const dateObj = new Date(date);
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const year = dateObj.getFullYear();
+  const month = months[dateObj.getMonth()];
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const hour = String(dateObj.getHours()).padStart(2, '0');
+  const minute = String(dateObj.getMinutes()).padStart(2, '0');
+
+  return `${month}, ${day}, ${year} - ${hour}:${minute}`;
+}
+
 export default new (class SiteController {
   // [GET] /
   redirecT(req, res) {
@@ -153,7 +169,7 @@ export default new (class SiteController {
   // [POST] /activity
   async activity(req, res) {
     try {
-        const site = req.query.site || "Home"; // Lấy site từ query string
+        const site = req.query.site || "Home";
         const siteDetails = {
             Australia: { url: "../imgs/activities/sydney-opera-house-354375.jpg", city: "Sydney City" },
             NewZealand: { url: "../imgs/activities/NZ.jpg", city: "Auckland City" },
@@ -170,16 +186,23 @@ export default new (class SiteController {
 
         const contents = await getContentsBySite(site);
         contents.forEach((file) => {
-            try {
-                file.title = Buffer.from(file.title, "base64").toString();
-                file.content = JSON.parse(file.content);
-                file.content_images = JSON.parse(file.content_images);
-                file.content_images = path.join(file.images_link, file.content_images[0]);
-            } catch (err) {
-                console.error(`Error parsing content_images for file: ${file.id}`, err);
-                file.content_images = [];
-            }
+          try {
+            file.title = Buffer.from(file.title, "base64").toString();
+            file.content = JSON.parse(file.content);
+            file.content_images = JSON.parse(file.content_images);
+        
+            if (Array.isArray(file.content_images) && file.content_images.length > 0) {
+              file.content_images = path.join(file.images_link, file.content_images[0]);
+            } else {
+              file.content_images = null;             }
+        
+            file.date_time = formatDate(file.date_time);
+          } catch (err) {
+            console.error(`Error parsing content_images for file: ${file.id}`, err);
+            file.content_images = null;
+          }
         });
+        
 
         contents.sort((a, b) => b.id_content - a.id_content);
         res.render("activity", {
