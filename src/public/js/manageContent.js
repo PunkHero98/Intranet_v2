@@ -63,7 +63,7 @@ async function fetchData() {
 function renderData() {
   if(!dataArray.length) {
     showNotification(
-      "Warning! No data found",
+      "Warning! No data found. ",
       "Please try again!",
       "alert-success",
       "alert-warning"
