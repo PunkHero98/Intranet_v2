@@ -124,7 +124,6 @@ $('.create-content-intranet .fourth-row #uploadFile').on("change", function (e) 
   const allowedExtensions = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt"];
   const maxSize = 5 * 1024 * 1024;
   if(FileArray.length > 3 || files.length > 3) {
-    console.log(FileArray.length);
     showNotification("Error! ", "You can only upload 3 files at a time!", "alert-success", "alert-danger");
     e.target.value = "";
     return;
@@ -146,7 +145,6 @@ $('.create-content-intranet .fourth-row #uploadFile').on("change", function (e) 
     FileArray.push(files[i]);
   };
   displayFileInfo();
-  console.log(FileArray);
 });
 
 function restructureTabindex(index) {
@@ -244,7 +242,6 @@ $(".create-content-intranet .create-content-box #uploadform").on(
     FileArray.forEach((file, index) => {
       formData.append("Docfiles", file , file.name);
     });
-    console.log(FileArray)
     try {
       $('.loader').css('display', 'block');
       $('.create-content-intranet').css({opacity: 0.05 , pointerEvents: 'none' , userSelect: 'none' , backgroundColor: 'rgba(0, 0, 0, 0.65)'});

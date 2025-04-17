@@ -64,8 +64,20 @@ const getfileinDir = (name) => {
 const updateImageinFolder = async (array) => {
   try {
     for (const item of array) {
+      if (!item.images_link) {
+        console.log("Bỏ qua item vì không có images_link:", item.id_content);
+        continue; // bỏ qua nếu không có images_link
+      }
+
       const dirPath = path.join("./IMG_Storage", item.images_link);
-      const files = await fs.promises.readdir(dirPath);
+      
+      let files;
+      try {
+        files = await fs.promises.readdir(dirPath);
+      } catch (err) {
+        console.error(`Không thể đọc thư mục ${dirPath}: ${err}`);
+        continue;
+      }
 
       const newImageContent = JSON.parse(item.content_images);
       const filesToDelete = files.filter(
@@ -74,7 +86,6 @@ const updateImageinFolder = async (array) => {
 
       for (const file of filesToDelete) {
         const filePath = path.join(dirPath, file);
-
         try {
           await fs.promises.unlink(filePath);
           console.log(`Đã xóa file ${file}`);
@@ -83,9 +94,11 @@ const updateImageinFolder = async (array) => {
         }
       }
     }
+
     console.log("Xử lý hoàn tất!");
   } catch (error) {
     console.error("Lỗi khi xử lý:", error);
   }
 };
+
 export { createDir, getfileinDir, updateImageinFolder , createFeedbackDir };

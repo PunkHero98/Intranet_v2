@@ -12,7 +12,6 @@ export default new (class ProfileController {
         username: req.session.username,
         fullname: req.session.fullname,
       });
-      console.log(result);
     } catch (err) {
       res
         .status(500)

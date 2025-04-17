@@ -24,7 +24,7 @@ export default new (class ContentController {
       const result = await getContentByID(req.params.slug);
       result.title = Buffer.from(result.title, "base64").toString();
       result.content = JSON.parse(result.content);
-      if(result.content_file){
+      if(result.content_file != '[]'){
          result.content_file = JSON.parse(result.content_file).map((file)=>{
           return `/${result.images_link}/${file}`;
         });
@@ -34,6 +34,9 @@ export default new (class ContentController {
         return `/${result.images_link}/${file}`;
       });
       result.date_time = formatDate(result.date_time);
+      if(result.last_updated){
+        result.last_updated = formatDate(result.last_updated);
+      }
       const userHasLiked = await ContentLike.findOne({
         where: { content_id: parseInt(req.params.slug), user_id: req.session.idUser },
       });
@@ -92,7 +95,6 @@ export default new (class ContentController {
       const { title, textcontent } = req.body;
       const { username, site } = req.session;
       const folderId = req.folderId;
-      console.log(textcontent , "-----------------------------")
 
       if (!req.files || Object.keys(req.files).length === 0) {
         const simpleTitle = Buffer.from(title).toString("base64");

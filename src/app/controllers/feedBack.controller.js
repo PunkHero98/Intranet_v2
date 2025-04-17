@@ -10,7 +10,6 @@ export default new (class FeedBackController {
             const { username , site } = req.session;
             const {fb_category , fb_message } = req.body;
             const uniqueId = req.feedbackId;
-            console.log(req.feedbackId)
             
             if(!req.files || Object.keys(req.files).length === 0) {
                 const simpleMessage = Buffer.from(fb_message).toString('base64');

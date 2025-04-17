@@ -101,7 +101,6 @@ $('#feedBackModal .modal-footer .btn-primary').on('click',async function() {
       throw new Error('Error submitting form');
     }
     const data = await result.json();
-    console.log(data);
     showNotification('Success! ', 'Thank you for your feedback!', 'alert-danger', 'alert-success');
     $('#feedback-category').val('');
     $('#message-text').val('');

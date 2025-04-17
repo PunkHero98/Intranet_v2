@@ -21,7 +21,6 @@ async function getAllFeedBackData() {
             throw new Error("Failed to fetch feedback data");
         }
         const data = await result.json();
-        console.log(data);
         if (data.result.length === 0) {
             $("#feedback-table").html("<tr><td colspan='6'>No feedback available</td></tr>");
             return;

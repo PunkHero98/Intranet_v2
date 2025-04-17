@@ -13,7 +13,6 @@ $(document).ready(function () {
   $('.file-item').on('click', async function () {
     const filePath = $(this).find('.file-name').attr('title');
     const fileExt = filePath.split('.').pop().toLowerCase();
-    console.log( fileExt);
     $('#previewContent').html('<p>Loading preview...</p>');
     $('#filePreviewModal').fadeIn();
 
@@ -71,7 +70,6 @@ $(document).ready(function () {
         $('#previewContent').html(sheetSelector + html);
       });
     } else if(['doc', 'docx'].includes(fileExt)){
-      console.log(filePath)
       try {
         const response = await fetch(filePath);
         const arrayBuffer = await response.arrayBuffer();
@@ -150,7 +148,6 @@ $(".like-btn").click(async function (e) {
 });
 
 $(document).on('click', '#submitComment', async function (e) {
-  console.log("submit comment");
   const contentId = $(".like-btn").data("id");
   const commentText = $('#commentText').val().trim();
 
@@ -236,7 +233,6 @@ async function getComment() {
       throw new Error("Failed to fetch comments");
     }
     const comments = data.comments;
-    console.log(comments);
     renderComments(comments);
   
 

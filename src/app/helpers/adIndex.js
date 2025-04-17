@@ -20,7 +20,6 @@ export const compare = function (value1, value2, options) {
 };
 
 export const eq = function(a, b) {
-  console.log("Compare:", a, b);
   return a === b;
 };
 

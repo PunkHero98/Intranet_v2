@@ -38,7 +38,6 @@ async function fetchAndStoreNews() {
     newsData = unFilteredData.filter((item) =>  !item.deleted);
     userRole = data.userRole;
     totalPages = Math.ceil(newsData.length / 8);
-    console.log(newsData)
     sortAndRenderNews();
   } catch (err) {
     console.error("Error fetching news:", err);
@@ -59,7 +58,6 @@ function sortAndRenderNews(data = newsData) {
   renderPage(data.slice(0, 8));
   currentPage = 0;
   totalPages = Math.ceil(data.length / 8);
-  console.log(totalPages)
   renderPagination(1, totalPages);
 }
 
@@ -105,15 +103,22 @@ function renderPage(array) {
     
   });
 }
-function formatDate (date) {
+function formatDate(date) {
   const dateObj = new Date(date);
 
- return new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-}).format(dateObj);
-};
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const year = dateObj.getFullYear();
+  const month = months[dateObj.getMonth()];
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const hour = String(dateObj.getHours()).padStart(2, '0');
+  const minute = String(dateObj.getMinutes()).padStart(2, '0');
+
+  return `${month}, ${day}, ${year} - ${hour}:${minute}`;
+}
+
+
 // Hàm hiển thị phân trang
 function renderPagination(currentPage, totalPages) {
   const pagination = $(".pagination");
