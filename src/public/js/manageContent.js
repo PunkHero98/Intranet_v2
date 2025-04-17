@@ -43,7 +43,7 @@ async function fetchData() {
     renderData();
   }catch(err){
     showNotification(
-      "Error!",
+      "Error! ",
       "Error fetching data, please try again!",
       "alert-success",
       "alert-danger"
