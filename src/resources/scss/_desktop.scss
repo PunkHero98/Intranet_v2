@@ -607,18 +607,22 @@ body,
   margin: 0;
 }
 
-.view-content-intranet .content_view img {
+.view-content-intranet .content_view img,
+.manage-posts .content img {
   /* Display & Box Model */
   padding: 1rem 0;
 }
 
-.view-content-intranet .content_view table {
+.view-content-intranet .content_view table,
+.manage-posts .content table  {
   /* Display & Box Model */
   margin: 1rem 0;
 }
 
 .view-content-intranet .content_view table th,
-.view-content-intranet .content_view table td {
+.view-content-intranet .content_view table td,
+.manage-posts .content table th,
+.manage-posts .content table td  {
   border: 1px solid black !important;
   padding: 0.5rem;
   // border: 1px solid black;
