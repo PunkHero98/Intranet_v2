@@ -11,7 +11,6 @@ $("#Upload").on("change", function (e) {
     const reader = new FileReader();
     reader.onload = function (e) {
       $("img.profile-picture").attr("src", e.target.result);
-      console.log(e.target.result);
     };
     reader.readAsDataURL(file);
   } else {

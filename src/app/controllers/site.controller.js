@@ -182,7 +182,6 @@ export default new (class SiteController {
         });
 
         contents.sort((a, b) => b.id_content - a.id_content);
-        console.log("Site được nhận:", site);
         res.render("activity", {
             contents,
             url,

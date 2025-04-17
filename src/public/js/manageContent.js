@@ -2,6 +2,7 @@
 let deletePicArray = [];
 let editContentJson = [];
 let dataArray = [];
+let isEditVariable = null;
 const HTTP_Request_address = "http://localhost:3000";
 
 $('document').ready(async function () {
@@ -11,6 +12,14 @@ $('document').ready(async function () {
 
 $(".add-Btn").css("display", "none");
 
+window.onbeforeunload = function (e) {
+  if (isEditVariable) {
+    const message = "You have unsaved changes. Are you sure you want to leave?";
+    e.preventDefault();  // Một số trình duyệt yêu cầu dòng này
+    e.returnValue = message;
+    return message;
+  }
+};
 
 $(document).on('click', '.toggle-images-btn', function () {
   const $btn = $(this);
@@ -39,7 +48,6 @@ async function fetchData() {
       throw new Error("Network response was not ok");
     };
     dataArray = await result.json();
-    console.log(dataArray);
     renderData();
   }catch(err){
     showNotification(
@@ -70,7 +78,7 @@ function renderData() {
             <td class="title">${item.title}</td>
             <td class="content">
               <div class="content-wrapper">
-                <div class="content-text clamp-text">${item.content}</div>
+                <div class="content-text">${item.content}</div>
               </div>
             </td>
             <td class="image_container">
@@ -152,7 +160,7 @@ function renderFilteredData(filteredData) {
             <td class="title">${item.title}</td>
             <td class="content">
               <div class="content-wrapper">
-                <div class="content-text clamp-text">${item.content}</div>
+                <div class="content-text">${item.content}</div>
               </div>
             </td>
             <td class="image_container">
@@ -263,10 +271,20 @@ $(".manage-posts").on(
   ".table-group-divider .editBtn",
   async function () {
     const button = $(this);
+    // const {id} = getRowElements($(this));
     const isEditing = button.html() === "Edit";
     const isSaving = button.html() === "Save";
-
+    if (isEditVariable && !isEditVariable.is(button)) {
+      showNotification(
+        "Warning! ",
+        "You are editing on another row. Please save it before continuing!",
+        "alert-success",
+        "alert-warning"
+      );
+      return;
+    }
     if (isEditing) {
+      isEditVariable = button;
       changeEditBtn(button, "btn-primary", "btn-success", "Save", 1);
       editContentTitle(button);
     } else if (isSaving) {
@@ -275,7 +293,7 @@ $(".manage-posts").on(
       await pushNewPicToServer(button);
       pushOrUpdate(editContentJson, generateJsonForEdit(button));
       check_update();
-      console.log(editContentJson);
+      isEditVariable = null;
     }
   }
 );
@@ -364,7 +382,6 @@ $(".manage-posts").on("click", ".update_manage", async function () {
     if (!editContentJson.length) return;
 
     const dataJson = JSON.stringify(editContentJson);
-    console.log(dataJson);
 
     $(".loader").css({
       display: "block",
@@ -447,7 +464,6 @@ async function pushNewPicToServer(obj) {
   const childOfImageContainer = imageContainer.children("div.image-gallery");
   const numOfBasic = childOfImageContainer.children('div.img-box').children("img.basic_image").length;
   const numOfPic = childOfImageContainer.children('div.img-box').children("img").length;
-  console.log(childOfImageContainer.children('div.img-box').children('img[src^="blob:"]'));
 
   if (numOfPic > numOfBasic) {
     obj.html('<i class="fa fa-spinner fa-spin"></i>Saving');
@@ -461,7 +477,6 @@ async function pushNewPicToServer(obj) {
       .split("\\");
     const formData = new FormData();
     formData.append("imgFolderName", basic_image[1]);
-    console.log(basic_image);
     try {
       const fetchPromises = afterEditImgArray.map((blobUrl, index) => {
         return fetch(blobUrl)
@@ -486,7 +501,6 @@ async function pushNewPicToServer(obj) {
 
       const result = await response.json();
       renderNewPic(obj, result, numOfBasic);
-      console.log(result);
       setTimeout(() => {
         obj.html("Edit");
       }, 1000);
@@ -611,12 +625,11 @@ function changeEditBtn(button, prevClass, newClass, innerText, opacity) {
     .css({
       "background-color": opacity ? "rgba(0, 0, 0, 0.063)" : "",
     });
-
+  
   imageContainer.find(".closeBtn").css("opacity", opacity);
   imageContainer
     .find(".closeBtn")
     .prop("disabled", !imageContainer.find(".closeBtn").prop("disabled"));
-    console.log()
   if(toggleBtn.html() !== 'No Pictures'){
     imageContainer.find(".addPic").css("display", opacity ? "block" : "none");
     if(opacity){
@@ -641,19 +654,17 @@ function editContentTitle(button) {
   const contentValue = content.html();
   content.html(
     `<div id="quill-editor-content" class="bg-white">
-            <textarea
-              style="width:100%;"
-              class="input-box border-0"
-              name="text_content"
-              id="content-area"
-              placeholder="Write something.."
-            ></textarea>
-          </div>`
+        <textarea
+          style="width:100%;"
+          class="input-box border-0"
+          name="text_content"
+          id="content-area"
+        ></textarea>
+      </div>`
   );
 
   const quill = new Quill("#quill-editor-content", {
     theme: "snow",
-    placeholder: "Write something..",
     modules: {
       toolbar: [
         ["bold", "italic", "underline"],
@@ -687,7 +698,6 @@ function generateJsonForEdit(button) {
   const contentId = dateTime.find("div").text().trim();
 
   const contentNew = JSON.stringify(content.html());
-  console.log(contentNew)
   const newdatetime = dateTime
     .contents()
     .filter(function () {
@@ -701,16 +711,16 @@ function generateJsonForEdit(button) {
     .find("img.basic_image")
     .map((i, img) => $(img).attr("src"))
     .get();
-
+    const content_images = images.map((item) => {
+      const parts = item.split("\\");
+      return parts[parts.length - 1];
+    });
   const timenow = getDate();
   if(images.length){
     const images_link1 = images[0].split("\\")[1];
     // const images_link2 = images[0].split("\\")[2];
     const images_link = images_link1;
-    const content_images = images.map((item) => {
-      const parts = item.split("\\");
-      return parts[parts.length - 1];
-    });
+    
 
     return {
       id_content: contentId,
@@ -728,9 +738,9 @@ function generateJsonForEdit(button) {
   return {
     id_content: contentId,
     title: title.text(),
-    content: contentNew,
+    content: content.html(),
     images_link: null,
-    content_images: [],
+    content_images: content_images,
     poster: "",
     date_time: anotherdatetime,
     last_updated: timenow,

@@ -322,7 +322,6 @@ $(".register-intranet #regis-email").on("blur", async function () {
         .html('<i class="text-danger fa-solid fa-circle-xmark"></i>');
     }
 
-    console.log(data);
   } catch (err) {
     console.error("Error:", error);
     alert("There was an error checking the email. Please try again.");

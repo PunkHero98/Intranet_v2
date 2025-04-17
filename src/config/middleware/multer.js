@@ -128,7 +128,6 @@ const processFiles = async (req, res, next) => {
       for (const file of req.files.Docfiles) {
         try {
           const newFileName = `${file.originalname}`;
-          console.log(newFileName , '-------------------------------------')
           const outputPath = path.join(uploadPath, newFileName);
           fs.writeFileSync(outputPath, file.buffer);
 

@@ -84,13 +84,10 @@ export default new (class ManageController {
           content_images: f.content_images,
         };
       });
-
       const [updateResult, deleteResult] = await Promise.all([
         updateContents(data),
         updateImageinFolder(extractData),
       ]);
-
-      console.log(updateResult);
       res.send("Update data successfully");
     } catch (err) {
       res
@@ -158,7 +155,6 @@ export default new (class ManageController {
       } = req.body;
       const isReset = is_reset_password === "true" || is_reset_password === true;
       const hashBasicPass = await bcrypt.hash("P@55w0rd", 10);
-      console.log(hashBasicPass);
       let result = "";
       if (isReset) {
         result = await updateUserWithPass(
