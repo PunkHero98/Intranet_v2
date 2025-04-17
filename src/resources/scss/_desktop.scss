@@ -400,9 +400,10 @@ body,
 .whats-new-intranet .news-content .content_area u,
 .whats-new-intranet .news-content .content_area span,
 .whats-new-intranet .news-content .content_area p {
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: none;
+  font-weight: normal !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 .whats-new-intranet .news-content i {
@@ -609,6 +610,18 @@ body,
 .view-content-intranet .content_view img {
   /* Display & Box Model */
   padding: 1rem 0;
+}
+
+.view-content-intranet .content_view table {
+  /* Display & Box Model */
+  margin: 1rem 0;
+}
+
+.view-content-intranet .content_view table th,
+.view-content-intranet .content_view table td {
+  border: 1px solid black !important;
+  padding: 0.5rem;
+  // border: 1px solid black;
 }
 
 .view-content-intranet .content_view ol,
