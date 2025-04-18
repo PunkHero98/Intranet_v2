@@ -868,14 +868,58 @@ img:last-child {
 
 .manage-posts .content {
   /* Display & Box Model */
-  width: 36%; }
+  width: 30%; }
 
 .manage-posts .content p {
   margin: 0; }
 
 .manage-posts .image_container {
   /* Display & Box Model */
-  width: 20%; }
+  width: 14%; }
+
+.manage-posts .file-container {
+  width: 12%; }
+
+.manage-posts .file-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif; }
+
+.manage-posts .file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden; }
+
+.manage-posts .file-name {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; }
+
+.manage-posts .delete-btn {
+  background: #f44336;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out; }
+
+.manage-posts .delete-btn:hover {
+  background: #d32f2f; }
+
+.manage-posts .delete-btn:focus {
+  outline: none; }
 
 .manage-posts .image_container .img-box {
   /* Positioning */

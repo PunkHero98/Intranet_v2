@@ -32,6 +32,17 @@ $(document).on('click', '.toggle-images-btn', function () {
   });
 });
 
+$(document).on('click', '.toggle-files-btn', function () {
+  const $btn = $(this);
+  const $gallery = $btn.siblings('.file-gallery');
+
+  $gallery.slideToggle(200, function () {
+    // Chạy sau khi toggle hoàn tất
+    const isVisible = $(this).is(':visible');
+    $btn.text(isVisible ? 'Hide Files' : 'Show Files');
+  });
+});
+
 // $(document).on('click', '.read-more-btn', function () {
 //   const $btn = $(this);
 //   const $content = $btn.siblings('.content-text');
@@ -119,6 +130,12 @@ function renderData() {
                 multiple
               />
             </td>
+            <td class="files">
+              ${item.content_file.length ? `<button type="button" class="btn btn-sm btn-info toggle-files-btn mb-2">Show File</button>` : `<button type="button" class="btn btn-sm btn-secondary toggle-files-btn mb-2" disabled>No File</button>`}
+               <div class="file-gallery" style="display: none;">
+                ${checkFileExt(item.content_file , item.newContentFile)}
+               </div>
+            </td>
             <td class="date_time">${formatDate(item.date_time) || 'N/A'}
               <div style="display:none">
                 ${item.id_content || ''}
@@ -151,6 +168,53 @@ $('.manage-posts .search_input').on('keyup', function() {
   renderFilteredData(filteredData);
 }
 );
+
+function checkFileExt(content_file, newContentFile) {
+  if (!content_file.length) return '';
+
+  let result = '';
+
+  content_file.forEach((item, index) => {
+    const fileName = newContentFile[index];
+    const ext = fileName.split('.').pop().toLowerCase();
+
+    let iconClass = 'fa-file'; // default icon
+
+    switch (ext) {
+      case 'pdf':
+        iconClass = 'fa-file-pdf text-danger';
+        break;
+      case 'xls':
+      case 'xlsx':
+        iconClass = 'fa-file-excel text-success';
+        break;
+      case 'doc':
+      case 'docx':
+        iconClass = 'fa-file-word text-primary';
+        break;
+      case 'ppt':
+      case 'pptx':
+        iconClass = 'fa-file-powerpoint text-danger';
+      default:
+        iconClass = 'fa-file';
+    }
+
+    const fileRow = `
+      <div class="file-box mb-1">
+        <div class="file-info">
+          <i class="fa-solid ${iconClass}" ></i>
+          <span class="file-name" title="${fileName}">${item}</span>
+        </div>
+        <button class="delete-btn" onclick="alert('Xoá file!')">✕</button>
+      </div>
+    `;
+
+    result += fileRow;
+  });
+
+  return result;
+}
+
 
 function renderFilteredData(filteredData) {
   const tableBody = $(".manage-posts table tbody");
@@ -201,6 +265,12 @@ function renderFilteredData(filteredData) {
                 class="fileListForManage input-${index + 1}"
                 multiple
               />
+            </td>
+            <td class="files">
+              ${item.content_file.length ? `<button type="button" class="btn btn-sm btn-info toggle-files-btn mb-2">Show File</button>` : `<button type="button" class="btn btn-sm btn-secondary toggle-files-btn mb-2" disabled>No File</button>`}
+               <div class="file-gallery" style="display: none;">
+                ${checkFileExt(item.content_file , item.newContentFile)}
+               </div>
             </td>
             <td class="date_time">${formatDate(item.date_time) || 'N/A'}
               <div style="display:none">
@@ -742,7 +812,7 @@ function generateJsonForEdit(button) {
   return {
     id_content: contentId,
     title: title.text(),
-    content: content.html(),
+    content: contentNew,
     images_link: null,
     content_images: content_images,
     poster: "",
