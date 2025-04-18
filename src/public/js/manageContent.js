@@ -742,7 +742,7 @@ function generateJsonForEdit(button) {
   return {
     id_content: contentId,
     title: title.text(),
-    content: content.html(),
+    content: contentNew,
     images_link: null,
     content_images: content_images,
     poster: "",

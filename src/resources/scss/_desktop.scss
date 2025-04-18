@@ -202,7 +202,7 @@ body,
   .small-img-container
   img {
   /* Other */
-  object-fit: cover;
+  // object-fit: cover;
 }
 
 .profile .profile-overview h5,
@@ -392,7 +392,7 @@ body,
 .whats-new-intranet .news-content .content_area {
   /* Display & Box Model */
   -webkit-line-clamp: 3;
-  padding: 0.2rem 0;
+  margin: 0.2rem 0;
 }
 
 .whats-new-intranet .news-content .content_area strong,
@@ -904,6 +904,12 @@ body,
   background: transparent !important;
 }
 
+.create-content-intranet .create-content-box .ql-editor img {
+  /* Display & Box Model */
+  padding: 1rem 0;
+}
+
+
 .create-content-intranet
   .create-content-box
   .fourth-row
@@ -1186,7 +1192,7 @@ body,
 .manage-posts .isResetPassword,
 .manage-posts .isActived,
 .manage-posts .select {
-  width: calc(100% / 11);
+  // width: calc(100% / 11);
 }
 
 

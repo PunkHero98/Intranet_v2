@@ -75,7 +75,7 @@ function renderPage(array) {
         <div class="row content-news ${isNew(f.date_time) && 'content-news-extreme'}" style="cursor: pointer;" onClick="window.location.href='content/${f.id_content}'">
           <div class="col-3 news-img p-0">
             <a href="content/${f.id_content}">
-              <img class="object-fit-cover" src="${f.content_images.length ? f.content_images : '/imgs/qsl-sample-pic.png'}" loading='lazy' 
+              <img class="" src="${f.content_images.length ? f.content_images : '/imgs/qsl-sample-pic.png'}" loading='lazy' 
               onerror="this.onerror=null; this.src='/imgs/qsl-sample-pic.png';" />
             </a>
           </div>
@@ -83,7 +83,7 @@ function renderPage(array) {
             <a href="content/${f.id_content}" class="text-black text-decoration-none">
               <h5 class="m-0">${f.title}</h5>
             </a>
-            <div class="m-0 text-reset content_area">
+            <div class="text-reset content_area">
               ${f.content}
             </div>
     
@@ -115,7 +115,7 @@ function formatDate(date) {
   const hour = String(dateObj.getHours()).padStart(2, '0');
   const minute = String(dateObj.getMinutes()).padStart(2, '0');
 
-  return `${month}, ${day}, ${year} - ${hour}:${minute}`;
+  return `${month} ${day}, ${year} - ${hour}:${minute}`;
 }
 
 

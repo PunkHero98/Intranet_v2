@@ -180,8 +180,7 @@ body,
 .img-container
 .small-img-container
 img {
-  /* Other */
-  object-fit: cover; }
+  /* Other */ }
 
 .profile .profile-overview h5,
 .create-content-intranet .create-content-box .fourth-row .img-container {
@@ -335,7 +334,7 @@ img {
 .whats-new-intranet .news-content .content_area {
   /* Display & Box Model */
   -webkit-line-clamp: 3;
-  padding: 0.2rem 0; }
+  margin: 0.2rem 0; }
 
 .whats-new-intranet .news-content .content_area strong,
 .whats-new-intranet .news-content .content_area em,
@@ -734,6 +733,10 @@ label:nth-child(n + 2) {
   cursor: pointer;
   background: transparent !important; }
 
+.create-content-intranet .create-content-box .ql-editor img {
+  /* Display & Box Model */
+  padding: 1rem 0; }
+
 .create-content-intranet
 .create-content-box
 .fourth-row
@@ -940,19 +943,6 @@ img:last-child {
 .modal_formanagePost button {
   /* Text */
   font-size: 0.8rem; }
-
-.manage-posts .fullname,
-.manage-posts .email,
-.manage-posts .role,
-.manage-posts .department,
-.manage-posts .position,
-.manage-posts .site,
-.manage-posts .address,
-.manage-posts .officeNumber,
-.manage-posts .isResetPassword,
-.manage-posts .isActived,
-.manage-posts .select {
-  width: calc(100% / 11); }
 
 /* add news button ------------------------------------------------------------------------- */
 .colorful-border-button {
