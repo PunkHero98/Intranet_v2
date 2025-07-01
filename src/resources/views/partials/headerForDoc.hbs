@@ -41,52 +41,81 @@
       </div>
 
       <div class="offcanvas-body">
-        <ul class="navbar-nav countries">
+        <ul class="navbar-nav">
             <li class="nav-item mx-1">
-                <form class="d-flex h-100" action="/activities" method="post">
-                    <button class="fw-bold {{#if (eq site 'Home')}}active{{/if}}" name="site" value="Home">Home</button>
-                </form>
-            </li>
-
-            <li class="nav-item mx-1 ">
-                <form class="d-flex h-100" action="/activities" method="post">
-                    <button class="fw-bold {{#if (eq site 'Australia')}}active{{/if}}" name="site" value="Australia">Australia</button>
-                </form>
-            </li>
-
-            <li class="nav-item mx-1 ">
-                <form class="d-flex h-100" action="/activities" method="post">
-                    <button class="fw-bold {{#if (eq site 'NewZealand')}}active{{/if}}" name="site" value="NewZealand">New Zealand</button>
-                </form>
-            </li>
-
-            <li class="nav-item mx-1 ">
-                <form class="d-flex h-100" action="/activities" method="post">
-                    <button class="fw-bold {{#if (eq site 'Thailand')}}active{{/if}}" name="site" value="Thailand">Thailand</button>
-                </form>
-            </li>
-
-            <li class="nav-item mx-1 ">
-                <form class="d-flex h-100" action="/activities" method="post">
-                    <button class="fw-bold {{#if (eq site 'Vietnam')}}active{{/if}}" name="site" value="Vietnam">Vietnam</button>
-                </form>
-            </li>
-
-            <li class="nav-item mx-1 ">
-                <form class="d-flex h-100" action="/activities" method="post">
-                    <button class="fw-bold {{#if (eq site 'Philippines')}}active{{/if}}" name="site" value="Philippines">Philippines</button>
-                </form>
+              <button type="button" id="historyButton" class="btn fw-bold ">
+                History
+              </button>
             </li>
         </ul>
         <ul class="navbar-nav noti">
-          {{!-- <li class="nav-item mx-1">
-            <button class="fw-bold"><i class="fa-solid fa-bell fa-sm"></i></button>
-          </li> --}}
+          <li class="nav-item dropdown  d-flex mx-1">
+            <!-- user avatar -->
+            {{! <img class="rounded-circle object-fit-cover" src="/imgs/user/user.png" /> }}
+
+            <!-- user name -->
+            <a
+              class="nav-link nav-profile  d-flex align-items-center text-reset p-0"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <button class="btn btn-light rounded-circle shadow-sm p-2 border-0 position-relative">
+              <i class="fa-solid fa-bell fa-lg"></i>
+
+              <!-- Badge thông báo -->
+              <span class=" badge rounded-pill ">
+                1
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </button>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-lg dropdown-menu-arrow border-0 rounded-0"
+            >
+            <li class="dropdown-header fw-bold text-dark">
+              Thông báo
+            </li>
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="px-3 py-2">
+              <div class="d-flex align-items-start">
+                <i class="fa-solid fa-file-circle-check text-primary me-2 mt-1"></i>
+                <div>
+                  <div class="fw-semibold">Tài liệu mới cần xét duyệt</div>
+                  <div class="text-muted small">"Quy định nghỉ phép" vừa được tải lên.</div>
+                  <div class="text-muted small">2 phút trước</div>
+                </div>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="px-3 py-2">
+              <div class="d-flex align-items-start">
+                <i class="fa-solid fa-user-lock text-warning me-2 mt-1"></i>
+                <div>
+                  <div class="fw-semibold">Phân quyền vừa được thay đổi</div>
+                  <div class="text-muted small">Bạn vừa được cấp quyền truy cập thư mục IT/Security.</div>
+                  <div class="text-muted small">10 phút trước</div>
+                </div>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li class="text-center px-3 py-2">
+              <a href="#" class="text-decoration-none text-primary fw-semibold">Xem tất cả</a>
+            </li>
+            </ul>
+          </li>
         </ul>
+
         <ul class="navbar-nav user">
           <li class="nav-item dropdown d-flex mx-1">
             <!-- user avatar -->
-            {{! <img class="rounded-circle object-fit-cover" src="" /> }}
+            {{! <img class="rounded-circle object-fit-cover" src="/imgs/user/user.png" /> }}
 
             <!-- user name -->
             <a
@@ -135,7 +164,7 @@
               </li>
 
               <!-- manage users -->
-              {{! <li>
+              <li>
                 <a
                   class="dropdown-item d-flex align-items-center"
                   onclick="window.location.href='/manage/user'"
@@ -143,7 +172,21 @@
                   <i class="fa-solid fa-users text-center"></i>
                   <span>Manage Users</span>
                 </a>
-              </li>  }}
+              </li>
+              <li>
+                <hr class="dropdown-divider m-0" />
+              </li>
+
+              <!--feedback-->
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  onclick="window.location.href='/manage/feedback'"
+                >
+                  <i class="fa-solid fa-comment"></i>
+                  <span>FeedBacks</span>
+                </a>
+              </li>
               <li>
                 <hr class="dropdown-divider m-0" />
               </li>

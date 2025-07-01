@@ -37,16 +37,16 @@
                     <div class="d-flex justify-content-center"><img src='/imgs/qsl-sample-pic.png' /></div>
                 </div>
                 {{/if}}
-                <a class="prev text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(-1)">&#10094;</a>
-                <a class="next text-decoration-none text-body-tertiary fw-bold" onclick="plusSlides1(1)">&#10095;</a>
+                <a class="prev text-decoration-none text-body-tertiary fw-bold" id="prevBtnForPic" >&#10094;</a>
+                <a class="next text-decoration-none text-body-tertiary fw-bold" id="nextBtnForPic" >&#10095;</a>
             </div>
             <div class="text-center">
                 {{#if result.content_images.length}}
-                {{#each result.content_images}}
-                <span class="dot" onclick="currentSlide1({{addindex @index}})"></span>
-                {{/each}}
+                    {{#each result.content_images}}
+                        <span class="dot" data-dot="{{addindex @index}}"></span>
+                    {{/each}}
                 {{else}}
-                <span class="dot" onclick="currentSlide1(1)"></span>
+                    <span class="dot" data-dot="1"></span>
                 {{/if}}
             </div>
 

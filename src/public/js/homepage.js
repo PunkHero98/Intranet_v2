@@ -12,11 +12,97 @@ let newsData = [];
 let filterData= [];
 let currentSortOrder = "desc";
 let userRole = "";
+let currentMonth = new Date().getMonth() + 1;
+let currentYear = new Date().getFullYear();
+let holidays = [];
 
 $(document).ready(async function () {
   await fetchAndStoreNews();
   renderHRList();
+  
+  // Khởi tạo lần đầu
+  // fetchHolidayData(currentYear, currentMonth);
 });
+
+async function fetchHolidayData(year = 2025, month = 1) {
+    try {
+      const response = await fetch(`http://localhost:3000/holiday/vn?year=${year}&month=${month}`);
+      const data = await response.json();
+      holidays = data;
+      renderCalendarFromData(holidays);
+      console.log(holidays)
+    } catch (err) {
+      console.error("Lỗi khi lấy ngày lễ:", err);
+    }
+  }
+
+ function renderCalendarFromData(data) {
+  const grid = document.getElementById('calendarGrid');
+  $('#currentMonth').text('Tháng ' + currentMonth + ' Năm ' + currentYear);
+  grid.innerHTML = '';
+
+  if (!data || data.length === 0) return;
+
+  const firstDate = new Date(data[0].date);
+  const firstDay = firstDate.getDay(); // 0 = Sun
+
+  // Add các ô trống đầu tháng nếu ngày 1 không phải Chủ nhật
+  for (let i = 0; i < firstDay; i++) {
+    const emptyDiv = document.createElement('div');
+    emptyDiv.classList.add('border', 'p-1', 'bg-light');
+    grid.appendChild(emptyDiv);
+  }
+
+  // Add các ngày trong tháng
+  data.forEach(item => {
+    const date = new Date(item.date);
+    const day = date.getDate();
+    const isSunday = date.getDay() === 0;
+
+    const dayDiv = document.createElement('div');
+    dayDiv.className = `border p-1 text-center ${item.isHoliday ? 'bg-danger text-white' : 'bg-white'} ${isSunday ? 'text-danger fw-bold' : ''}`;
+    dayDiv.innerHTML = `
+      <strong>${day}</strong>
+    `;
+    dayDiv.title = item.holidayName || '';
+    grid.appendChild(dayDiv);
+  });
+}
+
+
+  // document.getElementById("prevMonth").addEventListener("click", () => {
+  //   currentMonth--;
+  //   if (currentMonth < 1) {
+  //     currentMonth = 12;
+  //     currentYear--;
+  //   }
+  //   fetchHolidayData(currentYear, currentMonth);
+  // });
+
+  // document.getElementById("nextMonth").addEventListener("click", () => {
+  //   currentMonth++;
+  //   if (currentMonth > 12) {
+  //     currentMonth = 1;
+  //     currentYear++;
+  //   }
+  //   fetchHolidayData(currentYear, currentMonth);
+  // });
+
+  // Form trigger
+  $('#triggerHolidayData').on('click', function () {
+    const year = parseInt($('#holidayYear').val(), 10);
+    const month = parseInt($('#holidayMonth').val(), 10);
+
+    if (!year || !month || month < 1 || month > 12) {
+      alert("Vui lòng nhập đúng năm và tháng (1-12)");
+      return;
+    }
+
+    currentYear = year;
+    currentMonth = month;
+    fetchHolidayData(year, month);
+  });
+
 
 function renderHRList() {
   userRole.forEach((poster) => {

@@ -9,7 +9,7 @@ import fs from "fs";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const { fb_category, fb_message } = req.body;
-    const uniqueId = uuidv4(12);
+    const uniqueId = uuidv4();
     req.feedbackId = uniqueId;
     // const newTitle = title && simPliFizeString(title, true);
     cb(
@@ -146,5 +146,38 @@ const processFiles = async (req, res, next) => {
   }
 };
 
+// multer middleware for upload documents
+const storageForUploadDocuments = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const tempDir = '._temp';
+    const id = uuidv4(); // uuidv4 không nhận đối số, bỏ (12)
+    req.tempId = id;
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
+    }
+    cb(null, tempDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.tempId + path.extname(file.originalname));
+  },
+});
 
-export { upload, newUpload, processFiles , conditionalUpload };
+const uploadDocuments = multer({
+  storage: storageForUploadDocuments,
+  limits: { fileSize: 10 * 1024 * 1024 }, // Giới hạn kích thước file là 10MB
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /pdf|doc|docx|xls|xlsx|ppt|pptx/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extName = fileTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+
+    if (mimeType && extName) {
+      return cb(null, true);
+    } else {
+      cb(new Error("Only document files are allowed!"), false);
+    }
+  },
+}).single("file");
+
+export { upload, newUpload, processFiles , conditionalUpload , uploadDocuments};

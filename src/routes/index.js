@@ -6,6 +6,8 @@ import manageRouter from "./manage.route.js";
 import profileRouter from "./profile.route.js";
 import feedBackRouter from "./feedBack.route.js";
 import commentRouter from "./comment.route.js";
+import documentRouter from "./document.route.js";
+import holidayRouter from "./holiday.route.js";
 import { getUserById , updateUserSession } from "../app/models/Users.model.js";
 async function checkAuth(req, res, next) {
   if (!req.session.idUser) {
@@ -25,6 +27,7 @@ async function checkAuth(req, res, next) {
 
 
 function route(app) {
+  app.use('/document' , checkAuth, documentRouter);
   app.use("/login", loginRouter);
   app.use('/comment',checkAuth , commentRouter);
   app.use("/feedback" ,checkAuth, feedBackRouter);
@@ -32,6 +35,7 @@ function route(app) {
   app.use("/content", checkAuth, contentRouter);
   app.use("/manage", checkAuth, manageRouter);
   app.use("/profile", checkAuth, profileRouter);
+  app.use("/holiday", checkAuth, holidayRouter);
   app.use('/logout' ,async (req, res) =>{
     if (!req.session.idUser) {
       return res.json({

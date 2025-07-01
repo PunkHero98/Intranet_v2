@@ -57,7 +57,6 @@ export default new (class SiteController {
   async getallPage(req, res) {
     try {
       const contents = await getContents();
-  
       const updatedContents = await Promise.all(contents.map(async (file) => {
         // Decode title
         file.title = Buffer.from(file.title, "base64").toString();

@@ -1,0 +1,277 @@
+<div class="document-intranet d-flex p-0">
+  <div class="leftCol col-3">
+    <div class="searchDiv d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3">
+      <!-- Search + Filter group -->
+      <div class="input-group" style="max-width: 300px;">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search documents..." />
+        <button class="btn btn-outline-secondary" type="button">
+          <i class="fa-solid fa-filter me-1 "></i> Filter
+        </button>
+      </div>
+
+      <!-- Add New Dropdown -->
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-outline-primary dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-plus me-1"></i>
+          Add New
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="#" onclick="openAddFolderModal()">
+              <i class="bi bi-folder-plus text-warning fs-5 me-2"></i> New Folder
+            </a>
+          </li>
+          {{!-- <li>
+            <a class="dropdown-item" href="#" onclick="openAddFileModal()">
+              <i class="bi bi-file-earmark-plus text-success fs-5 me-2"></i> New Document
+            </a>
+          </li> --}}
+        </ul>
+      </div>
+    </div>
+
+    <div class="smallDocArea row d-flex flex-column folder-tree-modern">
+      <ul class="tree">
+        
+      </ul>
+    </div>
+  </div>
+  <div class="col-1"></div>
+  <div class="rightCol col-8 mainArea position-relative">
+  
+  </div>
+</div>
+
+<!-- Add Folder Modal -->
+<div class="modal fade" id="addFolderModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary">Create New Folder</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <label for="">Parent Folder</label>
+        <input type="text" class="form-control mb-3" id="parentFolderName" placeholder="Type parent folder" disabled />
+        <label for="folderName" class="form-label">Folder Name</label>
+        <input type="text" class="form-control" id="folderName" placeholder="Folder name" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add File Modal -->
+<div class="modal fade" id="addFileModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-sm rounded-3">
+      <div class="modal-header bg-light border-bottom-0">
+        <h5 class="modal-title fw-semibold text-primary">Add Document</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 📁 Parent Folder Display -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Parent Folder:</label>
+          <div id="parentFolderNameForAddFile" class="text-muted">/HR Policies/Security</div>
+        </div>
+
+        <!-- 📝 File name type -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Choose name type:</label>
+          <div class="d-flex gap-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="fileNameType" id="originalName" value="original" checked>
+              <label class="form-check-label" for="originalName">Original</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="fileNameType" id="customName" value="custom">
+              <label class="form-check-label" for="customName">Custom</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ✍️ Custom name input -->
+        <div class="mb-3">
+          <label for="fileName" class="form-label">Document Name</label>
+          <input type="text" class="form-control" id="fileName" placeholder="Enter name (if custom)" />
+        </div>
+
+        <!-- 📅 Version input -->
+        <div class="mb-3">
+          <label for="fileVersion" class="form-label">Version</label>
+          <input type="text" class="form-control" id="fileVersion" placeholder="e.g. 1.0, 2.0" />
+        </div>
+
+        <!-- 📤 File upload -->
+        <div class="mb-3" id="fileUploadContainer">
+          <label for="" class="form-label">Upload File</label>
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-outline-primary w-100 p-5" id="uploadFileButton">
+              <i class="fa-solid fa-upload me-1"></i>
+              <span class="default-text">Upload File</span>
+              <span class="drop-text text-primary fw-semibold d-none">Drop here</span>
+            </button>
+          </div> 
+          <input class="form-control d-none" type="file" id="fileInput" accept=".doc, .docx, .pdf , .xls , .xlsx , .ppt , .pptx" />
+        </div>
+
+        <!-- 📜 File description -->
+        <div class="mb-3 d-none" id="fileDescriptionContainer">
+          
+        </div>
+
+        <!-- 🔒 Access Type -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Who can view this document?</label>
+          <div class="d-flex gap-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="accessType" id="accessAll" value="all" checked>
+              <label class="form-check-label" for="accessAll">All Users</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="accessType" id="accessCustom" value="custom">
+              <label class="form-check-label" for="accessCustom">Custom</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 👤 Custom user input -->
+        <div class="mb-3 d-none" id="customUserContainer">
+          <label for="customUsers" class="form-label">Add Users (comma-separated or select)</label>
+          <input type="text" class="form-control" id="customUsers" placeholder="e.g. user1, user2" />
+        </div>
+      </div>
+
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="submitUploadFile" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Version Modal -->
+<div class="modal fade" id="updateVersionModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-sm rounded-3">
+      <div class="modal-header bg-light border-bottom-0">
+        <h5 class="modal-title fw-semibold text-primary-emphasis">Update Document Version</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 📁 Document Info -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Document name:</label>
+          <div class="d-flex gap-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="updateFileNameType" id="originalDocName" value="original" checked>
+              <label class="form-check-label" for="originalDocName">Original</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="updateFileNameType" id="customDocName" value="custom">
+              <label class="form-check-label" for="customDocName">Custom</label>
+            </div>
+         </div>
+          {{!-- <div id="documentNameForUpdate" class="text-muted">Loading...</div> --}}
+          <input type="text" class="form-control" id="documentInputNameForUpdate" disabled/>
+        </div>
+
+        <!-- 📅 New Version input -->
+        <div class="mb-3">
+          <label for="newFileVersion" class="form-label">New Version <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="newFileVersion" placeholder="e.g. 2.0, 1.1" required />
+        </div>
+
+        <!-- 📤 Optional: Upload new file -->
+        <div class="mb-3">
+          <label for="newFileInput" class="form-label">Replace File (optional)</label>
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-outline-primary w-100 p-5" id="updateFileButton">
+              <i class="fa-solid fa-upload me-1"></i>
+              <span class="default-text">Upload New File</span>
+              <span class="drop-text text-primary-emphasis fw-semibold d-none">Drop here</span>
+            </button>
+          </div>
+          <input class="form-control d-none" type="file" id="newFileInput" accept=".doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx" />
+        </div>
+
+        <!-- 📝 Optional Description -->
+        <div class="mb-3">
+          <label for="updateDescription" class="form-label">Description (optional)</label>
+          <textarea class="form-control" id="updateDescription" rows="2" placeholder="Change notes..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="submitUpdateVersion" class="btn btn-primary">Update Version</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Context Menu -->
+<ul id="contextMenu" class="dropdown-menu" style="position: absolute; display: none; z-index: 1000;">
+  <li><a class="dropdown-item" href="#" id="rename"><i class="bi bi-pencil-square text-danger-emphasis fs-5 me-2 "></i> Rename</a></li>
+  <li><a class="dropdown-item" href="#" id="addFolder"><i class="bi bi-folder-plus text-warning fs-5 me-2 "></i> Add Folder</a></li>
+  <li><a class="dropdown-item" href="#" id="addFile"><i class="bi bi-file-earmark-plus text-success fs-5 me-2 "></i> Add Document</a></li>
+  <li><a class="dropdown-item" href="#" id="deleteFolder"><i class="bi bi-folder-minus text-danger fs-5 me-2"></i> Delete Folder</a></li>
+</ul>
+
+<!-- Context Menu for Document -->
+<ul id="contextMenuDocument" class="dropdown-menu" style="position: absolute; display: none; z-index: 1000;">
+  <li><a class="dropdown-item" href="#" id="renameDocument"><i class="bi bi-pencil-square text-danger-emphasis fs-5 me-2"></i> Rename</a></li>
+  <li><a class="dropdown-item" href="#" id="updateVersionDocument"><i class="bi bi-caret-up-square text-success fs-5 me-2"></i> Update version</a></li>
+  <li><a class="dropdown-item" href="#" id="moreDetailDoc"><i class="bi bi-info-square text-secondary fs-5 me-2"></i> More details</a></li>
+  <li><a class="dropdown-item" href="#" id="deleteDocument"><i class="bi bi-folder-minus text-danger fs-5 me-2"></i> Delete Document</a></li>
+</ul>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteLabel">Attention</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <span class="confirmDeleteFolderName fw-bold">this folder</span>? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Confirm Delete</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteDocumentBtn">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="historyModalLabel">Activity History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="historyContent">
+        <div class="text-center">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p>Loading history...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

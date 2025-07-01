@@ -46,7 +46,6 @@ export default new (class ContentController {
         contentStats: {...contentStats, userHasLiked: !!userHasLiked},
         isContentView: true,
         role: req.session.userrole,
-        site: req.session.site,
         username: req.session.username,
         fullname: req.session.fullname,
         total: result.content_images.length,

@@ -29,6 +29,8 @@
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   {{!-- light gallery CSS --}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css" />
+  {{!-- Bootstrap Icons --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <!-- Custom Styles -->
   <link href="/css/app.css" rel="stylesheet">
@@ -38,18 +40,23 @@
 <body>
   <div class="app">
     
-    {{#compare role 'Member'}}
-      {{> headerForMem}}
-    {{/compare}}
-    
-    {{#compare role 'HR'}}
-      {{> headerForPost}}
-    {{/compare}}
-    
-    {{#compare role 'Admin'}}
-      {{> header}}
-    {{/compare}}
-  
+    {{#if isDocumentPage}}
+        {{> headerForDoc}}
+    {{else if isDocumentPageForMem}}
+        {{> headerForDocForMem}}
+    {{else}}
+        {{#compare role 'Member'}}
+          {{> headerForMem}}
+        {{/compare}}
+        
+        {{#compare role 'HR'}}
+          {{> headerForPost}}
+        {{/compare}}
+        
+        {{#compare role 'Admin'}}
+          {{> header}}
+        {{/compare}}
+    {{/if}}
 
     <main>
       {{{body}}}
@@ -169,6 +176,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   {{!-- mamothjs --}}
   <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+  
+
+
   <!-- Custom JS -->
   {{!-- <script src="/js/index.js"></script> --}}
 
@@ -229,7 +239,7 @@
   {{/if}}
 
   {{#if isContentView}}
-    <script src="/js/contentView.js"></script>
+    <script src="/js/contentView.js" type="module"></script>
   {{/if}}
 
   {{#if isProfile}}
@@ -239,7 +249,14 @@
   {{#if isManageFeedback}}
     <script src="/js/feedback.js"></script>
   {{/if}}
-  <!-- Initialize Quill -->
+
+  {{#if isDocumentPage}}
+    <script src="/js/document.js"></script>
+  {{/if}}
+
+  {{#if isDocumentPageForMem}}
+    <script src="/js/documentForMem.js"></script>
+  {{/if}}
   
 </body>
 

@@ -78,6 +78,7 @@ body,
 .profile,
 .view-content-intranet,
 .manage-posts,
+.document-intranet,
 .feedback-intranet {
   /* Display & Box Model */
   margin-top: 3.5rem;
@@ -85,6 +86,7 @@ body,
 }
 
 .homepage-intranet,
+.document-intranet,
 .activities-body,
 .create-content-intranet,
 .profile,
@@ -127,6 +129,7 @@ body,
 }
 
 .homepage-intranet,
+.document-intranet,
 .activities-body,
 .create-content-intranet {
   /* Color */
@@ -287,6 +290,21 @@ body,
   /* Display & Box Model */
   margin-right: 0.7rem;
   width: 1.5rem !important;
+}
+
+.header-intranet ul.noti span.badge{
+  /* Display & Box Model */
+  position: absolute;
+  top: 0rem;
+  right: -0.5rem;
+  font-size: x-small;
+  /* Color */
+  background-color: $red-color;
+}
+
+.header-intranet ul.noti ul.dropdown-menu-lg{
+  /* Display & Box Model */
+  width: 20rem;
 }
 
 /* footer ---------------------------------------------------------------------------------- */
@@ -1532,5 +1550,166 @@ body,
   padding: 0;
   background: transparent;
   color: white;
+}
+
+/* document page ---------------------------------------------------------------------- */
+.document-intranet .tree {
+  padding-left: 0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+}
+
+.document-intranet .tree details {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.document-intranet .tree summary {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: medium;
+  transition: background-color 0.2s ease;
+}
+
+.document-intranet .tree summary:hover {
+  background-color: #f0f0f0;
+}
+
+.document-intranet .tree ul {
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 2px dashed #ccc;
+}
+
+.document-intranet .tree li {
+  margin: 4px 0;
+  list-style: none;
+}
+
+.document-intranet .leftCol {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+.document-intranet .smallDocArea {
+  max-height: calc(100vh - 11.5rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#contextMenu.show {
+  display: block;
+}
+.document-intranet li.documentItem {
+  padding: 0.5rem;
+  font-size: medium;
+}
+.document-intranet li.documentItem:hover {
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#uploadFileButton.dragover {
+  background-color: #d1d9e7; /* light green */
+  border: 2px dashed #193a87;
+}
+
+#uploadFileButton .drop-text {
+  font-size: 1.2rem;
+}
+
+#uploadFileButton.dragover .default-text {
+  display: none;
+}
+
+.documentItem .documentInfo {
+  z-index: 100;
+}
+
+.documentItem .documentInfo:hover{
+  color: #007bff;
+}
+
+.documentItem .documentInfo:hover .custom-tooltip {
+  display: block;
+}
+
+.documentItem .custom-tooltip {
+  display: none;
+  position: absolute;
+  top: 100%; right: 0%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.tooltip-top {
+  transform: translateY(-100%); /* đẩy tooltip lên trên */
+  // margin-bottom: 10px;
+}
+
+.file-info-containerDocument {
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.file-info-containerDocument .file-name{
+  max-width: 20rem;
+}
+
+ .file-info-containerDocument:hover {
+  background-color: #94a2af;
+}
+
+.file-info-containerDocument i.fa-file {
+  color: #6c757d;
+}
+
+@keyframes wave {
+  0% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+  100% { opacity: 0.2; transform: translateY(0); }
+}
+
+.loading-wave span {
+  display: inline-block;
+  animation: wave 1.2s infinite;
+}
+
+/* Delay theo từng ký tự */
+.loading-wave span:nth-child(1) { animation-delay: 0s; }
+.loading-wave span:nth-child(2) { animation-delay: 0.1s; }
+.loading-wave span:nth-child(3) { animation-delay: 0.2s; }
+.loading-wave span:nth-child(4) { animation-delay: 0.3s; }
+.loading-wave span:nth-child(5) { animation-delay: 0.4s; }
+.loading-wave span:nth-child(6) { animation-delay: 0.5s; }
+.loading-wave span:nth-child(7) { animation-delay: 0.6s; }
+.loading-wave span:nth-child(8) { animation-delay: 0.7s; }
+.loading-wave span:nth-child(9) { animation-delay: 0.8s; }
+.loading-wave span:nth-child(10) { animation-delay: 0.9s; }
+
+#pdfViewer {
+  height: calc(100vh - 5.5rem);               /* Chiều cao cố định bằng chiều cao cửa sổ */
+  overflow-y: scroll;          /* Cuộn dọc nếu vượt quá */
+  padding: 1rem;               /* Cho thoáng lề */
+  background-color: rgba(0, 0, 0, 0.079);   /* Màu nền dịu mắt */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#pdfViewer canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  // border-radius: 6px;
 }
 

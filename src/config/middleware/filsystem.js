@@ -101,4 +101,18 @@ const updateImageinFolder = async (array) => {
   }
 };
 
-export { createDir, getfileinDir, updateImageinFolder , createFeedbackDir };
+//Middlewware for create folder for document
+const createDocumentDir = (name) => {
+  const dirPath = path.join("./Documents", `${name}`);
+
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+    console.log(`Thư mục ${dirPath} đã được tạo!`);
+    return {exist: false , path: dirPath};
+  } else {
+    console.log(`Thư mục ${dirPath} đã tồn tại.`);
+    return {exist: true , path: dirPath};
+  }
+};
+
+export { createDir, getfileinDir, updateImageinFolder , createFeedbackDir , createDocumentDir };
