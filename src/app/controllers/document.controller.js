@@ -388,4 +388,6 @@ export default new (class DocumentController {
         });
       }
     }
+
+    // [PATCH] /document/update/:id
 })();
