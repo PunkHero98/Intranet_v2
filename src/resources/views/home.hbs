@@ -7,7 +7,11 @@
       </div>
       <div class="col-4">
         <!-- welcome user -->
-        <h2 class="text-black m-0">Welcome, {{fullname}}!</h2>
+        {{#if fullname}}
+          <h2 class="text-black m-0">Welcome, {{fullname}}!</h2>
+        {{else}}
+          <h2 class="text-black m-0">Welcome to Intranet !</h2>
+        {{/if}}
 
         <!-- buttons link -->
         <button class="btn m-2 text-light fw-bold border-0" onclick="window.location.href='/document'" type="button" >Documents</button>

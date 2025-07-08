@@ -1,0 +1,53 @@
+<!-- header intranet -->
+<div
+  class="header-intranet container-fluid fixed-top d-flex align-items-center bg-white"
+>
+  <!-- logo QSL -->
+  <a class="logo" onclick="window.location.href='/homepage'">
+    <img src="/imgs/qsl-logo.png" alt="logo-QSL" />
+  </a>
+
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-md ms-auto fw-bold p-0">
+    <!-- toggler -->
+    <button
+      class="navbar-toggler p-0 border-0"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon text-black"></span>
+    </button>
+
+    <!-- navbar offcanvas -->
+    <div
+      class="offcanvas offcanvas-end"
+      id="offcanvasNavbar"
+      tabindex="-1"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+
+      <!-- close button -->
+      <div class="offcanvas-header">
+        <button
+          class="btn-close"
+          type="button"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="offcanvas-body">
+
+        <ul class="navbar-nav login">
+            <li class="nav-item mx-1">
+                <a href="/login" class="btn btn-primary">Login</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

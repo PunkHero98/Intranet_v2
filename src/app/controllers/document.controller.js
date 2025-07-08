@@ -231,7 +231,6 @@ export default new (class DocumentController {
             });
           }
       
-        //   await fs.mkdir(folderPath, { recursive: true }); // đảm bảo thư mục tồn tại
       
         const ext = path.extname(req.file.originalname); // ví dụ: .pdf, .docx
         const finalPath = path.join(folderPath, req.tempId + ext);

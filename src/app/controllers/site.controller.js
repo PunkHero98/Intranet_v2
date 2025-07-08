@@ -37,7 +37,16 @@ export default new (class SiteController {
       if (!contents || !Array.isArray(contents)) {
         throw new Error("Invalid content data");
       }
-      res.render("home", {
+      if( username === undefined || fullname === undefined) {
+          return res.render("home", {
+          // role: userrole,
+          isHomePage: true,
+          // username: username,
+          // fullname: fullname,
+          site: 'Home'
+        });
+      }
+      return res.render("home", {
         role: userrole,
         isHomePage: true,
         username: username,

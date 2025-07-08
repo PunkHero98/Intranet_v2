@@ -20,9 +20,7 @@ async function fetchDocumentData() {
     const data = await response.json();
     if(data.success) {
       documentData = data.data;
-      // renderDocumentTree(documentData);
       renderTree(documentData);
-      console.log("Document data fetched successfully:", documentData);
     } else {
       console.error("Failed to fetch document data:", data.message);
     }
@@ -260,9 +258,6 @@ $(document).on('contextmenu', 'summary', function(e) {
   e.preventDefault();                                           // Prevent default context menu
   const folderId = $(this).data('folder-id');                   // Get folder ID
   const folderName = $(this).text().trim();                     // Get folder name
-  console.log("Folder ID:", folderId);
-  console.log("Folder Name:", folderName);
-  console.log("Context menu opened at:", e.pageX, e.pageY);
   showContextMenu(e.pageX, e.pageY, folderId, folderName);      // Show custom context menu
 });
  
@@ -272,9 +267,6 @@ $(document).on('contextmenu', '.documentItem', function(e) {
   const documentId = $(this).data('document-id');
   const documentName = $(this).children('div').text().trim();
   const documentVersion = $(this).find('.documentInfo').data('version');
-  console.log("Document ID:", documentId);
-  console.log("Document Name:", documentName);
-  console.log("Context menu opened at:", e.pageX, e.pageY);
   showContextMenuDocument(e.pageX, e.pageY, documentId, documentName);
   currentFileVersion = documentVersion;  // Store current document version
   currentContextDocumentId = documentId;
@@ -287,11 +279,9 @@ $(document).on('mouseover', '.documentInfo', function(e) {
   const mouseX = e.pageX;
   const mouseY = e.pageY;
   const tooltipRect = tooltip[0].getBoundingClientRect();
-  console.log("Tooltip position:", mouseX, mouseY);
  
   if (mouseY + tooltipRect.height + 10 > window.innerHeight) {
     tooltip.addClass('tooltip-top');                            // Show tooltip above if it overflows
-    console.log("Tooltip position:", mouseX, mouseY);
   } else {
     tooltip.removeClass('tooltip-top');
   }
@@ -519,9 +509,6 @@ $('#submitUploadFile').on('click', async () =>{
     formData.append('fileVersion', fileVersion);
     formData.append('fileName', fileName);
     formData.append('folderId', folderId);
- 
-    console.log("Uploading file:", fileName, "to folder ID:", folderId);
-    console.log("File data:", fileInput.files[0]);
     const response = await fetch(`http://${http_request}/document/uploadFile`, {
       method: 'POST',
       body: formData,
@@ -594,7 +581,6 @@ $('#historyModal').on('show.bs.modal', async function() {
     if (!res.ok) throw new Error('Network response was not ok');
    
     const data = await res.json();
-    console.log("History data:", data);
  
     if (!data || data.data.length === 0) {
       $content.html(`<p class="text-muted">No history found.</p>`);
@@ -633,16 +619,12 @@ document.addEventListener('click', () => {
  
 // ==== 3. Handle "Add File" button click ====
 document.getElementById('addFile').addEventListener('click', () => {
-  console.log("Adding document to:", currentContextFolderName);
   $('#addFileModal').modal('show');                                 // Open modal to add file
   $('#parentFolderNameForAddFile').html(currentContextFolderName);  // Set folder name in modal
-  // $('#customName').prop('checked', true);
-  // $('#fileName').val(currentContextFolderName); // Reset file name input
 });
  
 // ==== 4. Handle "Add Folder" button click ====
 document.getElementById('addFolder').addEventListener('click', () => {
-  console.log("Adding subfolder to:", currentContextFolderName);
   $('#addFolderModal').modal('show');                   // Open modal to add folder
   $('#parentFolderName').val(currentContextFolderName); // Set parent folder name in input
 });

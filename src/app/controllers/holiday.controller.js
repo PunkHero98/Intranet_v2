@@ -1,4 +1,4 @@
-import vnholiday from "../../config/VN-holiday.json" assert { type: "json" };
+import vnholiday from "../../config/VN-holiday.json" with { type: "json" };
 import auholiday from "../../config/AU-holiday.json" with { type: "json" };
 import fs from "fs";
 import path from "path";

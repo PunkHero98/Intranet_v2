@@ -9,7 +9,7 @@ let isLoading = false;
 // ==== 1. Fetch document data from backend and render tree ====
 async function fetchDocumentData() {
   try {
-    const response = await fetch(`http://${http_request}/document/site`);
+    const response = await fetch(`http://${http_request}/document/getall`);
     const data = await response.json();
     if(data.success) {
       documentData = data.data;

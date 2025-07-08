@@ -53,22 +53,7 @@
             <button class="fw-bold"><i class="fa-solid fa-bell fa-sm"></i></button>
           </li> --}}
         </ul>
-        <ul class="navbar-nav user">
-          <li class="nav-item dropdown d-flex mx-1">
-            <!-- user avatar -->
-            {{! <img class="rounded-circle object-fit-cover" src="" /> }}
-
-            <!-- user name -->
-            <a
-              class="nav-link nav-profile dropdown-toggle d-flex align-items-center text-reset p-0"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="ps-2">{{username}}</span>
-            </a>
-            <ul
+        <ul
               class="dropdown-menu dropdown-menu-end dropdown-menu-arrow border-0 rounded-0"
             >
               <!-- full name and role -->
@@ -94,7 +79,7 @@
               </li>
 
               <!-- manage posts -->
-              {{! <li>
+              <li>
                 <a
                   class="dropdown-item d-flex align-items-center"
                   onclick="window.location.href='/manage'"
@@ -113,7 +98,21 @@
                   <i class="fa-solid fa-users text-center"></i>
                   <span>Manage Users</span>
                 </a>
-              </li> }}
+              </li>
+              <li>
+                <hr class="dropdown-divider m-0" />
+              </li>
+
+              <!--feedback-->
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  onclick="window.location.href='/manage/feedback'"
+                >
+                  <i class="fa-solid fa-comment"></i>
+                  <span>FeedBacks</span>
+                </a>
+              </li>
               <li>
                 <hr class="dropdown-divider m-0" />
               </li>
@@ -131,8 +130,6 @@
                 </a>
               </li>
             </ul>
-          </li>
-        </ul>
       </div>
     </div>
   </nav>

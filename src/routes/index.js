@@ -8,31 +8,17 @@ import feedBackRouter from "./feedBack.route.js";
 import commentRouter from "./comment.route.js";
 import documentRouter from "./document.route.js";
 import holidayRouter from "./holiday.route.js";
-import { getUserById , updateUserSession } from "../app/models/Users.model.js";
-async function checkAuth(req, res, next) {
-  if (!req.session.idUser) {
-      return res.redirect("/login"); // Chuyển hướng nếu chưa đăng nhập
-  }
-
-  const user = await getUserById(req.session.idUser);
-  if (!user || user.session_id !== req.session.sessionId) {
-      req.session.destroy(() => {
-          res.redirect("/login");
-      });
-  } else {
-      next();
-  }
-}
-
+import { updateUserSession } from "../app/models/Users.model.js";
+import checkAuth from "../config/middleware/checkAuth.js";
 
 
 function route(app) {
-  app.use('/document' , checkAuth, documentRouter);
+  app.use('/document' , documentRouter);
   app.use("/login", loginRouter);
-  app.use('/comment',checkAuth , commentRouter);
+  app.use('/comment' , commentRouter);
   app.use("/feedback" ,checkAuth, feedBackRouter);
   app.use("/register", registerRouter);
-  app.use("/content", checkAuth, contentRouter);
+  app.use("/content", contentRouter);
   app.use("/manage", checkAuth, manageRouter);
   app.use("/profile", checkAuth, profileRouter);
   app.use("/holiday", checkAuth, holidayRouter);
@@ -52,7 +38,7 @@ function route(app) {
       res.redirect("/login");
     });
   });
-  app.use("/", checkAuth, siteRouter);
+  app.use("/", siteRouter);
 }
 
 export default route;

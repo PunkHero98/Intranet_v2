@@ -20,7 +20,10 @@ export default new (class ContentController {
   // [GET] /content/:slug
   async show(req, res) {
     try {
-      const result = await getContentByID(req.params.slug);
+      let userHasLiked = false;
+      const userId = req.session.idUser || null;
+      const contentId = req.params.slug;
+      const result = await getContentByID(contentId);
       result.title = Buffer.from(result.title, "base64").toString();
       result.content = JSON.parse(result.content);
       if(result.content_file != '[]'){
@@ -36,18 +39,21 @@ export default new (class ContentController {
       if(result.last_updated){
         result.last_updated = formatDate(result.last_updated);
       }
-      const userHasLiked = await ContentLike.findOne({
-        where: { content_id: parseInt(req.params.slug), user_id: req.session.idUser },
-      });
-      await addContentView(req.params.slug, req.session.idUser);
-      const contentStats = await getContentStats(req.params.slug);
+      if(userId) {
+          userHasLiked = await ContentLike.findOne({
+          where: { content_id: parseInt(req.params.slug), user_id: userId },
+        });
+        await addContentView(contentId, userId);
+      }
+      
+      const contentStats = await getContentStats(contentId);
       res.render("contentViews", {
         result,
         contentStats: {...contentStats, userHasLiked: !!userHasLiked},
         isContentView: true,
         role: req.session.userrole,
-        username: req.session.username,
-        fullname: req.session.fullname,
+        username: req.session.username ,
+        fullname: req.session.fullname ,
         total: result.content_images.length,
       });
     } catch (err) {
@@ -144,6 +150,7 @@ export default new (class ContentController {
 
   // [GET] /content/add-news
   getAddpage(req, res) {
+    
     res.render("addContent", {
       isAddNew: true,
       role: req.session.userrole,
