@@ -1,4 +1,4 @@
-const HTTP_Request_address = "http://localhost:3000";
+const HTTP_Request_address = window.location.origin; // Use the current origin for requests
 
 const isValidEmail = (email) => {
   const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

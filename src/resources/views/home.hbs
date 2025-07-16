@@ -16,6 +16,7 @@
         <!-- buttons link -->
         <button class="btn m-2 text-light fw-bold border-0" onclick="window.location.href='/document'" type="button" >Documents</button>
         <button id="TicketSystem" class="btn m-2 text-light fw-bold border-0" type="button">Ticket System</button>
+        <button id="CapexRequest" class="btn m-2 text-light fw-bold border-0" type="button">Capex Request</button>
         {{!-- <button class="btn m-2 text-light fw-bold border-0" type="button" disabled>Time
           Sheets</button>
         <button class="btn m-2 text-light fw-bold border-0" type="button" disabled>Time
@@ -60,46 +61,6 @@
   </div>
 
   <div class="whats-new-intranet container-fluid">
-    <div class="row">
-      <div class="bg-transparent col-4 mb-2  w-100 ">
-        <div class="d-flex justify-content-end gap-3 mb-3">
-          {{!-- <button class="btn btn-primary" id="btnTimeAsc">Time Increasing</button>
-          <button class="btn btn-primary" id="btnTimeDesc">Time Decreasing</button>
-          <button class="btn btn-secondary" id="btnAdvanced">Advanced Filter</button> --}}
-        </div>
-
-        <!-- Advanced Filter Section -->
-        <div class="card p-3 shadow filter-section" id="advancedFilter">
-          <div class="row g-3 mb-3">
-
-            <!-- Filter by Poster -->
-            <div class="col-md-4">
-              <input type="text" class="form-control" id="nameFilter" placeholder="Filter by poster..." />
-            </div>
-
-            <!-- Filter by Site -->
-            <div class="col-md-4">
-              <select class="form-select" id="countryFilter">
-                <option value="" selected>All Sites</option>
-                <option value="vn">🇻🇳 Vietnam</option>
-                <option value="nz">🇳🇿 New Zealand</option>
-                <option value="au">🇦🇺 Australia</option>
-                <option value="th">🇹🇭 Thailand</option>
-                <option value="ph">🇵🇭 Philippines</option>
-              </select>
-            </div>
-
-            <!-- Filter by Date -->
-            <div class="col-md-4">
-              <input type="date" class="form-control" id="dateFilter" />
-            </div>
-          </div>
-
-          <!-- Clear Filters Button -->
-          <button class="btn btn-danger w-100" id="btnClear">Clear Filters</button>
-        </div>
-      </div>
-    </div>
     <div class="row d-flex mainArea">
 
     </div>
@@ -108,11 +69,6 @@
   {{!-- Hiển thị phân trang --}}
   <nav aria-label="Page navigation" class="d-flex mt-5 justify-content-center">
     <ul class="pagination m-0">
-      <li class="navigation-left"><a class="page-link" href="#"><i class="fa-solid fa-angle-left"></i></a></li>
-      {{#for 1 numOfPages}}
-      <li class="page-item"><a class="page-link" href="#" data-page={{this}}>{{this}}</a></li>
-      {{/for}}
-      <li class="navigation-right"><a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a></li>
     </ul>
   </nav>
 
@@ -122,7 +78,7 @@
   </button>
 
   <div class="gap-1 position-fixed translate-middle filter_container">
-    <button class="btn btn-primary" id="btnTimeAsc">Time Increasing</button>
+    <button class="btn btn-secondary" id="btnTimeAsc">Time Increasing</button>
     <button class="btn btn-primary" id="btnTimeDesc">Time Decreasing</button>
     <button class="btn btn-secondary" id="btnAdvanced">Advanced Filter</button>
   </div>
@@ -130,11 +86,14 @@
     <!-- Lọc theo Poster -->
     <div class="mb-2 position-relative">
       <label for="posterInput" class="form-label">By Poster:</label>
-      <input type="text" id="posterInput" class="form-control" placeholder="Enter Poster name...">
+      {{!-- <input type="text" id="posterInput" class="form-control" placeholder="Enter Poster name..."> --}}
+      <select name="posterSelect" id="posterSelect" class="form-select">
+        <option value="all">All</option>
+      </select>
 
-      <ul id="posterList" class="list-group position-absolute w-100" style="display: none; z-index: 10;">
+      {{!-- <ul id="posterList" class="list-group position-absolute w-100" style="display: none; z-index: 10;">
         <li class="list-group-item active" data-value="all">All</li>
-      </ul>
+      </ul> --}}
     </div>
     <!-- Lọc theo Time -->
     <div class="mb-2">
@@ -147,11 +106,11 @@
       <label for="filterSite" class="form-label">By Site:</label>
       <select id="filterSite" class="form-select">
         <option value="all">All</option>
-        <option value="australia">Australia</option>
-        <option value="newzealand">New Zealand</option>
-        <option value="thailand">Thailand</option>
-        <option value="vietnam">Viet Nam</option>
-        <option value="philippines">Philippines</option>
+        <option value="Australia">Australia</option>
+        <option value="NewZealand">New Zealand</option>
+        <option value="Thailand">Thailand</option>
+        <option value="Vietnam">Viet Nam</option>
+        <option value="Philippines">Philippines</option>
       </select>
     </div>
 

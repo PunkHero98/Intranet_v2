@@ -194,7 +194,7 @@
         </div>
 
         <!-- 📤 Optional: Upload new file -->
-        <div class="mb-3">
+        <div class="mb-3" id="fileUploadContainerForUpdate">
           <label for="newFileInput" class="form-label">Replace File (optional)</label>
           <div class="d-flex align-items-center">
             <button type="button" class="btn btn-outline-primary w-100 p-5" id="updateFileButton">
@@ -206,6 +206,9 @@
           <input class="form-control d-none" type="file" id="newFileInput" accept=".doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx" />
         </div>
 
+        <div class="mb-3 d-none" id="fileDescriptionContainerForUpdate">
+          
+        </div>
         <!-- 📝 Optional Description -->
         <div class="mb-3">
           <label for="updateDescription" class="form-label">Description (optional)</label>

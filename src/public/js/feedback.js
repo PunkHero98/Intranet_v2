@@ -1,5 +1,5 @@
 
-const http_request = 'http://localhost:3000';
+const http_request = window.location.origin; // Use the current origin for requests
 let feedbackData = [];
 
 $('document').ready(function () {

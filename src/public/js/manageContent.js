@@ -3,7 +3,7 @@ let deletePicArray = [];
 let editContentJson = [];
 let dataArray = [];
 let isEditVariable = null;
-const HTTP_Request_address = "http://localhost:3000";
+const HTTP_Request_address = window.location.origin;
 
 $('document').ready(async function () {
   await fetchData();

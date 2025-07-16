@@ -1584,6 +1584,10 @@ body,
   background-color: #f0f0f0;
 }
 
+.document-intranet .tree summary.folderItem {
+  transition: background-color 0.2s ease;
+}
+
 .document-intranet .tree ul {
   margin-left: 20px;
   padding-left: 10px;
@@ -1615,6 +1619,10 @@ body,
   background-color: #f0f0f0;
   border-radius: 6px;
   cursor: pointer;
+}
+.document-intranet li.documentItem.active {
+  background-color: #f0f0f0;
+  border-radius: 6px;
 }
 
 #uploadFileButton.dragover {

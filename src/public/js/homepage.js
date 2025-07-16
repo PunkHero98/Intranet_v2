@@ -1,36 +1,58 @@
-$(".welcome-homepage .col-12 #TicketSystem").on("click", function () {
+$(".welcome-homepage .col-4 #TicketSystem").on("click", function () {
   window.open("https://helpdesk.qsl.support", "_blank");
 });
 
-$(".welcome-homepage .col-12 #team").on("click", function () {
+$(".welcome-homepage .col-4 #team").on("click", function () {
   window.open("/teams", "_blank");
 });
 
-let currentPage = 0;
+$('.welcome-homepage .col-4 #CapexRequest').on('click', function () {
+  window.open("http://capexform.qsl.local:191", "_blank");
+});
+
+let currentPage = 1;
 let totalPages = 0;
-let newsData = [];
 let filterData= [];
-let currentSortOrder = "desc";
+let currentFilter = {
+  poster: "All",
+  time: null,
+  site: "All",
+  order: "desc",
+}
 let userRole = "";
 let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let holidays = [];
+const serverUrl = window.location.origin;
 
 $(document).ready(async function () {
+  await getTotalPages();
+  renderPagination(currentPage, totalPages);
   await fetchAndStoreNews();
   renderHRList();
+
   
   // Khởi tạo lần đầu
   // fetchHolidayData(currentYear, currentMonth);
 });
 
+async function getTotalPages() {
+  try {
+    const response = await fetch(`${serverUrl}/homepage/total`);
+    const data = await response.json();
+    totalPages = data.total;
+    userRole = data.userRole;
+  } catch (err) {
+    console.error("Error fetching total pages:", err);
+  }
+}
+
 async function fetchHolidayData(year = 2025, month = 1) {
     try {
-      const response = await fetch(`http://localhost:3000/holiday/vn?year=${year}&month=${month}`);
+      const response = await fetch(`${serverUrl}/holiday/vn?year=${year}&month=${month}`);
       const data = await response.json();
       holidays = data;
       renderCalendarFromData(holidays);
-      console.log(holidays)
     } catch (err) {
       console.error("Lỗi khi lấy ngày lễ:", err);
     }
@@ -70,23 +92,6 @@ async function fetchHolidayData(year = 2025, month = 1) {
 }
 
 
-  // document.getElementById("prevMonth").addEventListener("click", () => {
-  //   currentMonth--;
-  //   if (currentMonth < 1) {
-  //     currentMonth = 12;
-  //     currentYear--;
-  //   }
-  //   fetchHolidayData(currentYear, currentMonth);
-  // });
-
-  // document.getElementById("nextMonth").addEventListener("click", () => {
-  //   currentMonth++;
-  //   if (currentMonth > 12) {
-  //     currentMonth = 1;
-  //     currentYear++;
-  //   }
-  //   fetchHolidayData(currentYear, currentMonth);
-  // });
 
   // Form trigger
   $('#triggerHolidayData').on('click', function () {
@@ -106,45 +111,36 @@ async function fetchHolidayData(year = 2025, month = 1) {
 
 function renderHRList() {
   userRole.forEach((poster) => {
-    $("#posterList").append(`<li class="list-group-item" data-value="${poster.username}">${poster.username}</li>`);
+    $("#posterSelect").append(`<option value="${poster.username}">${poster.username}</option>`);
   });
-  $('#posterInput').val('All');
 }
 
+function generateQueryParams(object){
+  return new URLSearchParams({
+    poster: object.poster,
+    time: object.time,
+    site: object.site,
+    order: object.order,
+  });
+}
 
-async function fetchAndStoreNews() {
+async function fetchAndStoreNews(page = 1 , object = currentFilter) {
   try {
-    const response = await fetch(`http://localhost:3000/homepage/getall`, {
+    $(".whats-new-intranet .mainArea").html("<h3 class='text-center'>Loading...</h3>");
+    const response = await fetch(`${serverUrl}/homepage/${page}?${generateQueryParams(object)}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
-
-    unFilteredData = data.result;
-    newsData = unFilteredData.filter((item) =>  !item.deleted);
-    userRole = data.userRole;
-    totalPages = Math.ceil(newsData.length / 8);
-    sortAndRenderNews();
+    const newsArray = data.contents;
+    if (newsArray.length === 0) {
+      $(".whats-new-intranet .mainArea").html("<h3 class='text-center'>No news available</h3>");
+      return;
+    }
+    renderPage(newsArray);
   } catch (err) {
     console.error("Error fetching news:", err);
   }
-}
-
-function sortAndRenderNews(data = newsData) {
-  if (currentSortOrder === "desc") {
-    data.sort((a, b) => new Date(b.date_time) - new Date(a.date_time));
-    $('#btnTimeDesc').addClass('btn-primary').removeClass('btn-secondary');
-    $('#btnTimeAsc').addClass('btn-secondary').removeClass('btn-primary');
-  } else {
-    data.sort((a, b) => new Date(a.date_time) - new Date(b.date_time));
-    $('#btnTimeAsc').addClass('btn-primary').removeClass('btn-secondary');
-    $('#btnTimeDesc').addClass('btn-secondary').removeClass('btn-primary');
-  }
-
-  renderPage(data.slice(0, 8));
-  currentPage = 0;
-  totalPages = Math.ceil(data.length / 8);
-  renderPagination(1, totalPages);
 }
 
 function renderPage(array) {
@@ -210,88 +206,23 @@ function renderPagination(currentPage, totalPages) {
   const pagination = $(".pagination");
   pagination.empty();
 
-  const disabled = (condition) => condition ? "disabled" : "";
-  const active = (condition) => condition ? "active" : "";
-
-  // Nút về trang đầu
+  // Render previous button
   pagination.append(`
-    <li class="navigation-first ${disabled(currentPage === 1)}">
-      <a class="page-link" data-page="1" href="#" ${disabled(currentPage === 1) ? "tabindex='-1' aria-disabled='true'" : ""}>
-        <i class="fa-solid fa-angles-left"></i>
-      </a>
-    </li>
+    <li class="navigation-first"><a class="page-link" href="#"><i class="fa-solid fa-angle-double-left"></i></a></li>
+    <li class="navigation-left"><a class="page-link" href="#"><i class="fa-solid fa-angle-left"></i></a></li>
   `);
 
-  // Nút Previous
-  pagination.append(`
-    <li class="navigation-left ${disabled(currentPage === 1)}">
-      <a class="page-link" data-page="${currentPage - 1}" href="#" ${disabled(currentPage === 1) ? "tabindex='-1' aria-disabled='true'" : ""}>
-        <i class="fa-solid fa-angle-left"></i>
-      </a>
-    </li>
-  `);
-
-  // Tạo danh sách các nút số trang
-  if (totalPages <= 5) {
-    for (let i = 1; i <= totalPages; i++) {
-      pagination.append(`
-        <li class="page-item ${active(currentPage === i)}">
-          <a class="page-link" data-page="${i}" href="#">${i}</a>
-        </li>
-      `);
-    }
-  } else {
-    // Trang đầu
+  // Render page numbers
+  for (let i = 1; i <= totalPages; i++) {
     pagination.append(`
-      <li class="page-item ${active(currentPage === 1)}">
-        <a class="page-link" data-page="1" href="#">1</a>
-      </li>
-    `);
-
-    if (currentPage > 3) {
-      pagination.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
-    }
-
-    // Các trang ở giữa
-    let start = Math.max(2, currentPage - 1);
-    let end = Math.min(totalPages - 1, currentPage + 1);
-
-    for (let i = start; i <= end; i++) {
-      pagination.append(`
-        <li class="page-item ${active(currentPage === i)}">
-          <a class="page-link" data-page="${i}" href="#">${i}</a>
-        </li>
-      `);
-    }
-
-    if (currentPage < totalPages - 2) {
-      pagination.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
-    }
-
-    // Trang cuối
-    pagination.append(`
-      <li class="page-item ${active(currentPage === totalPages)}">
-        <a class="page-link" data-page="${totalPages}" href="#">${totalPages}</a>
-      </li>
+      <li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>
     `);
   }
 
-  // Nút Next
+  // Render next button
   pagination.append(`
-    <li class="navigation-right ${disabled(currentPage === totalPages)}">
-      <a class="page-link" data-page="${currentPage + 1}" href="#" ${disabled(currentPage === totalPages) ? "tabindex='-1' aria-disabled='true'" : ""}>
-        <i class="fa-solid fa-angle-right"></i>
-      </a>
-    </li>
-  `);
-
-  // Nút đến trang cuối
-  pagination.append(`
-    <li class="navigation-last ${disabled(currentPage === totalPages)}">
-      <a class="page-link" data-page="${totalPages}" href="#" ${disabled(currentPage === totalPages) ? "tabindex='-1' aria-disabled='true'" : ""}>
-        <i class="fa-solid fa-angles-right"></i>
-      </a>
-    </li>
+    <li class="navigation-right"><a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a></li>
+    <li class="navigation-last"><a class="page-link" href="#"><i class="fa-solid fa-angle-double-right"></i></a></li>
   `);
 }
 
@@ -317,79 +248,75 @@ $('.homepage-intranet .filterBtn').on('click', function () {
 });
 
 $('#btnAdvanced').on('click', function () {
-
   $('.advancedFilter_container').toggleClass('d-none');
 });
 // Hàm xử lý khi nhấn nút phân trang
-$(".pagination").on("click", ".page-item a", function (e) {
+$(".pagination").on("click", ".page-item a", async function (e) {
   e.preventDefault();
-  const page = $(this).data("page") - 1;
-  if (currentPage === page) return;
-
-  const start = page * 8;
-  const end = start + 8;
-  renderPage(newsData.slice(start, end));
+  const page = parseInt($(this).data("page"));
+  if(page === currentPage) return;
+  await fetchAndStoreNews(page , currentFilter);
+  $(".pagination .page-item").removeClass("active");
+  $(this).parent().addClass("active");
   currentPage = page;
-  renderPagination(currentPage + 1, totalPages);
 });
 
 // Xử lý nút Previous
-$(".pagination").on("click", ".navigation-left a", function (e) {
+$(".pagination").on("click", ".navigation-left a", async function (e) {
   e.preventDefault();
-  if (currentPage === 0) return;
+  if (currentPage === 1) return;
   currentPage--;
-  renderPage(newsData.slice(currentPage * 8, (currentPage + 1) * 8));
-  renderPagination(currentPage + 1, totalPages);
+  await fetchAndStoreNews(currentPage, currentFilter);
+  $(".pagination .page-item").removeClass("active");
+  $(`.pagination .page-item a[data-page="${currentPage}"]`).parent().addClass("active");
 });
 
 // Xử lý nút Next
-$(".pagination").on("click", ".navigation-right a", function (e) {
+$(".pagination").on("click", ".navigation-right a", async function (e) {
   e.preventDefault();
-  if (currentPage + 1 >= totalPages) return;
+  if (currentPage >= totalPages) return;
+  
   currentPage++;
-  renderPage(newsData.slice(currentPage * 8, (currentPage + 1) * 8));
-  renderPagination(currentPage + 1, totalPages);
+  await fetchAndStoreNews(currentPage, currentFilter);
+  $(".pagination .page-item").removeClass("active");
+  $(`.pagination .page-item a[data-page="${currentPage}"]`).parent().addClass("active");
 });
 
-$('.pagination').on('click', '.navigation-first a', function (e) {
+$('.pagination').on('click', '.navigation-first a', async function (e) {
   e.preventDefault();
-  if(currentPage === 0) return;
-  currentPage = 0;
-  renderPage(newsData.slice(currentPage * 8, (currentPage + 1) * 8));
-  renderPagination(currentPage + 1, totalPages);
+  if(currentPage === 1) return;
+
+  currentPage = 1;
+  await fetchAndStoreNews(currentPage, currentFilter);
+  $(".pagination .page-item").removeClass("active");
+  $(`.pagination .page-item a[data-page="${currentPage}"]`).parent().addClass("active");
 });
 
-$('.pagination').on('click', '.navigation-last a', function (e) {
+$('.pagination').on('click', '.navigation-last a', async function (e) {
   e.preventDefault();
-  if(currentPage + 1 >= totalPages) return;
-  currentPage = totalPages - 1;
-  renderPage(newsData.slice(currentPage * 8, (currentPage + 1) * 8));
-  renderPagination(currentPage + 1, totalPages);
+  if(currentPage >= totalPages) return;
+
+  currentPage = totalPages;
+  await fetchAndStoreNews(currentPage, currentFilter);
+  $(".pagination .page-item").removeClass("active");
+  $(`.pagination .page-item a[data-page="${currentPage}"]`).parent().addClass("active");
 });
-// Xử lý filter thay đổi
 
-$('#btnTimeDesc').on('click', function () {
-  if(currentSortOrder
-    === 'desc') return;
-  currentSortOrder = 'desc';
-
-  if(filterData.length) {
-    sortAndRenderNews(filterData);
-  }else{
-    sortAndRenderNews();
-  }
+$('#btnTimeDesc').on('click', async function () {
+  if(currentFilter.order === 'desc') return;
+  currentFilter.order = 'desc';
+  $(this).addClass('btn-primary').removeClass('btn-secondary');
+  $(this).siblings().removeClass('btn-primary').addClass('btn-secondary');
+  await fetchAndStoreNews(currentPage, currentFilter);
 });
 
 
-$('#btnTimeAsc').on('click', function () {
-  if(currentSortOrder
-    === 'asc') return;
-  currentSortOrder = 'asc';
-  if(filterData.length) {
-    sortAndRenderNews(filterData);
-  }else{
-    sortAndRenderNews();
-  }
+$('#btnTimeAsc').on('click', async function () {
+  if(currentFilter.order === 'asc') return;
+  currentFilter.order = 'asc';
+  $(this).addClass('btn-primary').removeClass('btn-secondary');
+  $(this).siblings().removeClass('btn-primary').addClass('btn-secondary');
+  await fetchAndStoreNews(currentPage, currentFilter);
 });
 
 // document.getElementById("posterInput").addEventListener("input", function() {
@@ -402,59 +329,30 @@ $('#btnTimeAsc').on('click', function () {
 //   });
 // });
 
-$('#posterInput').on('focus', function() {
-  $('#posterList').show(); // Hiển thị danh sách
-});
-
-$('#posterList').on('click','li' ,  function() {
-  $('#posterList li').removeClass('active');     
-  $(this).addClass('active');
-  $('#posterInput').val($(this).text()); // Gán giá trị vào input
-  $('#posterList').hide(); // Ẩn danh sách sau khi chọn
-});
-
-// Ẩn danh sách khi click ra ngoài
-$(document).on('click', function(e) {
-  if (!$(e.target).closest('#posterInput, #posterList').length) {
-      $('#posterList').hide();
-  }
-});
-$('#posterInput').on('input', function() {
-  let input = this.value.toLowerCase();
-  let options = $("#posterList li");
-
-  options.each(function() {
-      let text = $(this).text().toLowerCase();
-      $(this).css('display', text.includes(input) ? "block" : "none");
-  });
-});
 
 $('.homepage-intranet #advancedFilter').on('submit', function (e) {
   e.preventDefault();
   filterNews();
+  $('#advancedFilter').toggleClass('d-none');
 });
 
-$('.homepage-intranet #clearFilter').on('click', function () {
-  $('#posterInput').val('all');
+$('.homepage-intranet #clearFilter').on('click', async function () {
+  $('#posterSelect').val('All');
   $('#filterTime').val('');
-  $('#filterSite').val('all');
-  filterData = [];
-  sortAndRenderNews();
+  $('#filterSite').val('All');
+  currentFilter = {...currentFilter,
+    poster: 'All',
+    time: null,
+    site: 'All'
+  }
+  await fetchAndStoreNews(currentPage, currentFilter);
 });
 
-function filterNews() {
-  let poster = $('#posterInput').val().toLowerCase();
-  let time = $('#filterTime').val();
-  let site = $('#filterSite').val().toLowerCase();
-  filterData = [];
+async function filterNews() {
+  currentFilter.poster = $('#posterSelect').val();
+  currentFilter.time = $('#filterTime').val() || null;
+  currentFilter.site = $('#filterSite').val();
 
-  filterData = newsData.filter((item) => {
-    let matchPoster = poster === "all" || item.poster.toLowerCase().includes(poster);
-    let matchTime = !time || item.date_time.startsWith(time);
-    let matchSite = site === "all" || item.poster_site.toLowerCase() === site;
-
-    return matchPoster && matchTime && matchSite;
-  });
-  sortAndRenderNews(filterData);
+  await fetchAndStoreNews(currentPage, currentFilter);
 }
 

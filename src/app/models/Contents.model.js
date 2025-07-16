@@ -8,59 +8,53 @@ const getContents = async () => {
   const result = await pool.request().query("SELECT * from contents");
   return result.recordset;
 };
-const getContentsByPage = async (offset, limit, title, site, time) => {
+
+const getContentsByPage = async (offset, poster, poster_site, time, order = 'DESC') => {
   const pool = await connectToDB();
-  
-  // Điều kiện lọc dữ liệu
-  let query = `
-    SELECT * 
-    FROM contents 
-    WHERE 1=1 
+  const orderBy = order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
+  let whereClause = `WHERE 1=1 AND deleted = 0`;
+  const request = pool.request();
+
+  // Xử lý poster
+  if (poster && poster.toLowerCase() !== 'all') {
+    whereClause += `AND poster LIKE @Poster `;
+    request.input("Poster", sql.NVarChar, `%${poster}%`);
+  }
+
+  // Xử lý poster_site
+  if (poster_site && poster_site.toLowerCase() !== 'all') {
+    whereClause += `AND poster_site = @PosterSite `;
+    request.input("PosterSite", sql.NVarChar, poster_site);
+  }
+
+  // Xử lý thời gian
+  if (time && time !== 'null') {
+    const parsedTime = new Date(time);
+    if (!isNaN(parsedTime)) {
+      whereClause += `AND date_time >= @Time `;
+      request.input("Time", sql.DateTime, parsedTime);
+    }
+  }
+
+  request.input("Offset", sql.Int, offset);
+
+  const query = `
+    SELECT *
+    FROM contents
+    ${whereClause}
+    ORDER BY id_content ${orderBy}
+    OFFSET @Offset ROWS FETCH NEXT 8 ROWS ONLY;
   `;
-
-  if (title) query += `AND title LIKE '%' + @Title + '%' `;
-  if (site) query += `AND site = @Site `;
-  if (time) query += `AND date_time >= @Time `;
-
-  query += `
-    ORDER BY id_content DESC
-    OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY;
-  `;
-
-  const request = pool.request()
-    .input("Offset", sql.Int, offset)
-    .input("Limit", sql.Int, limit);
-
-  if (title) request.input("Title", sql.NVarChar, title);
-  if (site) request.input("Site", sql.NVarChar, site);
-  if (time) request.input("Time", sql.DateTime, new Date(time));
-
   const result = await request.query(query);
   return result.recordset;
 };
 
-const getTotalCountOfContent = async (title, site, time) => {
+const getTotalCountOfContent = async() => {
   const pool = await connectToDB();
-  
-  let query = `
-    SELECT COUNT(*) AS total
-    FROM contents
-    WHERE 1=1 
-  `;
-
-  if (title) query += `AND title LIKE '%' + @Title + '%' `;
-  if (site) query += `AND site = @Site `;
-  if (time) query += `AND date_time >= @Time `;
-
-  const request = pool.request();
-
-  if (title) request.input("Title", sql.NVarChar, title);
-  if (site) request.input("Site", sql.NVarChar, site);
-  if (time) request.input("Time", sql.DateTime, new Date(time));
-
-  const result = await request.query(query);
+  const result = await pool.request().query("SELECT COUNT(*) as total FROM contents WHERE deleted = 0");
   return result.recordset[0].total;
-};
+}
 
 
 const getContentByID = async (id) => {

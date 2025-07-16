@@ -4,7 +4,7 @@
 
 
 // });
-const htpp_request = "http://localhost:3000";
+const htpp_request = window.location.origin; // Use the current origin for requests
 let feedbackImage = [];
 
 $(document).on("click", ".navbar-nav.countries button", function (event) {

@@ -56,6 +56,8 @@
         {{#compare role 'Admin'}}
           {{> header}}
         {{/compare}}
+    {{else if isLoginPage}}
+    
     {{else}}
         {{> headerWithOutLogin}}
     {{/if}}

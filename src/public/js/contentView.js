@@ -1,5 +1,5 @@
 import { EmojiButton } from 'https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js';
-const HTTP_Request_address = 'http://localhost:3000';
+const HTTP_Request_address = window.location.origin;
 let pickerLoaded = false;
 let picker;
 let slideIndex1 = 1;
@@ -223,6 +223,12 @@ $(".like-btn").click(async function (e) {
     }
   } catch (err) {
     console.error("Error when liking content:", err);
+    showNotification(
+      "Error! ",
+      "An error occurred while liking the content.",
+      "alert-success",
+      "alert-danger"
+    );
   }
 });
  
@@ -278,6 +284,12 @@ $(document).on('click', '#submitComment', async function (e) {
     }
   } catch (err) {
     console.error("Error when adding comment:", err);
+    showNotification(
+      "Error! ",
+      "An error occurred while adding the comment.",
+      "alert-success",
+      "alert-danger"
+    );
   }
 }
 );

@@ -1,4 +1,4 @@
-const http_request = 'localhost:3000';
+const http_request = window.location.origin; // Use the current origin for requests
 let documentData = [];
 let isLoading = false;
 
@@ -9,7 +9,7 @@ let isLoading = false;
 // ==== 1. Fetch document data from backend and render tree ====
 async function fetchDocumentData() {
   try {
-    const response = await fetch(`http://${http_request}/document/getall`);
+    const response = await fetch(`${http_request}/document/getall`);
     const data = await response.json();
     if(data.success) {
       documentData = data.data;
@@ -39,19 +39,39 @@ function renderFolder(folder) {
   const details = document.createElement('details');
   const summary = document.createElement('summary');
   summary.setAttribute('data-folder-id', folder.id);
-  summary.innerHTML = `<i class="bi bi-folder-fill text-warning me-2"></i> ${folder.name} `;
+  summary.className = 'folderItem d-flex align-items-center justify-content-between p-2';
+
+  const documentCount = folder.documents.length;
+  const subfolderCount = folder.children.length;
+
+  let metaInfo = [];
+  if (subfolderCount > 0) metaInfo.push(`${subfolderCount} folders`);
+  if (documentCount > 0) metaInfo.push(`${documentCount} files`);
+
+  summary.innerHTML = `
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi bi-folder-fill text-warning"></i>
+    <span class="fw-semibold">${folder.name}</span>
+  </div>
+  <div class="text-muted d-flex align-items-center gap-3 small">
+    ${subfolderCount > 0 ? `<span><i class="bi bi-folder2-open me-1"></i>${subfolderCount}</span>` : ''}
+    ${documentCount > 0 ? `<span><i class="bi bi-file-earmark-text me-1"></i>${documentCount}</span>` : ''}
+  </div>
+`;
+
+
   details.appendChild(summary);
- 
+
   const ul = document.createElement('ul');
- 
-  // Documents in folder
+
+  // Documents trực tiếp
   folder.documents.forEach(doc => {
     const docLi = document.createElement('li');
     docLi.className = 'documentItem d-flex align-items-center justify-content-between';
     docLi.setAttribute('data-document-id', doc.id);
     docLi.innerHTML = `
-    <div>
-      <i class="${getFileIconClass(doc.fileName)}"></i>
+      <div>
+        <i class="${getFileIconClass(doc.fileName)}"></i>
         ${doc.title}
       </div>
       <i class="bi bi-info-circle documentInfo position-relative" data-version="${doc.version}">
@@ -61,19 +81,21 @@ function renderFolder(folder) {
           <strong>Working site:</strong> ${doc.uploader.user_working_site}<br>
           <strong>Date uploaded:</strong> ${formatDate(doc.createdAt)}<br>
         </div>
-      </i>`;
+      </i>
+    `;
     ul.appendChild(docLi);
   });
- 
+
   // Subfolders
   folder.children.forEach(child => {
     ul.appendChild(renderFolder(child));
   });
- 
+
   details.appendChild(ul);
   li.appendChild(details);
   return li;
 }
+
 
 // ==== 4. Get file icon class based on file extension ====
 function getFileIconClass(fileName) {
@@ -121,7 +143,7 @@ function formatDate(dateString) {
 // ==== 1. Document Ready Initialization ====
 $(document).ready(() => {
   $('.add-Btn').hide();       // Hide the "Add" button
-  fetchDocumentData();        // Fetch document data on page load
+  fetchDocumentData();       // Fetch document data on page load
 });
 
 // ==== 2. Handle click on document items ====
@@ -131,12 +153,14 @@ $(document).on('click', '.documentItem',async function(e) {
   const documentName = $(this).text().trim();                                       // Get document name
   const mainArea = document.querySelector('.document-intranet .mainArea');
   const loading = renderLoading();                                                  // Show loading animation
- 
+  $(".documentItem").removeClass("active"); // Bỏ active ở tất cả
+    $(this).addClass("active"); // Thêm active vào item được click
   try {
     mainArea.innerHTML = loading;
     if (isLoading) return; 
     isLoading = true;
-    const response = await fetch(`http://${http_request}/document/${documentId}`);
+    
+    const response = await fetch(`${http_request}/document/${documentId}`);
    
     if(!response.ok) {
       throw new Error("Failed to fetch document data");

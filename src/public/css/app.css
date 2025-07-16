@@ -199,13 +199,9 @@ body,
 }
 
 .profile .profile-card img,
-.create-content-intranet
-.create-content-box
-.fourth-row
-.img-container
-.small-img-container
-img {
-  /* Other */ }
+.create-content-intranet .create-content-box .fourth-row .img-container .small-img-container img {
+  /* Other */
+}
 
 .profile .profile-overview h5,
 .create-content-intranet .create-content-box .fourth-row .img-container {
@@ -402,7 +398,8 @@ img {
 .whats-new-intranet .news-content .content_area {
   /* Display & Box Model */
   -webkit-line-clamp: 3;
-  margin: 0.2rem 0; }
+  margin: 0.2rem 0;
+}
 
 .whats-new-intranet .news-content .content_area strong,
 .whats-new-intranet .news-content .content_area em,
@@ -874,13 +871,10 @@ img {
 
 .create-content-intranet .create-content-box .ql-editor img {
   /* Display & Box Model */
-  padding: 1rem 0; }
+  padding: 1rem 0;
+}
 
-.create-content-intranet
-.create-content-box
-.fourth-row
-.img-container
-.small-img-container {
+.create-content-intranet .create-content-box .fourth-row .img-container .small-img-container {
   /* Positioning */
   position: relative;
   /* Display & Box Model */
@@ -1398,6 +1392,10 @@ img {
   background-color: #f0f0f0;
 }
 
+.document-intranet .tree summary.folderItem {
+  transition: background-color 0.2s ease;
+}
+
 .document-intranet .tree ul {
   margin-left: 20px;
   padding-left: 10px;
@@ -1433,6 +1431,11 @@ img {
   background-color: #f0f0f0;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.document-intranet li.documentItem.active {
+  background-color: #f0f0f0;
+  border-radius: 6px;
 }
 
 #uploadFileButton.dragover {

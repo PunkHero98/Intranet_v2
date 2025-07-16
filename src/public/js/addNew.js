@@ -2,7 +2,7 @@ let Imgsarray = [];
 let FileArray = [];
 let ImageAfterDelete = [];
 let latestArray = [];
-const HTTP_Request_address = "http://localhost:3000";
+const HTTP_Request_address = window.location.origin;
 $(".create-content-intranet .fourth-row #Upload").on("change", function (e) {
   handleChoosePicture(e);
   displayImage();

@@ -23,7 +23,7 @@
       {{#each contents}}
 
         <div class="col-xl-6 col-md-6 col-sm-12">
-          <div class="row content-news" style="cursor: pointer" onClick="window.location.href='content/{{this.id_content}}'" >
+          <div class="row content-news" style="cursor: pointer" onClick="window.location.href='content/{{this.id_content}}'" data-created-date="{{this.originalDate}}" >
             <!-- image content -->
             <div class="col-3 news-img p-0">
               <a href="content/{{this.id_content}}">
@@ -48,7 +48,14 @@
                 |
                 {{this.date_time}}
                 |
-                {{this.poster_site}}</i>
+                {{this.poster_site}}
+                |
+                {{this.contentStat.total_views}} views
+                |
+                {{this.contentStat.total_likes}} likes
+                |
+                {{this.contentStat.total_comments}} comments
+              </i>
             </div>
           </div>
         </div>

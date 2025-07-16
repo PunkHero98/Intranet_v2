@@ -1,5 +1,5 @@
 
-const http_request = 'localhost:3000';
+const http_request = window.location.origin; // Use the current origin for requests
 let currentContextFolderId = null;
 let currentContextFolderName = null;
 let currentContextDocumentId = null;
@@ -96,19 +96,39 @@ function renderFolder(folder) {
   const details = document.createElement('details');
   const summary = document.createElement('summary');
   summary.setAttribute('data-folder-id', folder.id);
-  summary.innerHTML = `<i class="bi bi-folder-fill text-warning me-2"></i> ${folder.name} `;
+  summary.className = 'folderItem d-flex align-items-center justify-content-between p-2';
+
+  const documentCount = folder.documents.length;
+  const subfolderCount = folder.children.length;
+
+  let metaInfo = [];
+  if (subfolderCount > 0) metaInfo.push(`${subfolderCount} folders`);
+  if (documentCount > 0) metaInfo.push(`${documentCount} files`);
+
+  summary.innerHTML = `
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi bi-folder-fill text-warning"></i>
+    <span class="fw-semibold">${folder.name}</span>
+  </div>
+  <div class="text-muted d-flex align-items-center gap-3 small">
+    ${subfolderCount > 0 ? `<span><i class="bi bi-folder2-open me-1"></i>${subfolderCount}</span>` : ''}
+    ${documentCount > 0 ? `<span><i class="bi bi-file-earmark-text me-1"></i>${documentCount}</span>` : ''}
+  </div>
+`;
+
+
   details.appendChild(summary);
- 
+
   const ul = document.createElement('ul');
- 
-  // Documents in folder
+
+  // Documents trực tiếp
   folder.documents.forEach(doc => {
     const docLi = document.createElement('li');
     docLi.className = 'documentItem d-flex align-items-center justify-content-between';
     docLi.setAttribute('data-document-id', doc.id);
     docLi.innerHTML = `
-    <div>
-      <i class="${getFileIconClass(doc.fileName)}"></i>
+      <div>
+        <i class="${getFileIconClass(doc.fileName)}"></i>
         ${doc.title}
       </div>
       <i class="bi bi-info-circle documentInfo position-relative" data-version="${doc.version}">
@@ -118,15 +138,16 @@ function renderFolder(folder) {
           <strong>Working site:</strong> ${doc.uploader.user_working_site}<br>
           <strong>Date uploaded:</strong> ${formatDate(doc.createdAt)}<br>
         </div>
-      </i>`;
+      </i>
+    `;
     ul.appendChild(docLi);
   });
- 
+
   // Subfolders
   folder.children.forEach(child => {
     ul.appendChild(renderFolder(child));
   });
- 
+
   details.appendChild(ul);
   li.appendChild(details);
   return li;
@@ -141,6 +162,8 @@ function formatDate(dateString) {
  
 // ==== 9. Render uploaded file info in description container ====
 function renderFileDescription(file) {
+  $('#fileUploadContainer').addClass('d-none');           // Hide the upload container
+  $('#fileDescriptionContainer').removeClass('d-none');   // Show the file description container
   const container = $('#fileDescriptionContainer');
   container.empty();                        // Clear previous content
  
@@ -233,8 +256,7 @@ function validateFile(file) {
     return;
   };
  
-  $('#fileUploadContainer').addClass('d-none');           // Hide the upload container
-  $('#fileDescriptionContainer').removeClass('d-none');   // Show the file description container
+  
 }
 // ==== 15. Open "Update File" modal (from root) ====
 function openUpdateFileModal() {
@@ -242,6 +264,38 @@ function openUpdateFileModal() {
   $('#parentFolderNameForUpdateFile').html('Root folder');
   modal.show();
 }
+
+// ==== 16. function renderFile for New Input ====
+function renderFileDescriptionForNewInput(file) {
+  $('#fileUploadContainerForUpdate').addClass('d-none');           // Hide the upload container
+  $('#fileDescriptionContainerForUpdate').removeClass('d-none');   // Show the file description container
+  const container = $('#fileDescriptionContainerForUpdate');
+  container.empty();                        // Clear previous content
+ 
+  const fileName = file.name;
+  const fileSize = formatFileSize(file.size)                      // Convert to MB
+  const fileIconClass = `${getFileIconClass(fileName)} fs-2`;     // Get the icon class based on file type
+  const fileDescription = `
+      <div class="file-info-containerDocument d-flex align-items-center p-3 mb-2 bg-light border rounded shadow-sm" data-index="0">
+        <div class="me-3">
+          <i class="${fileIconClass}"></i>
+        </div>
+        <div class="flex-grow-1" >
+          <div class="file-name fw-semibold text-truncate d-block" title="${fileName}">${fileName}</div>
+          <small class="text-muted" title="${fileSize}">Size: ${fileSize}</small>
+        </div>
+        <div class="ms-3 flex-shrink-0">
+          <button class="btn btn-sm btn-outline-danger deleteFileBtn" title="Remove file">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+  `;
+ 
+  container.append(fileDescription);                                            // Append the file description to the container
+  // const fileNameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));  // Set the file name in the input field
+  // $('#fileName').val(fileNameWithoutExt);                                       // Set the file name in the input field
+};
 
 // ======================================================================
 // | II. Document & Folder Event Handling                               |
@@ -603,6 +657,17 @@ $('#historyModal').on('show.bs.modal', async function() {
 
 // ==== 9. Handle file upload button click ====
 $('#updateFileButton').on('click', () => $('#newFileInput').trigger('click'));
+
+// ==== 10. Handle new file input change ====
+$('#newFileInput').on('change', function (e) {
+  if (e.target.files.length > 1) {
+    showNotification("Fail  ", "Please upload only one file at a time.", "alert-success", "alert-danger");
+    return;
+  }
+  validateFile(e.target.files[0]);
+  renderFileDescriptionForNewInput(e.target.files[0]);
+  $('')
+});
 
 // ======================================================================
 // | IV. UI Button & Input Event Handler                                |

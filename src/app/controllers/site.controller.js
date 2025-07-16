@@ -95,8 +95,7 @@ export default new (class SiteController {
   
         // 👇 Thêm phần lấy stats
         try {
-          const stat = await getContentStats(file.id_content);
-          file.contentStat = stat;
+          file.contentStat = await getContentStats(file.id_content);
         } catch (statErr) {
           console.error("Error getting content stats:", statErr);
           file.contentStat = { views: 0, likes: 0, comments: 0 };
@@ -122,42 +121,68 @@ export default new (class SiteController {
   // [GET] /homepage/:page
   async navigatePages(req, res) {
     try {
-      const { page } = req.params; // Trang hiện tại
-      const { title, site, time } = req.query; // Tham số filter
-      const limit = 8; // Số bản ghi trên mỗi trang
-      const offset = (parseInt(page) - 1) * limit;
-  
-      // Gọi database để lấy dữ liệu theo filter + phân trang
-      const result = await getContentsByPage(offset, limit, title, site, time);
-      const totalCount = await getTotalCountOfContent(title, site, time); // Lấy tổng số bản ghi
-  
-      const totalPages = Math.ceil(totalCount / limit);
-  
-      // Xử lý dữ liệu (giải mã base64, JSON parse)
-      result.forEach((file) => {
+      const { page } = req.params; 
+      const { poster, site, order } = req.query; 
+      let time = req.query.time === "null" ? null : req.query.time;
+      const limit = 8; 
+      const offset = page == 1 ? 0 : (page - 1) * limit;
+
+      const contents = await getContentsByPage(offset, poster, site, time, order);
+      const updatedContents = await Promise.all(contents.map(async (file) => {
+        // Decode title
         file.title = Buffer.from(file.title, "base64").toString();
-        file.content = JSON.parse(file.content);
+        // Parse content
+        try {
+          file.content = JSON.parse(file.content);
+        } catch (e) {
+          file.content = {};
+        }
+        // Parse and format images
         if (file.content_images) {
           try {
             file.content_images = JSON.parse(file.content_images);
             if (file.content_images.length > 0) {
-              file.content_images = path.join(file.images_link, file.content_images[0]);
+              file.content_images = path.join(
+                file.images_link,
+                file.content_images[0]
+              );
             }
           } catch (parseError) {
             console.error("Error parsing content_images:", parseError);
             file.content_images = [];
           }
         }
-      });
-  
-      // Trả về dữ liệu
+        try {
+          file.contentStat = await getContentStats(file.id_content);
+        } catch (statErr) {
+          console.error("Error getting content stats:", statErr);
+          file.contentStat = { views: 0, likes: 0, comments: 0 };
+        }
+        
+        return file;
+      }));
       res.json({
-        result,
-        currentPage: parseInt(page),
-        totalPages,
+        message: "Successfully fetched contents",
+        contents: updatedContents,
       });
     } catch (err) {
       res.status(500).json({ message: "Error fetching contents", error: err.message });
+    }
+  }
+
+  // [GET] /homepage/total
+  async getTotalCount(req, res) {
+    try {
+      const userRole = await getUserRole("HR");
+      if (!userRole) {
+        return res.status(404).json({ message: "User role not found" });
+      }
+      const totalCount = await getTotalCountOfContent();
+      const totalPages = Math.ceil(totalCount / 8); // Assuming 8 items per page
+      res.json({ total: totalPages, userRole });
+    } catch (err) {
+      console.error("Error fetching total count:", err);
+      res.status(500).json({ message: "Error fetching total count", error: err.message });
     }
   }
   
@@ -175,7 +200,7 @@ export default new (class SiteController {
   }
 
   // [POST] /activity
-  async activity(req, res) {
+async activity(req, res) {
     try {
         const site = req.query.site || "Home";
         const siteDetails = {
@@ -187,34 +212,58 @@ export default new (class SiteController {
         };
 
         const { url, city } = siteDetails[site] || {};
-
         if (!url || !city) {
             return res.status(400).json({ message: "Invalid site" });
         }
 
-        const contents = await getContentsBySite(site);
-        contents.forEach((file) => {
-          try {
-            file.title = Buffer.from(file.title, "base64").toString();
-            file.content = JSON.parse(file.content);
-            file.content_images = JSON.parse(file.content_images);
-        
-            if (Array.isArray(file.content_images) && file.content_images.length > 0) {
-              file.content_images = path.join(file.images_link, file.content_images[0]);
-            } else {
-              file.content_images = null;             }
-        
-            file.date_time = formatDate(file.date_time);
-          } catch (err) {
-            console.error(`Error parsing content_images for file: ${file.id}`, err);
-            file.content_images = null;
-          }
-        });
-        
+        let contents = await getContentsBySite(site);
 
-        contents.sort((a, b) => b.id_content - a.id_content);
+        const updateContent = await Promise.all(
+            contents
+                .filter((file) => {
+                    // Chỉ giữ lại những file chưa bị xóa
+                    return !file.deleted;
+                })
+                .map(async (file) => {
+                    try {
+                        file.title = Buffer.from(file.title, "base64").toString();
+                        file.content = JSON.parse(file.content);
+                        file.content_images = JSON.parse(file.content_images);
+
+                        // Gán ảnh đầu tiên nếu có
+                        if (Array.isArray(file.content_images) && file.content_images.length > 0) {
+                            file.content_images = path.join(file.images_link, file.content_images[0]);
+                        } else {
+                            file.content_images = null;
+                        }
+                        
+                        file.originalDate = file.date_time; // Lưu ngày gốc để sử dụng sau
+                        file.date_time = formatDate(file.date_time);
+
+                        // Thống kê
+                        try {
+                            file.contentStat = await getContentStats(file.id_content);
+                        } catch (statErr) {
+                            console.error("Error getting content stats:", statErr);
+                            file.contentStat = { total_views: 0, total_likes: 0, total_comments: 0 };
+                        }
+
+                        return file;
+                    } catch (err) {
+                        console.error(`Error processing file: ${file.id_content}`, err);
+                        return null; // Bỏ qua file lỗi
+                    }
+                })
+        );
+
+        // Loại bỏ những file bị lỗi khi xử lý (null)
+        const filteredContents = updateContent.filter((file) => file !== null);
+
+        // Sắp xếp
+        filteredContents.sort((a, b) => b.id_content - a.id_content);
+
         res.render("activity", {
-            contents,
+            contents: filteredContents,
             url,
             city,
             site,
@@ -223,9 +272,12 @@ export default new (class SiteController {
             username: req.session.username,
             fullname: req.session.fullname,
         });
+
     } catch (err) {
+        console.error("Error in activity route:", err);
         res.status(500).json({ message: "Error fetching activity", error: err.message });
     }
 }
+
 
 })();
